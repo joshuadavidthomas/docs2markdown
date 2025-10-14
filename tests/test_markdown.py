@@ -10,13 +10,13 @@ from docs2md.markdown import md
 from docs2md.markdown import normalize_whitespace
 
 
-def test_md(doc_file, snapshot):
+def test_md(doc_file, snapshot_md):
     output = md(doc_file.read_text())
-    assert output == snapshot
+    assert output == snapshot_md
 
     # check if we've met a GOAL, if it exists
-    snapshot_location = snapshot.extension_class.get_location(
-        test_location=snapshot.test_location, index=0
+    snapshot_location = snapshot_md.extension_class.get_location(
+        test_location=snapshot_md.test_location, index=0
     )
     goal_file = Path(str(snapshot_location).replace(".md", ".GOAL.md"))
     if goal_file.exists():

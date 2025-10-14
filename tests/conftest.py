@@ -23,9 +23,8 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("doc_file", doc_files, ids=[f.stem for f in doc_files])
 
 
-class MarkdownSnapshotExtension(SingleFileSnapshotExtension):
+class Docs2MdSnapshotExtension(SingleFileSnapshotExtension):
     _write_mode = WriteMode.TEXT
-    file_extension = "md"
 
     @classmethod
     @override
@@ -45,6 +44,19 @@ class MarkdownSnapshotExtension(SingleFileSnapshotExtension):
         return str(data)
 
 
+class HtmlSnapshotExtension(Docs2MdSnapshotExtension):
+    file_extension = "html"
+
+
+class MarkdownSnapshotExtension(Docs2MdSnapshotExtension):
+    file_extension = "md"
+
+
 @pytest.fixture
-def snapshot(snapshot):
+def snapshot_html(snapshot):
+    return snapshot.use_extension(HtmlSnapshotExtension)
+
+
+@pytest.fixture
+def snapshot_md(snapshot):
     return snapshot.use_extension(MarkdownSnapshotExtension)
