@@ -2,6 +2,37 @@ from __future__ import annotations
 
 import re
 
+from bs4 import Tag
+
+
+def extract_language(el: Tag):
+    """Extract language from code element's class attribute.
+
+    Looks for <code class="language-{lang}"> pattern within <pre> blocks.
+
+    Args:
+        el: The <pre> element being converted
+
+    Returns:
+        Language string or empty string if no language found
+    """
+    code = el.find("code")
+    if not code:
+        return ""
+
+    classes = code.get("class", "")
+    if not classes:
+        return ""
+
+    if isinstance(classes, str):
+        classes = [classes]
+
+    for class_name in classes:
+        if class_name.startswith("language-"):
+            return class_name.replace("language-", "")
+
+    return ""
+
 
 def normalize_whitespace(text: str):
     """Normalize whitespace in converted text.

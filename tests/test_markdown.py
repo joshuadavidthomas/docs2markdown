@@ -1,18 +1,38 @@
 from __future__ import annotations
 
 import pytest
+from bs4 import BeautifulSoup
 
+from docs2md.markdown import extract_language
 from docs2md.markdown import normalize_whitespace
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    "html,expected",
+    [
+        ('<pre><code class="language-python">def foo(): pass</code></pre>', "python"),
+        (
+            '<pre><code class="language-javascript">console.log("world")</code></pre>',
+            "javascript",
+        ),
+        ("<pre><code>plain code</code></pre>", ""),
+    ],
+)
+def test_converter_code_blocks(html, expected):
+    soup = BeautifulSoup(html, features="lxml")
+    assert soup.pre is not None
+    assert extract_language(soup.pre) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
     [
         (
-            """<p>This is a paragraph
+            """This is a paragraph
 with line breaks
-in the HTML source.</p>""",
-            "<p>This is a paragraph with line breaks in the HTML source.</p>",
+
+in the text.""",
+            "This is a paragraph with line breaks in the text.",
         ),
         (
             """<ul>
@@ -38,5 +58,5 @@ line breaks</td>
         ),
     ],
 )
-def test_normalize_whitespace(input, expected):
-    assert normalize_whitespace(input) == expected
+def test_normalize_whitespace(text, expected):
+    assert normalize_whitespace(text) == expected
