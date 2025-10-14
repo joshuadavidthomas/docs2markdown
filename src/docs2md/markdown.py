@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 from typing import final
 
 from bs4 import Tag
@@ -65,3 +66,7 @@ class Docs2MdConverter(MarkdownConverter):
         bullets = "-"
         code_language_callback = extract_language
         heading_style = "ATX"
+
+    def convert_p(self, el: Tag, text: str, **kwargs: Any) -> Any:
+        text = normalize_whitespace(text)
+        return super().convert_p(el, text, **kwargs)

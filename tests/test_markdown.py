@@ -10,14 +10,20 @@ from docs2md.markdown import md
 from docs2md.markdown import normalize_whitespace
 
 
-@pytest.fixture
-def doc():
-    fixtures_dir = Path(__file__).parent / "fixtures"
-    yield from fixtures_dir.iterdir()
+def test_md(doc_file, snapshot):
+    output = md(doc_file.read_text())
+    assert output == snapshot
 
-
-def test_md(doc, snapshot):
-    assert md(doc.read_text()) == snapshot
+    # check if we've met a GOAL, if it exists
+    snapshot_location = snapshot.extension_class.get_location(
+        test_location=snapshot.test_location, index=0
+    )
+    goal_file = Path(str(snapshot_location).replace(".md", ".GOAL.md"))
+    if goal_file.exists():
+        goal = goal_file.read_text()
+        assert output != goal, (
+            f"Output matches GOAL for {doc_file.stem}. You can now delete {goal_file.name}"
+        )
 
 
 @pytest.mark.parametrize(
