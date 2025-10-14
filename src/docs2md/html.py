@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from enum import Enum
+
 from bs4 import BeautifulSoup
 from bs4 import Tag
 
@@ -77,7 +79,84 @@ class BaseHtmlPreprocessor:
         return str(content)
 
 
+class Admonition(Enum):
+    CAUTION = "caution"
+    IMPORTANT = "important"
+    NOTE = "note"
+    TIP = "tip"
+    WARNING = "warning"
+
+    @classmethod
+    def from_class_name(cls, class_name: str) -> Admonition:
+        return SPHINX_ADMONITION_MAP.get(class_name.lower(), cls.NOTE)
+
+    @classmethod
+    def from_title(cls, title: str) -> Admonition | None:
+        try:
+            admon_type = cls[title.upper()]
+            return admon_type
+        except KeyError:
+            return None
+
+
+SPHINX_ADMONITION_MAP = {
+    "attention": Admonition.WARNING,
+    "danger": Admonition.WARNING,
+    "caution": Admonition.CAUTION,
+    "error": Admonition.CAUTION,
+    "hint": Admonition.TIP,
+    "important": Admonition.IMPORTANT,
+    "note": Admonition.NOTE,
+    "seealso": Admonition.NOTE,
+    "tip": Admonition.TIP,
+    "warning": Admonition.WARNING,
+}
+
+
 class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
     def process_a(self, tag: Tag) -> None:
         if "headerlink" in tag.get("class", []):
             tag.decompose()
+
+    def process_div(self, tag: Tag) -> None:
+        classes = tag.get("class")
+        if classes is None:
+            return
+
+        if not isinstance(classes, list):
+            classes = [classes]
+
+        if "admonition" in classes:
+            self._process_admonition(tag)
+            return
+
+    def _process_admonition(self, tag: Tag) -> None:
+        admonition_classes = tag.get("class", [])
+        if not isinstance(admonition_classes, list):
+            admonition_classes = [admonition_classes]
+
+        title_elem = tag.find("p", class_="admonition-title")
+        title = title_elem.get_text(strip=True) if title_elem else "Note"
+        if title_elem:
+            title_elem.decompose()
+
+        alert_type = Admonition.NOTE
+        for cls in admonition_classes:
+            alert_type = Admonition.from_class_name(cls)
+            if alert_type != Admonition.NOTE:
+                break
+
+        title_type = Admonition.from_title(title)
+        if title_type:
+            alert_type = title_type
+
+        blockquote = self.soup.new_tag("blockquote")
+
+        marker = self.soup.new_tag("p")
+        marker.string = f"[!{alert_type.name}]"
+        blockquote.append(marker)
+
+        for child in list(tag.children):
+            blockquote.append(child)
+
+        tag.replace_with(blockquote)
