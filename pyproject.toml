@@ -4,27 +4,27 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "coverage[toml]>=7.10.7",
-    "nox[uv]>=2025.5.1",
-    "pytest>=8.4.2",
-    "pytest-cov>=7.0.0",
-    "pytest-randomly>=4.0.1",
-    "pytest-xdist>=3.8.0",
+  "coverage[toml]>=7.10.7",
+  "nox[uv]>=2025.5.1",
+  "pytest>=8.4.2",
+  "pytest-cov>=7.0.0",
+  "pytest-randomly>=4.0.1",
+  "pytest-xdist>=3.8.0",
 ]
 types = [
-    "mypy>=1.18.2",
+  "mypy>=1.18.2",
 ]
 
 [project]
 authors = [
-    { name = "Josh Thomas", email = "josh@joshthomas.dev" }
+  { name = "Josh Thomas", email = "josh@joshthomas.dev" }
 ]
 dependencies = [
-    "beautifulsoup4[lxml]>=4.14.2",
-    "markdownify>=1.2.0",
-    "pydantic>=2.12.1",
-    "rich>=14.2.0",
-    "typer>=0.19.2",
+  "beautifulsoup4[lxml]>=4.14.2",
+  "markdownify>=1.2.0",
+  "pydantic>=2.12.1",
+  "rich>=14.2.0",
+  "typer>=0.19.2",
 ]
 description = "Convert HTML documentation to GitHub-flavored Markdown"
 name = "docs2md"
@@ -50,11 +50,11 @@ version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
 
 [tool.bumpver.file_patterns]
 "tests/test_version.py" = [
-    'assert __version__ == "{version}"',
+  'assert __version__ == "{version}"',
 ]
 "pyproject.toml" = [
-    '^version = "{version}"',
-    '^current_version = "{version}"',
+  '^version = "{version}"',
+  '^current_version = "{version}"',
 ]
 
 [tool.coverage.paths]
