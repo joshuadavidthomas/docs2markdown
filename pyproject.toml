@@ -31,6 +31,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 version = "0.1.0"
 
+[project.scripts]
+docs2md = "docs2md.cli:app"
+
 [tool.bumpver]
 commit = true
 commit_message = ":bookmark: bump version {old_version} -> {new_version}"
