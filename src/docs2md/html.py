@@ -138,6 +138,9 @@ def get_language_from_class(class_name: str) -> str:
 
 class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
     def process_a(self, tag: Tag) -> None:
+        if tag.has_attr("title"):
+            del tag["title"]
+
         if "headerlink" in tag.get("class", []):
             tag.decompose()
 

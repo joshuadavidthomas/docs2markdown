@@ -13,7 +13,7 @@
 <section id="s-performing-raw-sql-queries">
 <span id="performing-raw-sql-queries"></span><h1>Performing raw SQL queries</h1>
 <p>Django gives you two ways of performing raw SQL queries: you can use
-<a class="reference internal" href="#django.db.models.Manager.raw" title="django.db.models.Manager.raw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Manager.raw()</span></code></a> to <a class="reference internal" href="#performing-raw-queries">perform raw queries and return model instances</a>, or
+<a class="reference internal" href="#django.db.models.Manager.raw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Manager.raw()</span></code></a> to <a class="reference internal" href="#performing-raw-queries">perform raw queries and return model instances</a>, or
 you can avoid the model layer entirely and <a class="reference internal" href="#executing-custom-sql-directly">execute custom SQL directly</a>.</p>
 <blockquote><p>[!NOTE]</p>
 
@@ -21,7 +21,7 @@ you can avoid the model layer entirely and <a class="reference internal" href="#
 SQL. For example:</p>
 <ul class="simple">
 <li><p>The <a class="reference internal" href="../../ref/models/querysets.html"><span class="doc">QuerySet API</span></a> is extensive.</p></li>
-<li><p>You can <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet.annotate" title="django.db.models.query.QuerySet.annotate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">annotate</span></code></a> and <a class="reference internal" href="aggregation.html"><span class="doc">aggregate</span></a> using many built-in <a class="reference internal" href="../../ref/models/database-functions.html"><span class="doc">database functions</span></a>. Beyond those, you can create
+<li><p>You can <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet.annotate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">annotate</span></code></a> and <a class="reference internal" href="aggregation.html"><span class="doc">aggregate</span></a> using many built-in <a class="reference internal" href="../../ref/models/database-functions.html"><span class="doc">database functions</span></a>. Beyond those, you can create
 <a class="reference internal" href="../../ref/models/expressions.html"><span class="doc">custom query expressions</span></a>.</p></li>
 </ul>
 <p>Before using raw SQL, explore <a class="reference internal" href="index.html"><span class="doc">the ORM</span></a>. Ask on
@@ -45,7 +45,7 @@ return model instances:</p>
 <dd></dd></dl>
 <p>This method takes a raw SQL query, executes it, and returns a
 <code class="docutils literal notranslate"><span class="pre">django.db.models.query.RawQuerySet</span></code> instance. This <code class="docutils literal notranslate"><span class="pre">RawQuerySet</span></code> instance
-can be iterated over like a normal <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet" title="django.db.models.query.QuerySet"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code></a> to
+can be iterated over like a normal <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code></a> to
 provide object instances.</p>
 <p>This is best illustrated with an example. Suppose you have the following
 model:</p>
@@ -73,7 +73,7 @@ the model’s class name, with an underscore between them. In the example
 we’ve assumed that the <code class="docutils literal notranslate"><span class="pre">Person</span></code> model lives in an app named <code class="docutils literal notranslate"><span class="pre">myapp</span></code>,
 so its table would be <code class="docutils literal notranslate"><span class="pre">myapp_person</span></code>.</p>
 <p>For more details check out the documentation for the
-<a class="reference internal" href="../../ref/models/options.html#django.db.models.Options.db_table" title="django.db.models.Options.db_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">db_table</span></code></a> option, which also lets you manually set the
+<a class="reference internal" href="../../ref/models/options.html#django.db.models.Options.db_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">db_table</span></code></a> option, which also lets you manually set the
 database table name.</p>
 </blockquote>
 <blockquote><p>[!WARNING]</p>
@@ -141,7 +141,7 @@ efficient to limit the query at the SQL level:</p>
 <pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name FROM myapp_person"</span><span class="p">)</span>
 </code></pre>
 <p>The <code class="docutils literal notranslate"><span class="pre">Person</span></code> objects returned by this query will be deferred model instances
-(see <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet.defer" title="django.db.models.query.QuerySet.defer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">defer()</span></code></a>). This means that the
+(see <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet.defer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">defer()</span></code></a>). This means that the
 fields that are omitted from the query will be loaded on demand. For example:</p>
 <pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name FROM myapp_person"</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span>
@@ -159,7 +159,7 @@ last names were both retrieved on demand when they were printed.</p>
 <p>There is only one field that you can’t leave out - the primary key
 field. Django uses the primary key to identify model instances, so it
 must always be included in a raw query. A
-<a class="reference internal" href="../../ref/exceptions.html#django.core.exceptions.FieldDoesNotExist" title="django.core.exceptions.FieldDoesNotExist"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldDoesNotExist</span></code></a> exception will be raised if
+<a class="reference internal" href="../../ref/exceptions.html#django.core.exceptions.FieldDoesNotExist"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldDoesNotExist</span></code></a> exception will be raised if
 you forget to include the primary key.</p>
 </section>
 <section id="s-adding-annotations">
@@ -218,7 +218,7 @@ placeholder, you’re at risk for SQL injection.</p>
 </section>
 <section id="s-executing-custom-sql-directly">
 <span id="s-executing-custom-sql"></span><span id="executing-custom-sql-directly"></span><span id="executing-custom-sql"></span><h2>Executing custom SQL directly</h2>
-<p>Sometimes even <a class="reference internal" href="#django.db.models.Manager.raw" title="django.db.models.Manager.raw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Manager.raw()</span></code></a> isn’t quite enough: you might need to
+<p>Sometimes even <a class="reference internal" href="#django.db.models.Manager.raw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Manager.raw()</span></code></a> isn’t quite enough: you might need to
 perform queries that don’t map cleanly to models, or directly execute
 <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>, <code class="docutils literal notranslate"><span class="pre">INSERT</span></code>, or <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> queries.</p>
 <p>In these cases, you can always access the database directly, routing around
@@ -270,7 +270,7 @@ using something like this:</p>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
 </code></pre>
-<p>Another option is to use <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.namedtuple" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">collections.namedtuple()</span></code></a> from the Python
+<p>Another option is to use <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.namedtuple"><code class="xref py py-func docutils literal notranslate"><span class="pre">collections.namedtuple()</span></code></a> from the Python
 standard library. A <code class="docutils literal notranslate"><span class="pre">namedtuple</span></code> is a tuple-like object that has fields
 accessible by attribute lookup; it’s also indexable and iterable. Results are
 immutable and accessible by field names or indices, which might be useful:</p>

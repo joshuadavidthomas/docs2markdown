@@ -2,14 +2,14 @@
 
 # Performing raw SQL queries
 
-Django gives you two ways of performing raw SQL queries: you can use [`Manager.raw()`](#django.db.models.Manager.raw "django.db.models.Manager.raw") to [perform raw queries and return model instances](#performing-raw-queries), or you can avoid the model layer entirely and [execute custom SQL directly](#executing-custom-sql-directly).
+Django gives you two ways of performing raw SQL queries: you can use [`Manager.raw()`](#django.db.models.Manager.raw) to [perform raw queries and return model instances](#performing-raw-queries), or you can avoid the model layer entirely and [execute custom SQL directly](#executing-custom-sql-directly).
 
 > [!NOTE]
 >
 > The Django ORM provides many tools to express queries without writing raw SQL. For example:
 >
 > - The [QuerySet API](../../ref/models/querysets.html) is extensive.
-> - You can [`annotate`](../../ref/models/querysets.html#django.db.models.query.QuerySet.annotate "django.db.models.query.QuerySet.annotate") and [aggregate](aggregation.html) using many built-in [database functions](../../ref/models/database-functions.html). Beyond those, you can create [custom query expressions](../../ref/models/expressions.html).
+> - You can [`annotate`](../../ref/models/querysets.html#django.db.models.query.QuerySet.annotate) and [aggregate](aggregation.html) using many built-in [database functions](../../ref/models/database-functions.html). Beyond those, you can create [custom query expressions](../../ref/models/expressions.html).
 >
 > Before using raw SQL, explore [the ORM](index.html). Ask on one of [the support channels](../../faq/help.html) to see if the ORM supports your use case.
 
@@ -23,7 +23,7 @@ The `raw()` manager method can be used to perform raw SQL queries that return mo
 
 Manager.raw(*raw\_query*, *params=()*, *translations=None*)
 
-This method takes a raw SQL query, executes it, and returns a `django.db.models.query.RawQuerySet` instance. This `RawQuerySet` instance can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.html#django.db.models.query.QuerySet "django.db.models.query.QuerySet") to provide object instances.
+This method takes a raw SQL query, executes it, and returns a `django.db.models.query.RawQuerySet` instance. This `RawQuerySet` instance can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.html#django.db.models.query.QuerySet) to provide object instances.
 
 This is best illustrated with an example. Suppose you have the following model:
 
@@ -52,7 +52,7 @@ This example isn’t very exciting – it’s exactly the same as running `Perso
 >
 > By default, Django figures out a database table name by joining the model’s “app label” – the name you used in `manage.py startapp` – to the model’s class name, with an underscore between them. In the example we’ve assumed that the `Person` model lives in an app named `myapp`, so its table would be `myapp_person`.
 >
-> For more details check out the documentation for the [`db_table`](../../ref/models/options.html#django.db.models.Options.db_table "django.db.models.Options.db_table") option, which also lets you manually set the database table name.
+> For more details check out the documentation for the [`db_table`](../../ref/models/options.html#django.db.models.Options.db_table) option, which also lets you manually set the database table name.
 
 > [!WARNING]
 >
@@ -118,7 +118,7 @@ Fields may also be left out:
 >>> people = Person.objects.raw("SELECT id, first_name FROM myapp_person")
 ```
 
-The `Person` objects returned by this query will be deferred model instances (see [`defer()`](../../ref/models/querysets.html#django.db.models.query.QuerySet.defer "django.db.models.query.QuerySet.defer")). This means that the fields that are omitted from the query will be loaded on demand. For example:
+The `Person` objects returned by this query will be deferred model instances (see [`defer()`](../../ref/models/querysets.html#django.db.models.query.QuerySet.defer)). This means that the fields that are omitted from the query will be loaded on demand. For example:
 
 ```python
 >>> for p in Person.objects.raw("SELECT id, first_name FROM myapp_person"):
@@ -133,7 +133,7 @@ Jane Jones
 
 From outward appearances, this looks like the query has retrieved both the first name and last name. However, this example actually issued 3 queries. Only the first names were retrieved by the `raw()` query – the last names were both retrieved on demand when they were printed.
 
-There is only one field that you can’t leave out - the primary key field. Django uses the primary key to identify model instances, so it must always be included in a raw query. A [`FieldDoesNotExist`](../../ref/exceptions.html#django.core.exceptions.FieldDoesNotExist "django.core.exceptions.FieldDoesNotExist") exception will be raised if you forget to include the primary key.
+There is only one field that you can’t leave out - the primary key field. Django uses the primary key to identify model instances, so it must always be included in a raw query. A [`FieldDoesNotExist`](../../ref/exceptions.html#django.core.exceptions.FieldDoesNotExist) exception will be raised if you forget to include the primary key.
 
 ### Adding annotations
 
@@ -189,7 +189,7 @@ If you need to perform parameterized queries, you can use the `params` argument 
 
 ## Executing custom SQL directly
 
-Sometimes even [`Manager.raw()`](#django.db.models.Manager.raw "django.db.models.Manager.raw") isn’t quite enough: you might need to perform queries that don’t map cleanly to models, or directly execute `UPDATE`, `INSERT`, or `DELETE` queries.
+Sometimes even [`Manager.raw()`](#django.db.models.Manager.raw) isn’t quite enough: you might need to perform queries that don’t map cleanly to models, or directly execute `UPDATE`, `INSERT`, or `DELETE` queries.
 
 In these cases, you can always access the database directly, routing around the model layer entirely.
 
@@ -241,7 +241,7 @@ def dictfetchall(cursor):
     return [dict(zip(columns, row)) for row in cursor.fetchall()]
 ```
 
-Another option is to use [`collections.namedtuple()`](https://docs.python.org/3/library/collections.html#collections.namedtuple "(in Python v3.14)") from the Python standard library. A `namedtuple` is a tuple-like object that has fields accessible by attribute lookup; it’s also indexable and iterable. Results are immutable and accessible by field names or indices, which might be useful:
+Another option is to use [`collections.namedtuple()`](https://docs.python.org/3/library/collections.html#collections.namedtuple) from the Python standard library. A `namedtuple` is a tuple-like object that has fields accessible by attribute lookup; it’s also indexable and iterable. Results are immutable and accessible by field names or indices, which might be useful:
 
 ```python
 from collections import namedtuple
