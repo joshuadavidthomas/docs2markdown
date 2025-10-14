@@ -112,6 +112,29 @@ SPHINX_ADMONITION_MAP = {
     "warning": Admonition.WARNING,
 }
 
+SPHINX_LANGUAGE_OVERRIDES = {
+    "highlight-default": "python",
+    "highlight-pycon": "python",
+    "highlight-py3": "python",
+    "highlight-console": "bash",
+    "highlight-shell": "bash",
+    "highlight-doscon": "batch",
+    "highlight-none": "text",
+    "highlight-pytb": "python",
+    "highlight-po": "gettext",
+    "highlight-psql": "postgresql",
+}
+
+
+def get_language_from_class(class_name: str) -> str:
+    if class_name in SPHINX_LANGUAGE_OVERRIDES:
+        return SPHINX_LANGUAGE_OVERRIDES[class_name]
+
+    if class_name.startswith("highlight-"):
+        return class_name.replace("highlight-", "")
+
+    return ""
+
 
 class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
     def process_a(self, tag: Tag) -> None:
@@ -129,6 +152,11 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         if "admonition" in classes:
             self._process_admonition(tag)
             return
+
+        for cls in classes:
+            if cls.startswith("highlight-"):
+                self._process_code_block(tag, cls)
+                return
 
     def _process_admonition(self, tag: Tag) -> None:
         admonition_classes = tag.get("class", [])
@@ -160,3 +188,34 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
             blockquote.append(child)
 
         tag.replace_with(blockquote)
+
+    def _process_code_block(self, tag: Tag, highlight_class: str) -> None:
+        """Sphinx code block to standard HTML code block
+
+        Transforms:
+            <div class="highlight-{lang}">
+                <div class="highlight">
+                    <pre>code</pre>
+                </div>
+            </div>
+
+        To:
+            <pre><code class="language-{lang}">code</code></pre>
+        """
+
+        pre_tag = tag.find("pre")
+        if not pre_tag:
+            return
+
+        new_pre = self.soup.new_tag("pre")
+        code_tag = self.soup.new_tag("code")
+
+        language = get_language_from_class(highlight_class)
+        if language:
+            code_tag["class"] = f"language-{language}"
+
+        for child in list(pre_tag.children):
+            code_tag.append(child)
+
+        new_pre.append(code_tag)
+        tag.replace_with(new_pre)

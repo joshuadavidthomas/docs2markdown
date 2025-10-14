@@ -27,7 +27,7 @@ This method takes a raw SQL query, executes it, and returns a `django.db.models.
 
 This is best illustrated with an example. Suppose you have the following model:
 
-```
+```python
 class Person(models.Model):
     first_name = models.CharField(...)
     last_name = models.CharField(...)
@@ -36,7 +36,7 @@ class Person(models.Model):
 
 You could then execute custom SQL like so:
 
-```
+```python
 >>> for p in Person.objects.raw("SELECT * FROM myapp_person"):
 ...     print(p)
 ...
@@ -68,14 +68,14 @@ This example isn’t very exciting – it’s exactly the same as running `Perso
 
 The order of fields in your query doesn’t matter. In other words, both of the following queries work identically:
 
-```
+```python
 >>> Person.objects.raw("SELECT id, first_name, last_name, birth_date FROM myapp_person")
 >>> Person.objects.raw("SELECT last_name, birth_date, first_name, id FROM myapp_person")
 ```
 
 Matching is done by name. This means that you can use SQL’s `AS` clauses to map fields in the query to model fields. So if you had some other table that had `Person` data in it, you could easily map it into `Person` instances:
 
-```
+```python
 >>> Person.objects.raw(
 ...     """
 ...     SELECT first AS first_name,
@@ -91,7 +91,7 @@ As long as the names match, the model instances will be created correctly.
 
 Alternatively, you can map fields in the query to model fields using the `translations` argument to `raw()`. This is a dictionary mapping names of fields in the query to names of fields on the model. For example, the above query could also be written:
 
-```
+```python
 >>> name_map = {"first": "first_name", "last": "last_name", "bd": "birth_date", "pk": "id"}
 >>> Person.objects.raw("SELECT * FROM some_other_table", translations=name_map)
 ```
@@ -100,13 +100,13 @@ Alternatively, you can map fields in the query to model fields using the `transl
 
 `raw()` supports indexing, so if you need only the first result you can write:
 
-```
+```python
 >>> first_person = Person.objects.raw("SELECT * FROM myapp_person")[0]
 ```
 
 However, the indexing and slicing are not performed at the database level. If you have a large number of `Person` objects in your database, it is more efficient to limit the query at the SQL level:
 
-```
+```python
 >>> first_person = Person.objects.raw("SELECT * FROM myapp_person LIMIT 1")[0]
 ```
 
@@ -114,13 +114,13 @@ However, the indexing and slicing are not performed at the database level. If yo
 
 Fields may also be left out:
 
-```
+```python
 >>> people = Person.objects.raw("SELECT id, first_name FROM myapp_person")
 ```
 
 The `Person` objects returned by this query will be deferred model instances (see [`defer()`](../../ref/models/querysets.html#django.db.models.query.QuerySet.defer "django.db.models.query.QuerySet.defer")). This means that the fields that are omitted from the query will be loaded on demand. For example:
 
-```
+```python
 >>> for p in Person.objects.raw("SELECT id, first_name FROM myapp_person"):
 ...     print(
 ...         p.first_name,  # This will be retrieved by the original query
@@ -139,7 +139,7 @@ There is only one field that you can’t leave out - the primary key field. Djan
 
 You can also execute queries containing fields that aren’t defined on the model. For example, we could use [PostgreSQL’s age() function](https://www.postgresql.org/docs/current/functions-datetime.html) to get a list of people with their ages calculated by the database:
 
-```
+```python
 >>> people = Person.objects.raw("SELECT *, age(birth_date) AS age FROM myapp_person")
 >>> for p in people:
 ...     print("%s is %s." % (p.first_name, p.age))
@@ -155,7 +155,7 @@ You can often avoid using raw SQL to compute annotations by instead using a [Fun
 
 If you need to perform parameterized queries, you can use the `params` argument to `raw()`:
 
-```
+```python
 >>> lname = "Doe"
 >>> Person.objects.raw("SELECT * FROM myapp_person WHERE last_name = %s", [lname])
 ```
@@ -172,14 +172,14 @@ If you need to perform parameterized queries, you can use the `params` argument 
 >
 > It’s tempting to write the above query as:
 >
-> ```
+> ```python
 > >>> query = "SELECT * FROM myapp_person WHERE last_name = %s" % lname
 > >>> Person.objects.raw(query)
 > ```
 >
 > You might also think you should write your query like this (with quotes around `%s`):
 >
-> ```
+> ```python
 > >>> query = "SELECT * FROM myapp_person WHERE last_name = '%s'"
 > ```
 >
@@ -197,7 +197,7 @@ The object `django.db.connection` represents the default database connection. To
 
 For example:
 
-```
+```python
 from django.db import connection
 
 
@@ -214,14 +214,14 @@ To protect against SQL injection, you must not include quotes around the `%s` pl
 
 Note that if you want to include literal percent signs in the query, you have to double them in the case you are passing parameters:
 
-```
+```python
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%%' AND id = %s", [self.id])
 ```
 
 If you are using [more than one database](multi-db.html), you can use `django.db.connections` to obtain the connection (and cursor) for a specific database. `django.db.connections` is a dictionary-like object that allows you to retrieve a specific connection using its alias:
 
-```
+```python
 from django.db import connections
 
 with connections["my_db_alias"].cursor() as cursor:
@@ -231,7 +231,7 @@ with connections["my_db_alias"].cursor() as cursor:
 
 By default, the Python DB API will return results without their field names, which means you end up with a `list` of values, rather than a `dict`. At a small performance and memory cost, you can return results as a `dict` by using something like this:
 
-```
+```python
 def dictfetchall(cursor):
     """
     Return all rows from a cursor as a dict.
@@ -243,7 +243,7 @@ def dictfetchall(cursor):
 
 Another option is to use [`collections.namedtuple()`](https://docs.python.org/3/library/collections.html#collections.namedtuple "(in Python v3.14)") from the Python standard library. A `namedtuple` is a tuple-like object that has fields accessible by attribute lookup; it’s also indexable and iterable. Results are immutable and accessible by field names or indices, which might be useful:
 
-```
+```python
 from collections import namedtuple
 
 
@@ -261,7 +261,7 @@ The `dictfetchall()` and `namedtuplefetchall()` examples assume unique column na
 
 Here is an example of the difference between the three:
 
-```
+```python
 >>> cursor.execute("SELECT id, parent_id FROM test LIMIT 2")
 >>> cursor.fetchall()
 ((54360982, None), (54360880, None))
@@ -290,14 +290,14 @@ Also note that Django expects the `"%s"` placeholder, *not* the `"?"` placeholde
 
 Using a cursor as a context manager:
 
-```
+```python
 with connection.cursor() as c:
     c.execute(...)
 ```
 
 is equivalent to:
 
-```
+```python
 c = connection.cursor()
 try:
     c.execute(...)
@@ -312,7 +312,7 @@ CursorWrapper.callproc(*procname*, *params=None*, *kparams=None*)
 
     For example, given this stored procedure in an Oracle database:
 
-    ```
+    ```sql
     CREATE PROCEDURE "TEST_PROCEDURE"(v_i INTEGER, v_text NVARCHAR2(10)) AS
         p_i INTEGER;
         p_text NVARCHAR2(10);
@@ -325,7 +325,7 @@ CursorWrapper.callproc(*procname*, *params=None*, *kparams=None*)
 
     This will call it:
 
-    ```
+    ```python
     with connection.cursor() as cursor:
         cursor.callproc("test_procedure", [1, "test"])
     ```

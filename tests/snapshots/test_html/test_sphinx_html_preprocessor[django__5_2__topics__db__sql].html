@@ -49,20 +49,18 @@ can be iterated over like a normal <a class="reference internal" href="../../ref
 provide object instances.</p>
 <p>This is best illustrated with an example. Suppose you have the following
 model:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<pre><code class="language-python"><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
     <span class="n">birth_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
+</code></pre>
 <p>You could then execute custom SQL like so:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person"</span><span class="p">):</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person"</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="go">John Smith</span>
 <span class="go">Jane Jones</span>
-</pre></div>
-</div>
+</code></pre>
 <p>This example isn’t very exciting – it’s exactly the same as running
 <code class="docutils literal notranslate"><span class="pre">Person.objects.all()</span></code>. However, <code class="docutils literal notranslate"><span class="pre">raw()</span></code> has a bunch of other options that
 make it very powerful.</p>
@@ -100,14 +98,13 @@ perform the correct typecasting before using the value in a query.</p>
 <p><code class="docutils literal notranslate"><span class="pre">raw()</span></code> automatically maps fields in the query to fields on the model.</p>
 <p>The order of fields in your query doesn’t matter. In other words, both
 of the following queries work identically:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name, last_name, birth_date FROM myapp_person"</span><span class="p">)</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name, last_name, birth_date FROM myapp_person"</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT last_name, birth_date, first_name, id FROM myapp_person"</span><span class="p">)</span>
-</pre></div>
-</div>
+</code></pre>
 <p>Matching is done by name. This means that you can use SQL’s <code class="docutils literal notranslate"><span class="pre">AS</span></code> clauses to
 map fields in the query to model fields. So if you had some other table that
 had <code class="docutils literal notranslate"><span class="pre">Person</span></code> data in it, you could easily map it into <code class="docutils literal notranslate"><span class="pre">Person</span></code> instances:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span>
 <span class="gp">... </span><span class="w">    </span><span class="sd">"""</span>
 <span class="gp">... </span><span class="sd">    SELECT first AS first_name,</span>
 <span class="gp">... </span><span class="sd">           last AS last_name,</span>
@@ -116,42 +113,37 @@ had <code class="docutils literal notranslate"><span class="pre">Person</span></
 <span class="gp">... </span><span class="sd">    FROM some_other_table</span>
 <span class="gp">... </span><span class="sd">    """</span>
 <span class="gp">... </span><span class="p">)</span>
-</pre></div>
-</div>
+</code></pre>
 <p>As long as the names match, the model instances will be created correctly.</p>
 <p>Alternatively, you can map fields in the query to model fields using the
 <code class="docutils literal notranslate"><span class="pre">translations</span></code> argument to <code class="docutils literal notranslate"><span class="pre">raw()</span></code>. This is a dictionary mapping names of
 fields in the query to names of fields on the model. For example, the above
 query could also be written:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">name_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"first"</span><span class="p">:</span> <span class="s2">"first_name"</span><span class="p">,</span> <span class="s2">"last"</span><span class="p">:</span> <span class="s2">"last_name"</span><span class="p">,</span> <span class="s2">"bd"</span><span class="p">:</span> <span class="s2">"birth_date"</span><span class="p">,</span> <span class="s2">"pk"</span><span class="p">:</span> <span class="s2">"id"</span><span class="p">}</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">name_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"first"</span><span class="p">:</span> <span class="s2">"first_name"</span><span class="p">,</span> <span class="s2">"last"</span><span class="p">:</span> <span class="s2">"last_name"</span><span class="p">,</span> <span class="s2">"bd"</span><span class="p">:</span> <span class="s2">"birth_date"</span><span class="p">,</span> <span class="s2">"pk"</span><span class="p">:</span> <span class="s2">"id"</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM some_other_table"</span><span class="p">,</span> <span class="n">translations</span><span class="o">=</span><span class="n">name_map</span><span class="p">)</span>
-</pre></div>
-</div>
+</code></pre>
 </section>
 <section id="s-index-lookups">
 <span id="index-lookups"></span><h3>Index lookups</h3>
 <p><code class="docutils literal notranslate"><span class="pre">raw()</span></code> supports indexing, so if you need only the first result you can
 write:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_person</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_person</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre>
 <p>However, the indexing and slicing are not performed at the database level. If
 you have a large number of <code class="docutils literal notranslate"><span class="pre">Person</span></code> objects in your database, it is more
 efficient to limit the query at the SQL level:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_person</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person LIMIT 1"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_person</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person LIMIT 1"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre>
 </section>
 <section id="s-deferring-model-fields">
 <span id="deferring-model-fields"></span><h3>Deferring model fields</h3>
 <p>Fields may also be left out:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name FROM myapp_person"</span><span class="p">)</span>
-</pre></div>
-</div>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name FROM myapp_person"</span><span class="p">)</span>
+</code></pre>
 <p>The <code class="docutils literal notranslate"><span class="pre">Person</span></code> objects returned by this query will be deferred model instances
 (see <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet.defer" title="django.db.models.query.QuerySet.defer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">defer()</span></code></a>). This means that the
 fields that are omitted from the query will be loaded on demand. For example:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name FROM myapp_person"</span><span class="p">):</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT id, first_name FROM myapp_person"</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="n">p</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span>  <span class="c1"># This will be retrieved by the original query</span>
 <span class="gp">... </span>        <span class="n">p</span><span class="o">.</span><span class="n">last_name</span><span class="p">,</span>  <span class="c1"># This will be retrieved on demand</span>
@@ -159,8 +151,7 @@ fields that are omitted from the query will be loaded on demand. For example:</p
 <span class="gp">...</span>
 <span class="go">John Smith</span>
 <span class="go">Jane Jones</span>
-</pre></div>
-</div>
+</code></pre>
 <p>From outward appearances, this looks like the query has retrieved both
 the first name and last name. However, this example actually issued 3
 queries. Only the first names were retrieved by the <code class="docutils literal notranslate"><span class="pre">raw()</span></code> query – the
@@ -176,15 +167,14 @@ you forget to include the primary key.</p>
 <p>You can also execute queries containing fields that aren’t defined on the
 model. For example, we could use <a class="reference external" href="https://www.postgresql.org/docs/current/functions-datetime.html">PostgreSQL’s age() function</a> to get a list
 of people with their ages calculated by the database:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT *, age(birth_date) AS age FROM myapp_person"</span><span class="p">)</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT *, age(birth_date) AS age FROM myapp_person"</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> is </span><span class="si">%s</span><span class="s2">."</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
 <span class="gp">...</span>
 <span class="go">John is 37.</span>
 <span class="go">Jane is 42.</span>
 <span class="go">...</span>
-</pre></div>
-</div>
+</code></pre>
 <p>You can often avoid using raw SQL to compute annotations by instead using a
 <a class="reference internal" href="../../ref/models/expressions.html#func-expressions"><span class="std std-ref">Func() expression</span></a>.</p>
 </section>
@@ -192,10 +182,9 @@ of people with their ages calculated by the database:</p>
 <span id="passing-parameters-into-raw"></span><h3>Passing parameters into <code class="docutils literal notranslate"><span class="pre">raw()</span></code></h3>
 <p>If you need to perform parameterized queries, you can use the <code class="docutils literal notranslate"><span class="pre">params</span></code>
 argument to <code class="docutils literal notranslate"><span class="pre">raw()</span></code>:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lname</span> <span class="o">=</span> <span class="s2">"Doe"</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lname</span> <span class="o">=</span> <span class="s2">"Doe"</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="s2">"SELECT * FROM myapp_person WHERE last_name = </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="p">[</span><span class="n">lname</span><span class="p">])</span>
-</pre></div>
-</div>
+</code></pre>
 <p><code class="docutils literal notranslate"><span class="pre">params</span></code> is a list or dictionary of parameters. You’ll use <code class="docutils literal notranslate"><span class="pre">%s</span></code>
 placeholders in the query string for a list, or <code class="docutils literal notranslate"><span class="pre">%(key)s</span></code>
 placeholders for a dictionary (where <code class="docutils literal notranslate"><span class="pre">key</span></code> is replaced by a
@@ -211,15 +200,13 @@ this backend, you must pass parameters as a list.</p>
 <p><strong>Do not use string formatting on raw queries or quote placeholders in your
 SQL strings!</strong></p>
 <p>It’s tempting to write the above query as:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="s2">"SELECT * FROM myapp_person WHERE last_name = </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">lname</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="s2">"SELECT * FROM myapp_person WHERE last_name = </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">lname</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-</pre></div>
-</div>
+</code></pre>
 <p>You might also think you should write your query like this (with quotes
 around <code class="docutils literal notranslate"><span class="pre">%s</span></code>):</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="s2">"SELECT * FROM myapp_person WHERE last_name = '</span><span class="si">%s</span><span class="s2">'"</span>
-</pre></div>
-</div>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="s2">"SELECT * FROM myapp_person WHERE last_name = '</span><span class="si">%s</span><span class="s2">'"</span>
+</code></pre>
 <p><strong>Don’t make either of these mistakes.</strong></p>
 <p>As discussed in <a class="reference internal" href="../security.html#sql-injection-protection"><span class="std std-ref">SQL injection protection</span></a>, using the <code class="docutils literal notranslate"><span class="pre">params</span></code>
 argument and leaving the placeholders unquoted protects you from <a class="reference external" href="https://en.wikipedia.org/wiki/SQL_injection">SQL
@@ -242,7 +229,7 @@ get a cursor object. Then, call <code class="docutils literal notranslate"><span
 the SQL and <code class="docutils literal notranslate"><span class="pre">cursor.fetchone()</span></code> or <code class="docutils literal notranslate"><span class="pre">cursor.fetchall()</span></code> to return the
 resulting rows.</p>
 <p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">connection</span>
+<pre><code class="language-python"><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">connection</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">my_custom_sql</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -252,46 +239,42 @@ resulting rows.</p>
         <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">row</span>
-</pre></div>
-</div>
+</code></pre>
 <p>To protect against SQL injection, you must not include quotes around the <code class="docutils literal notranslate"><span class="pre">%s</span></code>
 placeholders in the SQL string.</p>
 <p>Note that if you want to include literal percent signs in the query, you have
 to double them in the case you are passing parameters:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT foo FROM bar WHERE baz = '30%'"</span><span class="p">)</span>
+<pre><code class="language-python"><span></span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT foo FROM bar WHERE baz = '30%'"</span><span class="p">)</span>
 <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT foo FROM bar WHERE baz = '30</span><span class="si">%%</span><span class="s2">' AND id = </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
-</pre></div>
-</div>
+</code></pre>
 <p>If you are using <a class="reference internal" href="multi-db.html"><span class="doc">more than one database</span></a>, you can
 use <code class="docutils literal notranslate"><span class="pre">django.db.connections</span></code> to obtain the connection (and cursor) for a
 specific database. <code class="docutils literal notranslate"><span class="pre">django.db.connections</span></code> is a dictionary-like
 object that allows you to retrieve a specific connection using its
 alias:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">connections</span>
+<pre><code class="language-python"><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">connections</span>
 
 <span class="k">with</span> <span class="n">connections</span><span class="p">[</span><span class="s2">"my_db_alias"</span><span class="p">]</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
     <span class="c1"># Your code here</span>
     <span class="o">...</span>
-</pre></div>
-</div>
+</code></pre>
 <p>By default, the Python DB API will return results without their field names,
 which means you end up with a <code class="docutils literal notranslate"><span class="pre">list</span></code> of values, rather than a <code class="docutils literal notranslate"><span class="pre">dict</span></code>. At a
 small performance and memory cost, you can return results as a <code class="docutils literal notranslate"><span class="pre">dict</span></code> by
 using something like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dictfetchall</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
+<pre><code class="language-python"><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dictfetchall</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Return all rows from a cursor as a dict.</span>
 <span class="sd">    Assume the column names are unique.</span>
 <span class="sd">    """</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
-</pre></div>
-</div>
+</code></pre>
 <p>Another option is to use <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.namedtuple" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">collections.namedtuple()</span></code></a> from the Python
 standard library. A <code class="docutils literal notranslate"><span class="pre">namedtuple</span></code> is a tuple-like object that has fields
 accessible by attribute lookup; it’s also indexable and iterable. Results are
 immutable and accessible by field names or indices, which might be useful:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+<pre><code class="language-python"><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">namedtuplefetchall</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
@@ -302,12 +285,11 @@ immutable and accessible by field names or indices, which might be useful:</p>
     <span class="n">desc</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">description</span>
     <span class="n">nt_result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">"Result"</span><span class="p">,</span> <span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">])</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">nt_result</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
-</pre></div>
-</div>
+</code></pre>
 <p>The <code class="docutils literal notranslate"><span class="pre">dictfetchall()</span></code> and <code class="docutils literal notranslate"><span class="pre">namedtuplefetchall()</span></code> examples assume unique
 column names, since a cursor cannot distinguish columns from different tables.</p>
 <p>Here is an example of the difference between the three:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT id, parent_id FROM test LIMIT 2"</span><span class="p">)</span>
+<pre><code class="language-python"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT id, parent_id FROM test LIMIT 2"</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 <span class="go">((54360982, None), (54360880, None))</span>
 
@@ -323,8 +305,7 @@ column names, since a cursor cannot distinguish columns from different tables.</
 <span class="go">54360982</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="go">54360982</span>
-</pre></div>
-</div>
+</code></pre>
 <section id="s-connections-and-cursors">
 <span id="connections-and-cursors"></span><h3>Connections and cursors</h3>
 <p><code class="docutils literal notranslate"><span class="pre">connection</span></code> and <code class="docutils literal notranslate"><span class="pre">cursor</span></code> mostly implement the standard Python DB-API
@@ -337,18 +318,16 @@ database library will automatically escape your parameters as necessary.</p>
 placeholder, which is used by the SQLite Python bindings. This is for the sake
 of consistency and sanity.</p>
 <p>Using a cursor as a context manager:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+<pre><code class="language-python"><span></span><span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
+</code></pre>
 <p>is equivalent to:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<pre><code class="language-python"><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="k">finally</span><span class="p">:</span>
     <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
+</code></pre>
 <section id="s-calling-stored-procedures">
 <span id="calling-stored-procedures"></span><h4>Calling stored procedures</h4>
 <dl class="py method">
@@ -359,7 +338,7 @@ of consistency and sanity.</p>
 provided. Most databases don’t support <code class="docutils literal notranslate"><span class="pre">kparams</span></code>. Of Django’s built-in
 backends, only Oracle supports it.</p>
 <p>For example, given this stored procedure in an Oracle database:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="ss">"TEST_PROCEDURE"</span><span class="p">(</span><span class="n">v_i</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="n">v_text</span><span class="w"> </span><span class="n">NVARCHAR2</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span>
+<pre><code class="language-sql"><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="ss">"TEST_PROCEDURE"</span><span class="p">(</span><span class="n">v_i</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="n">v_text</span><span class="w"> </span><span class="n">NVARCHAR2</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span>
 <span class="w">    </span><span class="n">p_i</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">;</span>
 <span class="w">    </span><span class="n">p_text</span><span class="w"> </span><span class="n">NVARCHAR2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 <span class="k">BEGIN</span>
@@ -367,13 +346,11 @@ backends, only Oracle supports it.</p>
 <span class="w">    </span><span class="n">p_text</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">v_text</span><span class="p">;</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="k">END</span><span class="p">;</span>
-</pre></div>
-</div>
+</code></pre>
 <p>This will call it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<pre><code class="language-python"><span></span><span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
     <span class="n">cursor</span><span class="o">.</span><span class="n">callproc</span><span class="p">(</span><span class="s2">"test_procedure"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"test"</span><span class="p">])</span>
-</pre></div>
-</div>
+</code></pre>
 </dd></dl>
 </section>
 </section>
