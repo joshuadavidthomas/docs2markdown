@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pytest
+from syrupy.extensions.base import AbstractSyrupyExtension
 from syrupy.extensions.single_file import SingleFileSnapshotExtension
 from syrupy.extensions.single_file import WriteMode
 from typing_extensions import override
@@ -68,11 +69,36 @@ class MarkdownSnapshotExtension(Docs2MdSnapshotExtension):
     file_extension = "md"
 
 
+class SnapshotWithGoal:
+    def __init__(self, snapshot_ext: AbstractSyrupyExtension):
+        self.snapshot = snapshot_ext
+
+    def __eq__(self, other):
+        result = self.snapshot.__eq__(other)
+
+        snapshot_location = self.snapshot.extension_class.get_location(
+            test_location=self.snapshot.test_location, index=0
+        )
+        ext = self.snapshot.extension_class.file_extension
+        goal_file = Path(str(snapshot_location).replace(f".{ext}", f".GOAL.{ext}"))
+
+        if goal_file.exists():
+            goal = goal_file.read_text()
+            assert other != goal, f"Output matches GOAL! Delete {goal_file.name}"
+
+        return result
+
+    def __getattr__(self, name):
+        return getattr(self.snapshot, name)
+
+
 @pytest.fixture
 def snapshot_html(snapshot):
-    return snapshot.use_extension(HtmlSnapshotExtension)
+    extension = snapshot.use_extension(HtmlSnapshotExtension)
+    return SnapshotWithGoal(extension)
 
 
 @pytest.fixture
 def snapshot_md(snapshot):
-    return snapshot.use_extension(MarkdownSnapshotExtension)
+    extention = snapshot.use_extension(MarkdownSnapshotExtension)
+    return SnapshotWithGoal(extention)
