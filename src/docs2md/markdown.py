@@ -1,8 +1,14 @@
 from __future__ import annotations
 
 import re
+from typing import final
 
 from bs4 import Tag
+from markdownify import MarkdownConverter
+
+
+def md(html: str):
+    return Docs2MdConverter().convert(html)
 
 
 def extract_language(el: Tag):
@@ -50,3 +56,12 @@ def normalize_whitespace(text: str):
     if text:
         return re.sub(r"\s+", " ", text.strip())
     return text
+
+
+class Docs2MdConverter(MarkdownConverter):
+    @final
+    class Options:
+        bs4_options = "lxml"
+        bullets = "-"
+        code_language_callback = extract_language
+        heading_style = "ATX"

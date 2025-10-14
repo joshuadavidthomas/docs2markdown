@@ -1,10 +1,23 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 from bs4 import BeautifulSoup
 
 from docs2md.markdown import extract_language
+from docs2md.markdown import md
 from docs2md.markdown import normalize_whitespace
+
+
+@pytest.fixture
+def doc():
+    fixtures_dir = Path(__file__).parent / "fixtures"
+    yield from fixtures_dir.iterdir()
+
+
+def test_md(doc, snapshot):
+    assert md(doc.read_text()) == snapshot
 
 
 @pytest.mark.parametrize(
