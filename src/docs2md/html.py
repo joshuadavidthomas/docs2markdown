@@ -4,6 +4,7 @@ from enum import Enum
 
 from bs4 import BeautifulSoup
 from bs4 import Tag
+from typing_extensions import override
 
 DEFAULT_CONTENT_SELECTORS = [
     "article#docs-content",
@@ -14,25 +15,6 @@ DEFAULT_CONTENT_SELECTORS = [
 ]
 DEFAULT_CONTENT_MIN_LEN = 100
 
-DEFAULT_GENERIC_CHROME_SELECTORS = [
-    "head",
-    "nav",
-    ".nav",
-    "header",
-    "footer",
-    "#ft",
-    "aside",
-    "script",
-    "style",
-    "noscript",
-    "[role='navigation']",
-    "[role='banner']",
-    ".sidebar",
-    "#sidebar",
-    "#global-nav",
-    ".toc",
-]
-
 
 class BaseHtmlPreprocessor:
     def __init__(
@@ -41,16 +23,33 @@ class BaseHtmlPreprocessor:
         *,
         content_selectors: list[str] | None = None,
         content_min_len: int | None = None,
-        generic_chrome_selectors: list[str] | None = None,
     ) -> None:
         self.soup: BeautifulSoup = BeautifulSoup(html, "lxml")
         self.content_selectors: list[str] = (
             content_selectors or DEFAULT_CONTENT_SELECTORS
         )
         self.content_min_len: int = content_min_len or DEFAULT_CONTENT_MIN_LEN
-        self.generic_chrome_selectors: list[str] = (
-            generic_chrome_selectors or DEFAULT_GENERIC_CHROME_SELECTORS
-        )
+        self.generic_chrome_selectors: list[str] = self.get_generic_chrome_selectors()
+
+    def get_generic_chrome_selectors(self) -> list[str]:
+        return [
+            "head",
+            "nav",
+            ".nav",
+            "header",
+            "footer",
+            "#ft",
+            "aside",
+            "script",
+            "style",
+            "noscript",
+            "[role='navigation']",
+            "[role='banner']",
+            ".sidebar",
+            "#sidebar",
+            "#global-nav",
+            ".toc",
+        ]
 
     def process(self) -> str:
         content = self.soup.body or self.soup
@@ -137,6 +136,20 @@ def get_language_from_class(class_name: str) -> str:
 
 
 class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
+    @override
+    def get_generic_chrome_selectors(self) -> list[str]:
+        base_selectors = super().get_generic_chrome_selectors()
+        sphinx_selectors = [
+            ".sphinxsidebar",
+            ".related",
+            ".rst-versions",
+            "[aria-label='breadcrumb']",
+            "ul[aria-label='Languages']",
+            "ul[aria-label='Versions']",
+            "#hd",
+        ]
+        return base_selectors + sphinx_selectors
+
     def process_a(self, tag: Tag) -> None:
         if tag.has_attr("title"):
             del tag["title"]
