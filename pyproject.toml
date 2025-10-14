@@ -35,6 +35,11 @@ version = "0.1.0"
 [project.scripts]
 docs2md = "docs2md.cli:app"
 
+[project.urls]
+Documentation = "https://github.com/joshuadavidthomas/docs2md#README"
+Issues = "https://github.com/joshuadavidthomas/docs2md/issues"
+Source = "https://github.com/joshuadavidthomas/docs2md"
+
 [tool.bumpver]
 commit = true
 commit_message = ":bookmark: bump version {old_version} -> {new_version}"
