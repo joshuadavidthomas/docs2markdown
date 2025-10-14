@@ -17,10 +17,26 @@ if TYPE_CHECKING:
 
 
 def pytest_generate_tests(metafunc):
-    if "doc_file" in metafunc.fixturenames:
-        fixtures_dir = Path(metafunc.module.__file__).parent / "fixtures"
+    if "doc_file" not in metafunc.fixturenames:
+        return
+
+    fixtures_dir = Path(metafunc.module.__file__).parent / "fixtures"
+
+    marker = metafunc.definition.get_closest_marker("fixture_tags")
+
+    if marker:
+        tags = marker.args[0] if marker.args else []
+        doc_files = []
+        for tag in tags:
+            doc_files.extend(sorted((fixtures_dir / tag).glob("*.html")))
+    else:
         doc_files = sorted(fixtures_dir.glob("*.html"))
-        metafunc.parametrize("doc_file", doc_files, ids=[f.stem for f in doc_files])
+        for subdir in sorted(fixtures_dir.iterdir()):
+            if subdir.is_dir():
+                doc_files.extend(sorted(subdir.glob("*.html")))
+
+    ids = [f.stem for f in doc_files]
+    metafunc.parametrize("doc_file", doc_files, ids=ids)
 
 
 class Docs2MdSnapshotExtension(SingleFileSnapshotExtension):

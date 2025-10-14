@@ -103,6 +103,9 @@ module = [
 
 [tool.pytest.ini_options]
 addopts = "-n auto --dist loadfile --doctest-modules"
+markers = [
+    "fixture_tags",
+]
 norecursedirs = ".* bin build dist *.egg htmlcov logs node_modules templates venv"
 python_files = "tests.py test_*.py *_tests.py"
 pythonpath = ["src", "."]

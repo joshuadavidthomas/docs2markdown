@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from bs4 import BeautifulSoup
+from bs4 import Tag
 
 DEFAULT_CONTENT_SELECTORS = [
     "article#docs-content",
@@ -74,3 +75,9 @@ class BaseHtmlPreprocessor:
                 method(element)
 
         return str(content)
+
+
+class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
+    def process_a(self, tag: Tag) -> None:
+        if "headerlink" in tag.get("class", []):
+            tag.decompose()
