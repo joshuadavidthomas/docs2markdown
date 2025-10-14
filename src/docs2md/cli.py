@@ -34,7 +34,7 @@ def convert(
         ),
     ],
 ) -> None:
-    """Convert HTML documentation to markdown.
+    """Convert HTML documentation to GitHub-flavored Markdown.
 
     ## Examples
 
