@@ -6,7 +6,7 @@
 <div id="yui-main">
 <div class="yui-b">
 <div class="yui-g" id="topics-db-sql">
-<section id="s-performing-raw-sql-queries">
+<section><span data-markdownify-raw="" id="s-performing-raw-sql-queries"></span>
 <h1>Performing raw SQL queries</h1>
 <p>Django gives you two ways of performing raw SQL queries: you can use
 <a class="reference internal" href="#django.db.models.Manager.raw"><code>Manager.raw()</code></a> to <a class="reference internal" href="#performing-raw-queries">perform raw queries and return model instances</a>, or
@@ -31,7 +31,7 @@ it, you should properly escape any parameters that the user can control
 by using <code>params</code> in order to protect against SQL injection attacks.
 Please read more about <a class="reference internal" href="../security.html#sql-injection-protection">SQL injection protection</a>.</p>
 </blockquote>
-<section id="s-performing-raw-queries">
+<section><span data-markdownify-raw="" id="s-performing-raw-queries"></span>
 <span data-markdownify-raw="" id="s-executing-raw-queries"></span><span data-markdownify-raw="" id="executing-raw-queries"></span><h2>Performing raw queries</h2>
 <p>The <code>raw()</code> manager method can be used to perform raw SQL queries that
 return model instances:</p>
@@ -88,7 +88,7 @@ For example, if your table contains the values <code>'abc'</code>, <code>'def'</
 query for <code>WHERE mycolumn=0</code>, both rows will match. To prevent this,
 perform the correct typecasting before using the value in a query.</p>
 </blockquote>
-<section id="s-mapping-query-fields-to-model-fields">
+<section><span data-markdownify-raw="" id="s-mapping-query-fields-to-model-fields"></span>
 <h3>Mapping query fields to model fields</h3>
 <p><code>raw()</code> automatically maps fields in the query to fields on the model.</p>
 <p>The order of fields in your query doesn’t matter. In other words, both
@@ -118,7 +118,7 @@ query could also be written:</p>
 &gt;&gt;&gt; Person.objects.raw("SELECT * FROM some_other_table", translations=name_map)
 </code></pre>
 </section>
-<section id="s-index-lookups">
+<section><span data-markdownify-raw="" id="s-index-lookups"></span>
 <h3>Index lookups</h3>
 <p><code>raw()</code> supports indexing, so if you need only the first result you can
 write:</p>
@@ -130,7 +130,7 @@ efficient to limit the query at the SQL level:</p>
 <pre><code class="language-python">&gt;&gt;&gt; first_person = Person.objects.raw("SELECT * FROM myapp_person LIMIT 1")[0]
 </code></pre>
 </section>
-<section id="s-deferring-model-fields">
+<section><span data-markdownify-raw="" id="s-deferring-model-fields"></span>
 <h3>Deferring model fields</h3>
 <p>Fields may also be left out:</p>
 <pre><code class="language-python">&gt;&gt;&gt; people = Person.objects.raw("SELECT id, first_name FROM myapp_person")
@@ -157,7 +157,7 @@ must always be included in a raw query. A
 <a class="reference internal" href="../../ref/exceptions.html#django.core.exceptions.FieldDoesNotExist"><code>FieldDoesNotExist</code></a> exception will be raised if
 you forget to include the primary key.</p>
 </section>
-<section id="s-adding-annotations">
+<section><span data-markdownify-raw="" id="s-adding-annotations"></span>
 <h3>Adding annotations</h3>
 <p>You can also execute queries containing fields that aren’t defined on the
 model. For example, we could use <a class="reference external" href="https://www.postgresql.org/docs/current/functions-datetime.html">PostgreSQL’s age() function</a> to get a list
@@ -173,8 +173,8 @@ Jane is 42.
 <p>You can often avoid using raw SQL to compute annotations by instead using a
 <a class="reference internal" href="../../ref/models/expressions.html#func-expressions">Func() expression</a>.</p>
 </section>
-<section id="s-passing-parameters-into-raw">
-<span data-markdownify-raw="" id="passing-parameters-into-raw"></span><h3>Passing parameters into <code>raw()</code></h3>
+<section><span data-markdownify-raw="" id="s-passing-parameters-into-raw"></span>
+<h3>Passing parameters into <code>raw()</code></h3>
 <p>If you need to perform parameterized queries, you can use the <code>params</code>
 argument to <code>raw()</code>:</p>
 <pre><code class="language-python">&gt;&gt;&gt; lname = "Doe"
@@ -211,7 +211,7 @@ placeholder, you’re at risk for SQL injection.</p>
 </blockquote>
 </section>
 </section>
-<section id="s-executing-custom-sql-directly">
+<section><span data-markdownify-raw="" id="s-executing-custom-sql-directly"></span>
 <span data-markdownify-raw="" id="s-executing-custom-sql"></span><span data-markdownify-raw="" id="executing-custom-sql"></span><h2>Executing custom SQL directly</h2>
 <p>Sometimes even <a class="reference internal" href="#django.db.models.Manager.raw"><code>Manager.raw()</code></a> isn’t quite enough: you might need to
 perform queries that don’t map cleanly to models, or directly execute
@@ -301,7 +301,7 @@ column names, since a cursor cannot distinguish columns from different tables.</
 &gt;&gt;&gt; results[0][0]
 54360982
 </code></pre>
-<section id="s-connections-and-cursors">
+<section><span data-markdownify-raw="" id="s-connections-and-cursors"></span>
 <h3>Connections and cursors</h3>
 <p><code>connection</code> and <code>cursor</code> mostly implement the standard Python DB-API
 described in <span class="target" data-markdownify-raw="" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0249/"><strong>PEP 249</strong></a> — except when it comes to <a class="reference internal" href="transactions.html">transaction handling</a>.</p>
@@ -323,7 +323,7 @@ try:
 finally:
     c.close()
 </code></pre>
-<section id="s-calling-stored-procedures">
+<section><span data-markdownify-raw="" id="s-calling-stored-procedures"></span>
 <h4>Calling stored procedures</h4>
 <dl data-markdownify-raw="">
 <dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname,params=None,kparams=None)</code></dt>

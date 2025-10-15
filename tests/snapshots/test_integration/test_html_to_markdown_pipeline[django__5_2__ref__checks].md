@@ -1,10 +1,16 @@
+<span id="s-system-check-framework"></span>
+
 # System check framework
 
 The system check framework is a set of static checks for validating Django projects. It detects common problems and provides hints for how to fix them. The framework is extensible so you can easily add your own checks.
 
 For details on how to add your own checks and integrate them with Django’s system checks, see the [System check topic guide](../topics/checks.md).
 
+<span id="s-api-reference"></span>
+
 ## API reference
+
+<span id="s-checkmessage"></span>
 
 ### `CheckMessage`
 
@@ -76,6 +82,7 @@ There are subclasses to make creating messages with common levels easier. When u
 </dd>
 </dl>
 
+<span id="s-builtin-tags"></span>
 <span id="s-system-check-builtin-tags"></span><span id="system-check-builtin-tags"></span>
 
 ## Builtin tags
@@ -100,7 +107,11 @@ Django’s system checks are organized using the following tags:
 
 Some checks may be registered with multiple tags.
 
+<span id="s-core-system-checks"></span>
+
 ## Core system checks
+
+<span id="s-asynchronous-support"></span>
 
 ### Asynchronous support
 
@@ -108,12 +119,16 @@ The following checks verify your setup for [Asynchronous support](../topics/asyn
 
 - **async.E001**: You should not set the <span class="target" id="index-0"></span>[`DJANGO_ALLOW_ASYNC_UNSAFE`](../topics/async.md#envvar-DJANGO_ALLOW_ASYNC_UNSAFE) environment variable in deployment. This disables [async safety protection](../topics/async.md#async-safety).
 
+<span id="s-backwards-compatibility"></span>
+
 ### Backwards compatibility
 
 Compatibility checks warn of potential problems that might occur after upgrading Django.
 
 - **2\_0.W001**: Your URL pattern `<pattern>` has a `route` that contains `(?P<`, begins with a `^`, or ends with a `$`. This was likely an oversight when migrating from `url()` to [`path()`](urls.md#django.urls.path).
 - **4\_0.E001**: As of Django 4.0, the values in the [`CSRF_TRUSTED_ORIGINS`](settings.md#std-setting-CSRF_TRUSTED_ORIGINS) setting must start with a scheme (usually `http://` or `https://`) but found `<hostname>`.
+
+<span id="s-caches"></span>
 
 ### Caches
 
@@ -123,7 +138,11 @@ The following checks verify that your [`CACHES`](settings.md#std-setting-CACHES)
 - **caches.W002**: Your `<cache>` configuration might expose your cache or lead to corruption of your data because its [`LOCATION`](settings.md#std-setting-CACHES-LOCATION) matches/is inside/contains [`MEDIA_ROOT`](settings.md#std-setting-MEDIA_ROOT)/[`STATIC_ROOT`](settings.md#std-setting-STATIC_ROOT)/[`STATICFILES_DIRS`](settings.md#std-setting-STATICFILES_DIRS).
 - **caches.W003**: Your `<cache>` cache [`LOCATION`](settings.md#std-setting-CACHES-LOCATION) is relative. Use an absolute path instead.
 
+<span id="s-database"></span>
+
 ### Database
+
+<span id="s-mysql-and-mariadb"></span>
 
 #### MySQL and MariaDB
 
@@ -133,11 +152,15 @@ If you’re using MySQL or MariaDB, the following checks will be performed:
 - **mysql.W002**: MySQL/MariaDB Strict Mode is not set for database connection `<alias>`. See also [Setting sql\_mode](databases.md#mysql-sql-mode).
 - **mysql.W003**: MySQL/MariaDB may not allow unique `CharField`s to have a `max_length` > 255.
 
+<span id="s-managing-files"></span>
+
 ### Managing files
 
 The following checks verify your setup for [Managing files](../topics/files.md):
 
 - **files.E001**: The [`FILE_UPLOAD_TEMP_DIR`](settings.md#std-setting-FILE_UPLOAD_TEMP_DIR) setting refers to the nonexistent directory `<path>`.
+
+<span id="s-model-fields"></span>
 
 ### Model fields
 
@@ -194,12 +217,16 @@ The following checks verify your setup for [Managing files](../topics/files.md):
 - **fields.W907**: `django.contrib.postgres.fields.CITextField` is deprecated. Support for it (except in historical migrations) will be removed in Django 5.1. *This check appeared in Django 4.2 and 5.0*.
 - **fields.E907**: `django.contrib.postgres.fields.CITextField` is removed except for support for historical migrations.
 
+<span id="s-file-fields"></span>
+
 #### File fields
 
 - **fields.E200**: `unique` is not a valid argument for a `FileField`. *This check is removed in Django 1.11*.
 - **fields.E201**: `primary_key` is not a valid argument for a `FileField`.
 - **fields.E202**: `FileField`’s `upload_to` argument must be a relative path, not an absolute path.
 - **fields.E210**: Cannot use `ImageField` because Pillow is not installed.
+
+<span id="s-related-fields"></span>
 
 #### Related fields
 
@@ -237,6 +264,8 @@ The following checks verify your setup for [Managing files](../topics/files.md):
 - **fields.W345**: `related_name` has no effect on `ManyToManyField` with a symmetrical relationship, e.g. to “self”.
 - **fields.W346**: `db_comment` has no effect on `ManyToManyField`.
 - **fields.E347**: Field defines a relation involving model `<model>` which has a `CompositePrimaryKey` and such relations are not supported.
+
+<span id="s-models"></span>
 
 ### Models
 
@@ -290,11 +319,15 @@ The following checks verify your setup for [Managing files](../topics/files.md):
 - **models.W047**: `<database>` does not support unique constraints with nulls distinct.
 - **models.E048**: `constraints/indexes/unique_together` refers to a `CompositePrimaryKey` `<field name>`, but `CompositePrimaryKey`s are not supported for that option.
 
+<span id="s-management-commands"></span>
+
 ### Management Commands
 
 The following checks verify custom management commands are correctly configured:
 
 - **commands.E001**: The `migrate` and `makemigrations` commands must have the same `autodetector`.
+
+<span id="s-security"></span>
 
 ### Security
 
@@ -336,9 +369,13 @@ The following checks verify that your security-related settings are correctly co
 - **security.E101**: The CSRF failure view `'path.to.view'` does not take the correct number of arguments.
 - **security.E102**: The CSRF failure view `'path.to.view'` could not be imported.
 
+<span id="s-signals"></span>
+
 ### Signals
 
 - **signals.E001**: `<handler>` was connected to the `<signal>` signal with a lazy reference to the sender `<app label>.<model>`, but app `<app label>` isn’t installed or doesn’t provide model `<model>`.
+
+<span id="s-templates"></span>
 
 ### Templates
 
@@ -349,6 +386,8 @@ The following checks verify that your [`TEMPLATES`](settings.md#std-setting-TEMP
 - **templates.E003**:`<name>` is used for multiple template tag modules: `<module list>`. *This check was changed to* `templates.W003` *in Django 4.1.2*.
 - **templates.W003**:`<name>` is used for multiple template tag modules: `<module list>`.
 
+<span id="s-translation"></span>
+
 ### Translation
 
 The following checks are performed on your translation configuration:
@@ -357,6 +396,8 @@ The following checks are performed on your translation configuration:
 - **translation.E002**: You have provided an invalid language code in the [`LANGUAGES`](settings.md#std-setting-LANGUAGES) setting: `<value>`.
 - **translation.E003**: You have provided an invalid language code in the [`LANGUAGES_BIDI`](settings.md#std-setting-LANGUAGES_BIDI) setting: `<value>`.
 - **translation.E004**: You have provided a value for the [`LANGUAGE_CODE`](settings.md#std-setting-LANGUAGE_CODE) setting that is not in the [`LANGUAGES`](settings.md#std-setting-LANGUAGES) setting.
+
+<span id="s-urls"></span>
 
 ### URLs
 
@@ -373,9 +414,11 @@ The following checks are performed on your URL configuration:
 - **urls.E009**: Your URL pattern `<pattern>` has an invalid view, pass `<view>.as_view()` instead of `<view>`.
 - **urls.W010**: Your URL pattern `<pattern>` has an unmatched `<angle bracket>`.
 
-<span id="contrib-app-checks"></span>
+<span id="s-contrib-app-checks"></span>
 
 ## `contrib` app checks
+
+<span id="s-admin"></span>
 
 ### `admin`
 
@@ -424,6 +467,8 @@ The following checks are performed on any [`ModelAdmin`](contrib/admin/index.md#
 - **admin.E039**: An admin for model `<model>` has to be registered to be referenced by `<modeladmin>.autocomplete_fields`.
 - **admin.E040**: `<modeladmin>` must define `search_fields`, because it’s referenced by `<other_modeladmin>.autocomplete_fields`.
 
+<span id="s-modeladmin"></span>
+
 #### `ModelAdmin`
 
 The following checks are performed on any [`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin) that is registered with the admin site:
@@ -459,6 +504,8 @@ The following checks are performed on any [`ModelAdmin`](contrib/admin/index.md#
 - **admin.E129**: `<modeladmin>` must define a `has_<foo>_permission()` method for the `<action>` action.
 - **admin.E130**: `__name__` attributes of actions defined in `<modeladmin>` must be unique. Name `<name>` is not unique.
 
+<span id="s-inlinemodeladmin"></span>
+
 #### `InlineModelAdmin`
 
 The following checks are performed on any [`InlineModelAdmin`](contrib/admin/index.md#django.contrib.admin.InlineModelAdmin) that is registered as an inline on a [`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin).
@@ -470,6 +517,8 @@ The following checks are performed on any [`InlineModelAdmin`](contrib/admin/ind
 - **admin.E205**: The value of `min_num` must be an integer.
 - **admin.E206**: The value of `formset` must inherit from `BaseModelFormSet`.
 
+<span id="s-genericinlinemodeladmin"></span>
+
 #### `GenericInlineModelAdmin`
 
 The following checks are performed on any [`GenericInlineModelAdmin`](contrib/contenttypes.md#django.contrib.contenttypes.admin.GenericInlineModelAdmin) that is registered as an inline on a [`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin).
@@ -478,6 +527,8 @@ The following checks are performed on any [`GenericInlineModelAdmin`](contrib/co
 - **admin.E302**: `'ct_field'` references `<label>`, which is not a field on `<model>`.
 - **admin.E303**: `'ct_fk_field'` references `<label>`, which is not a field on `<model>`.
 - **admin.E304**: `<model>` has no `GenericForeignKey` using content type field `<field name>` and object ID field `<field name>`.
+
+<span id="s-adminsite"></span>
 
 #### `AdminSite`
 
@@ -493,6 +544,8 @@ The following checks are performed on the default [`AdminSite`](contrib/admin/in
 - **admin.E409**: [`django.contrib.messages.middleware.MessageMiddleware`](middleware.md#django.contrib.messages.middleware.MessageMiddleware) must be in [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE) in order to use the admin application.
 - **admin.E410**: [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.md#django.contrib.sessions.middleware.SessionMiddleware) must be in [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE) in order to use the admin application.
 - **admin.W411**: `django.template.context_processors.request` must be enabled in [`DjangoTemplates`](../topics/templates.md#django.template.backends.django.DjangoTemplates) ([`TEMPLATES`](settings.md#std-setting-TEMPLATES)) in order to use the admin navigation sidebar.
+
+<span id="s-auth"></span>
 
 ### `auth`
 
@@ -510,6 +563,8 @@ The following checks are performed on the default [`AdminSite`](contrib/admin/in
 - **auth.E012**: The permission codenamed `<codename>` of model `<model>` is longer than 100 characters.
 - **auth.E013**: In order to use [`django.contrib.auth.middleware.LoginRequiredMiddleware`](middleware.md#django.contrib.auth.middleware.LoginRequiredMiddleware), [`django.contrib.auth.middleware.AuthenticationMiddleware`](middleware.md#django.contrib.auth.middleware.AuthenticationMiddleware) must be defined before it in MIDDLEWARE.
 
+<span id="s-contenttypes"></span>
+
 ### `contenttypes`
 
 The following checks are performed when a model contains a [`GenericForeignKey`](contrib/contenttypes.md#django.contrib.contenttypes.fields.GenericForeignKey) or [`GenericRelation`](contrib/contenttypes.md#django.contrib.contenttypes.fields.GenericRelation):
@@ -520,6 +575,8 @@ The following checks are performed when a model contains a [`GenericForeignKey`]
 - **contenttypes.E004**: `<field>` is not a `ForeignKey` to `contenttypes.ContentType`.
 - **contenttypes.E005**: Model names must be at most 100 characters.
 
+<span id="s-postgres"></span>
+
 ### `postgres`
 
 The following checks are performed on [`django.contrib.postgres`](contrib/postgres/index.md#module-django.contrib.postgres) model fields:
@@ -529,6 +586,7 @@ The following checks are performed on [`django.contrib.postgres`](contrib/postgr
 - **postgres.E003**: `<field>` default should be a callable instead of an instance so that it’s not shared between all field instances. *This check was changed to* `fields.E010` *in Django 3.1*.
 - **postgres.W004**: Base field for array has warnings: …
 
+<span id="s-sites"></span>
 <span id="s-sites-system-checks"></span><span id="sites-system-checks"></span>
 
 ### `sites`
@@ -541,6 +599,8 @@ The following checks are performed on any model using a [`CurrentSiteManager`](c
 The following checks verify that [`django.contrib.sites`](contrib/sites.md#module-django.contrib.sites) is correctly configured:
 
 - **sites.E101**: The [`SITE_ID`](settings.md#std-setting-SITE_ID) setting must be an integer.
+
+<span id="s-staticfiles"></span>
 
 ### `staticfiles`
 

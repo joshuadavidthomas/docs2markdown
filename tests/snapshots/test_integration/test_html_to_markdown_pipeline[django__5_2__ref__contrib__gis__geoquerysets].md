@@ -1,5 +1,8 @@
+<span id="s-gis-queryset-api-reference"></span>
+
 # GIS QuerySet API Reference
 
+<span id="s-spatial-lookups"></span>
 <span id="s-id1"></span><span id="id1"></span>
 
 ## Spatial Lookups
@@ -7,6 +10,8 @@
 The spatial lookups in this section are available for [`GeometryField`](model-api.md#django.contrib.gis.db.models.GeometryField) and [`RasterField`](model-api.md#django.contrib.gis.db.models.RasterField).
 
 For an introduction, see the [spatial lookups introduction](db-api.md#spatial-lookups-intro). For an overview of what lookups are compatible with a particular spatial backend, refer to the [spatial lookup compatibility table](db-api.md#spatial-lookup-compatibility).
+
+<span id="s-lookups-with-rasters"></span>
 
 ### Lookups with rasters
 
@@ -35,6 +40,7 @@ The examples below show the SQL equivalent for the lookups in the different type
 
 Spatial lookups with rasters are only supported for PostGIS backends (denominated as PGRaster in this section).
 
+<span id="s-bbcontains"></span>
 <span id="s-std-fieldlookup-bbcontains"></span><span id="std-fieldlookup-bbcontains"></span>
 
 ### `bbcontains`
@@ -56,6 +62,7 @@ Zipcode.objects.filter(poly__bbcontains=geom)
 | MySQL | `MBRContains(poly, geom)` |
 | SpatiaLite | `MbrContains(poly, geom)` |
 
+<span id="s-bboverlaps"></span>
 <span id="s-std-fieldlookup-bboverlaps"></span><span id="std-fieldlookup-bboverlaps"></span>
 
 ### `bboverlaps`
@@ -77,6 +84,7 @@ Zipcode.objects.filter(poly__bboverlaps=geom)
 | MySQL | `MBROverlaps(poly, geom)` |
 | SpatiaLite | `MbrOverlaps(poly, geom)` |
 
+<span id="s-contained"></span>
 <span id="s-std-fieldlookup-contained"></span><span id="std-fieldlookup-contained"></span>
 
 ### `contained`
@@ -98,6 +106,7 @@ Zipcode.objects.filter(poly__contained=geom)
 | MySQL | `MBRWithin(poly, geom)` |
 | SpatiaLite | `MbrWithin(poly, geom)` |
 
+<span id="s-contains"></span>
 <span id="s-std-fieldlookup-gis-contains"></span><span id="std-fieldlookup-gis-contains"></span>
 
 ### `contains`
@@ -120,6 +129,7 @@ Zipcode.objects.filter(poly__contains=geom)
 | MySQL | `ST_Contains(poly, geom)` |
 | SpatiaLite | `Contains(poly, geom)` |
 
+<span id="s-contains-properly"></span>
 <span id="s-std-fieldlookup-contains_properly"></span><span id="contains-properly"></span><span id="std-fieldlookup-contains_properly"></span>
 
 ### `contains_properly`
@@ -138,6 +148,7 @@ Zipcode.objects.filter(poly__contains_properly=geom)
 | --- | --- |
 | PostGIS | `ST_ContainsProperly(poly, geom)` |
 
+<span id="s-coveredby"></span>
 <span id="s-std-fieldlookup-coveredby"></span><span id="std-fieldlookup-coveredby"></span>
 
 ### `coveredby`
@@ -165,6 +176,7 @@ Zipcode.objects.filter(poly__coveredby=geom)
 >
 > MySQL support was added.
 
+<span id="s-covers"></span>
 <span id="s-std-fieldlookup-covers"></span><span id="std-fieldlookup-covers"></span>
 
 ### `covers`
@@ -192,6 +204,7 @@ Zipcode.objects.filter(poly__covers=geom)
 >
 > MySQL support was added.
 
+<span id="s-crosses"></span>
 <span id="s-std-fieldlookup-crosses"></span><span id="std-fieldlookup-crosses"></span>
 
 ### `crosses`
@@ -213,6 +226,7 @@ Zipcode.objects.filter(poly__crosses=geom)
 | MySQL | `ST_Crosses(poly, geom)` |
 | SpatiaLite | `Crosses(poly, geom)` |
 
+<span id="s-disjoint"></span>
 <span id="s-std-fieldlookup-disjoint"></span><span id="std-fieldlookup-disjoint"></span>
 
 ### `disjoint`
@@ -235,6 +249,7 @@ Zipcode.objects.filter(poly__disjoint=geom)
 | MySQL | `ST_Disjoint(poly, geom)` |
 | SpatiaLite | `Disjoint(poly, geom)` |
 
+<span id="s-equals"></span>
 <span id="s-std-fieldlookup-equals"></span><span id="std-fieldlookup-equals"></span>
 
 ### `equals`
@@ -257,6 +272,7 @@ Zipcode.objects.filter(poly__equals=geom)
 | MySQL | `ST_Equals(poly, geom)` |
 | SpatiaLite | `Equals(poly, geom)` |
 
+<span id="s-exact-same-as"></span>
 <span id="s-std-fieldlookup-same_as"></span><span id="s-std-fieldlookup-exact-noindex"></span><span id="exact-same-as"></span><span id="std-fieldlookup-same_as"></span><span id="std-fieldlookup-exact-noindex"></span>
 
 ### `exact`, `same_as`
@@ -279,6 +295,7 @@ Zipcode.objects.filter(poly=geom)
 | MySQL | `ST_Equals(poly, geom)` |
 | SpatiaLite | `Equals(poly, geom)` |
 
+<span id="s-intersects"></span>
 <span id="s-std-fieldlookup-intersects"></span><span id="std-fieldlookup-intersects"></span>
 
 ### `intersects`
@@ -301,6 +318,7 @@ Zipcode.objects.filter(poly__intersects=geom)
 | MySQL | `ST_Intersects(poly, geom)` |
 | SpatiaLite | `Intersects(poly, geom)` |
 
+<span id="s-isempty"></span>
 <span id="s-std-fieldlookup-isempty"></span><span id="std-fieldlookup-isempty"></span>
 
 ### `isempty`
@@ -315,6 +333,7 @@ Example:
 Zipcode.objects.filter(poly__isempty=True)
 ```
 
+<span id="s-isvalid"></span>
 <span id="s-std-fieldlookup-isvalid"></span><span id="std-fieldlookup-isvalid"></span>
 
 ### `isvalid`
@@ -334,6 +353,7 @@ Zipcode.objects.filter(poly__isvalid=True)
 | MySQL, PostGIS, SpatiaLite | `ST_IsValid(poly)` |
 | Oracle | `SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT(poly, 0.05) = 'TRUE'` |
 
+<span id="s-overlaps"></span>
 <span id="s-std-fieldlookup-overlaps"></span><span id="std-fieldlookup-overlaps"></span>
 
 ### `overlaps`
@@ -350,6 +370,7 @@ Tests if the geometry field spatially overlaps the lookup geometry.
 | MySQL | `ST_Overlaps(poly, geom)` |
 | SpatiaLite | `Overlaps(poly, geom)` |
 
+<span id="s-relate"></span>
 <span id="s-std-fieldlookup-relate"></span><span id="std-fieldlookup-relate"></span>
 
 ### `relate`
@@ -357,6 +378,8 @@ Tests if the geometry field spatially overlaps the lookup geometry.
 *Availability*: [PostGIS](https://postgis.net/docs/ST_Relate.md), MariaDB, Oracle, SpatiaLite, PGRaster (Conversion)
 
 Tests if the geometry field is spatially related to the lookup geometry by the values given in the given pattern. This lookup requires a tuple parameter, `(geom, pattern)`; the form of `pattern` will depend on the spatial backend:
+
+<span id="s-mariadb-postgis-and-spatialite"></span>
 
 #### MariaDB, PostGIS, and SpatiaLite
 
@@ -396,6 +419,8 @@ SELECT ... WHERE ST_Relate(poly, ST_Polygon(rast, 1), 'T*T***FF*')
 SELECT ... WHERE ST_Relate(ST_Polygon(rast, 2), ST_Polygon(rast, 1), 'T*T***FF*')
 ```
 
+<span id="s-oracle"></span>
+
 #### Oracle
 
 Here the relation pattern is comprised of at least one of the nine relation strings: `TOUCH`, `OVERLAPBDYDISJOINT`, `OVERLAPBDYINTERSECT`, `EQUAL`, `INSIDE`, `COVEREDBY`, `CONTAINS`, `COVERS`, `ON`, and `ANYINTERACT`. Multiple strings may be combined with the logical Boolean operator OR, for example, `'inside+touch'`. [[2]](#fnsdorelate) The relation strings are case-insensitive.
@@ -412,6 +437,7 @@ Oracle SQL equivalent:
 SELECT ... WHERE SDO_RELATE(poly, geom, 'anyinteract')
 ```
 
+<span id="s-touches"></span>
 <span id="s-std-fieldlookup-touches"></span><span id="std-fieldlookup-touches"></span>
 
 ### `touches`
@@ -434,6 +460,7 @@ Zipcode.objects.filter(poly__touches=geom)
 | Oracle | `SDO_TOUCH(poly, geom)` |
 | SpatiaLite | `Touches(poly, geom)` |
 
+<span id="s-within"></span>
 <span id="s-std-fieldlookup-within"></span><span id="std-fieldlookup-within"></span>
 
 ### `within`
@@ -456,6 +483,7 @@ Zipcode.objects.filter(poly__within=geom)
 | Oracle | `SDO_INSIDE(poly, geom)` |
 | SpatiaLite | `Within(poly, geom)` |
 
+<span id="s-left"></span>
 <span id="s-std-fieldlookup-left"></span><span id="std-fieldlookup-left"></span>
 
 ### `left`
@@ -476,6 +504,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly << geom
 ```
 
+<span id="s-right"></span>
 <span id="s-std-fieldlookup-right"></span><span id="std-fieldlookup-right"></span>
 
 ### `right`
@@ -496,6 +525,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly >> geom
 ```
 
+<span id="s-overlaps-left"></span>
 <span id="s-std-fieldlookup-overlaps_left"></span><span id="overlaps-left"></span><span id="std-fieldlookup-overlaps_left"></span>
 
 ### `overlaps_left`
@@ -516,6 +546,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly &< geom
 ```
 
+<span id="s-overlaps-right"></span>
 <span id="s-std-fieldlookup-overlaps_right"></span><span id="overlaps-right"></span><span id="std-fieldlookup-overlaps_right"></span>
 
 ### `overlaps_right`
@@ -536,6 +567,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly &> geom
 ```
 
+<span id="s-overlaps-above"></span>
 <span id="s-std-fieldlookup-overlaps_above"></span><span id="overlaps-above"></span><span id="std-fieldlookup-overlaps_above"></span>
 
 ### `overlaps_above`
@@ -556,6 +588,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly |&> geom
 ```
 
+<span id="s-overlaps-below"></span>
 <span id="s-std-fieldlookup-overlaps_below"></span><span id="overlaps-below"></span><span id="std-fieldlookup-overlaps_below"></span>
 
 ### `overlaps_below`
@@ -576,6 +609,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly &<| geom
 ```
 
+<span id="s-strictly-above"></span>
 <span id="s-std-fieldlookup-strictly_above"></span><span id="strictly-above"></span><span id="std-fieldlookup-strictly_above"></span>
 
 ### `strictly_above`
@@ -596,6 +630,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly |>> geom
 ```
 
+<span id="s-strictly-below"></span>
 <span id="s-std-fieldlookup-strictly_below"></span><span id="strictly-below"></span><span id="std-fieldlookup-strictly_below"></span>
 
 ### `strictly_below`
@@ -616,6 +651,7 @@ PostGIS equivalent:
 SELECT ... WHERE poly <<| geom
 ```
 
+<span id="s-distance-lookups"></span>
 <span id="s-id6"></span><span id="id6"></span>
 
 ## Distance Lookups
@@ -638,6 +674,7 @@ On every distance lookup except [`dwithin`](#std-fieldlookup-dwithin), an option
 
 On PostgreSQL, the `'spheroid'` option uses [ST\_DistanceSpheroid](https://postgis.net/docs/ST_Distance_Spheroid.md) instead of [ST\_DistanceSphere](https://postgis.net/docs/ST_DistanceSphere.md). The simpler [ST\_Distance](https://postgis.net/docs/ST_Distance.md) function is used with projected coordinate systems. Rasters are converted to geometries for spheroid based lookups.
 
+<span id="s-distance-gt"></span>
 <span id="s-std-fieldlookup-distance_gt"></span><span id="distance-gt"></span><span id="std-fieldlookup-distance_gt"></span>
 
 ### `distance_gt`
@@ -658,6 +695,7 @@ Zipcode.objects.filter(poly__distance_gt=(geom, D(m=5)))
 | Oracle | `SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) > 5` |
 | SpatiaLite | `Distance(poly, geom) > 5` |
 
+<span id="s-distance-gte"></span>
 <span id="s-std-fieldlookup-distance_gte"></span><span id="distance-gte"></span><span id="std-fieldlookup-distance_gte"></span>
 
 ### `distance_gte`
@@ -678,6 +716,7 @@ Zipcode.objects.filter(poly__distance_gte=(geom, D(m=5)))
 | Oracle | `SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) >= 5` |
 | SpatiaLite | `Distance(poly, geom) >= 5` |
 
+<span id="s-distance-lt"></span>
 <span id="s-std-fieldlookup-distance_lt"></span><span id="distance-lt"></span><span id="std-fieldlookup-distance_lt"></span>
 
 ### `distance_lt`
@@ -698,6 +737,7 @@ Zipcode.objects.filter(poly__distance_lt=(geom, D(m=5)))
 | Oracle | `SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) < 5` |
 | SpatiaLite | `Distance(poly, geom) < 5` |
 
+<span id="s-distance-lte"></span>
 <span id="s-std-fieldlookup-distance_lte"></span><span id="distance-lte"></span><span id="std-fieldlookup-distance_lte"></span>
 
 ### `distance_lte`
@@ -718,6 +758,7 @@ Zipcode.objects.filter(poly__distance_lte=(geom, D(m=5)))
 | Oracle | `SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) <= 5` |
 | SpatiaLite | `Distance(poly, geom) <= 5` |
 
+<span id="s-dwithin"></span>
 <span id="s-std-fieldlookup-dwithin"></span><span id="std-fieldlookup-dwithin"></span>
 
 ### `dwithin`
@@ -736,6 +777,7 @@ Zipcode.objects.filter(poly__dwithin=(geom, D(m=5)))
 | Oracle | `SDO_WITHIN_DISTANCE(poly, geom, 5)` |
 | SpatiaLite | `PtDistWithin(poly, geom, 5)` |
 
+<span id="s-aggregate-functions"></span>
 <span id="s-gis-aggregation-functions"></span><span id="gis-aggregation-functions"></span>
 
 ### Aggregate Functions
@@ -752,6 +794,8 @@ Example:
 >>> from django.contrib.gis.db.models import Extent, Union
 >>> WorldBorder.objects.aggregate(Extent("mpoly"), Union("mpoly"))
 ```
+
+<span id="s-collect"></span>
 
 #### `Collect`
 
@@ -771,6 +815,8 @@ Returns a `GEOMETRYCOLLECTION` or a `MULTI` geometry object from the geometry co
 > **Changed in Django 5.1:**
 >
 > MySQL 8.0.24+ support was added.
+
+<span id="s-extent"></span>
 
 #### `Extent`
 
@@ -793,6 +839,8 @@ Example:
 (-96.8016128540039, 29.7633724212646, -95.3631439208984, 32.782058715820)
 ```
 
+<span id="s-extent3d"></span>
+
 #### `Extent3D`
 
 <dl>
@@ -814,6 +862,8 @@ Example:
 (-96.8016128540039, 29.7633724212646, 0, -95.3631439208984, 32.782058715820, 0)
 ```
 
+<span id="s-makeline"></span>
+
 #### `MakeLine`
 
 <dl>
@@ -834,6 +884,8 @@ Example:
 >>> print(qs["poly__makeline"])
 LINESTRING (-95.3631510000000020 29.7633739999999989, -96.8016109999999941 32.7820570000000018)
 ```
+
+<span id="s-union"></span>
 
 #### `Union`
 
