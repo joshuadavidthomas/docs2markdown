@@ -103,16 +103,19 @@ class Docs2MdConverter(MarkdownConverter):
 
                 dd_markdown = "".join(dd_parts).strip()
                 dd_markdown = re.sub(r"\n{3,}", "\n\n", dd_markdown)
-                return f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
             else:
-                code = dt.find("code")
-                if code:
-                    signature = code.get_text()
-                    return f"**method** `{signature}`\n"
-                return ""
+                dd_markdown = ""
+
+            return f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
 
         return super().convert_dl(el, text, **kwargs)
 
     def convert_p(self, el: Tag, text: str, **kwargs: Any) -> Any:
         text = normalize_whitespace(text)
         return super().convert_p(el, text, **kwargs)
+
+    def convert_span(self, el: Tag, text: str, **kwargs: Any) -> str:
+        if el.has_attr("data-markdownify-raw"):
+            del el["data-markdownify-raw"]
+            return str(el)
+        return text

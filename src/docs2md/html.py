@@ -282,3 +282,9 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
         new_pre.append(code)
         div.replace_with(new_pre)
+
+    def process_span(self, span: Tag) -> None:
+        if span.has_attr("id"):
+            span["data-markdownify-raw"] = ""
+        else:
+            span.unwrap()
