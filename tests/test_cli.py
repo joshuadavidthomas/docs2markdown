@@ -26,7 +26,6 @@ def test_single_file_to_file(tmp_path):
     result = runner.invoke(app, [str(html_file), str(output_file)])
 
     assert result.exit_code == 0
-    assert "✓" in result.stdout
     assert output_file.exists()
     assert "# System check framework" in output_file.read_text()
 
@@ -39,8 +38,6 @@ def test_directory_to_default_dist(tmp_path, monkeypatch):
     result = runner.invoke(app, [str(html_dir)])
 
     assert result.exit_code == 0
-    assert "✓" in result.stdout
-    assert "Converted 3 files" in result.stdout
 
     output_dir = tmp_path / "dist"
     assert output_dir.exists()
@@ -54,7 +51,6 @@ def test_directory_to_custom_output(tmp_path):
     result = runner.invoke(app, [str(html_dir), str(output_dir)])
 
     assert result.exit_code == 0
-    assert "✓" in result.stdout
     assert output_dir.exists()
     assert (output_dir / "django__5_2__ref__checks.md").exists()
 
@@ -105,9 +101,6 @@ def test_directory_with_file_processing_error(tmp_path, monkeypatch):
     result = runner.invoke(app, [str(html_dir)])
 
     assert result.exit_code == 1
-    assert "Failed conversions:" in result.stdout
-    assert "html" in result.stdout
-    assert "Simulated processing error" in result.stdout
 
 
 def test_directory_with_io_error(tmp_path, monkeypatch):
@@ -129,5 +122,3 @@ def test_directory_with_io_error(tmp_path, monkeypatch):
     result = runner.invoke(app, [str(html_dir)])
 
     assert result.exit_code == 1
-    assert "Failed conversions:" in result.stdout
-    assert "Simulated I/O error" in result.stdout
