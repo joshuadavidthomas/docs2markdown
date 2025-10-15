@@ -4,6 +4,7 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
+from docs2md import cli
 from docs2md.cli import app
 
 runner = CliRunner()
@@ -97,8 +98,6 @@ def test_directory_with_file_processing_error(tmp_path, monkeypatch):
 
     def mock_process_file(html_file, doc_type):
         raise ValueError("Simulated processing error")
-
-    from docs2md import cli
 
     monkeypatch.setattr(cli, "process_file", mock_process_file)
 
