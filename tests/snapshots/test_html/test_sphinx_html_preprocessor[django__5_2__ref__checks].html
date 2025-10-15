@@ -7,16 +7,16 @@
 <div class="yui-b">
 <div class="yui-g" id="ref-checks">
 <section id="s-system-check-framework">
-<span data-markdownify-raw="" id="system-check-framework"></span><h1>System check framework</h1>
+<h1>System check framework</h1>
 <p>The system check framework is a set of static checks for validating Django
 projects. It detects common problems and provides hints for how to fix them.
 The framework is extensible so you can easily add your own checks.</p>
 <p>For details on how to add your own checks and integrate them with Django’s
 system checks, see the <a class="reference internal" href="../topics/checks.html">System check topic guide</a>.</p>
 <section id="s-api-reference">
-<span data-markdownify-raw="" id="api-reference"></span><h2>API reference</h2>
+<h2>API reference</h2>
 <section id="s-checkmessage">
-<span data-markdownify-raw="" id="checkmessage"></span><h3><code>CheckMessage</code></h3>
+<h3><code>CheckMessage</code></h3>
 <dl data-markdownify-raw="">
 <dt id="django.core.checks.CheckMessage"><code>classCheckMessage(level,msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L9">[source]</a></dt>
 <dd></dd></dl>
@@ -67,7 +67,7 @@ class name.</p>
 </section>
 </section>
 <section id="s-builtin-tags">
-<span data-markdownify-raw="" id="s-system-check-builtin-tags"></span><span data-markdownify-raw="" id="builtin-tags"></span><span data-markdownify-raw="" id="system-check-builtin-tags"></span><h2>Builtin tags</h2>
+<span data-markdownify-raw="" id="s-system-check-builtin-tags"></span><span data-markdownify-raw="" id="system-check-builtin-tags"></span><h2>Builtin tags</h2>
 <p>Django’s system checks are organized using the following tags:</p>
 <ul class="simple">
 <li><p><code>admin</code>: Checks of any admin site declarations.</p></li>
@@ -93,9 +93,9 @@ calling the <a class="reference internal" href="django-admin.html#django-admin-c
 <p>Some checks may be registered with multiple tags.</p>
 </section>
 <section id="s-core-system-checks">
-<span data-markdownify-raw="" id="core-system-checks"></span><h2>Core system checks</h2>
+<h2>Core system checks</h2>
 <section id="s-asynchronous-support">
-<span data-markdownify-raw="" id="asynchronous-support"></span><h3>Asynchronous support</h3>
+<h3>Asynchronous support</h3>
 <p>The following checks verify your setup for <a class="reference internal" href="../topics/async.html">Asynchronous support</a>:</p>
 <ul class="simple">
 <li><p><strong>async.E001</strong>: You should not set the <span class="target" data-markdownify-raw="" id="index-0"></span><a class="reference internal" href="../topics/async.html#envvar-DJANGO_ALLOW_ASYNC_UNSAFE"><code>DJANGO_ALLOW_ASYNC_UNSAFE</code></a>
@@ -104,7 +104,7 @@ protection</a>.</p></li>
 </ul>
 </section>
 <section id="s-backwards-compatibility">
-<span data-markdownify-raw="" id="backwards-compatibility"></span><h3>Backwards compatibility</h3>
+<h3>Backwards compatibility</h3>
 <p>Compatibility checks warn of potential problems that might occur after
 upgrading Django.</p>
 <ul class="simple">
@@ -117,7 +117,7 @@ oversight when migrating from <code>url()</code> to <a class="reference internal
 </ul>
 </section>
 <section id="s-caches">
-<span data-markdownify-raw="" id="caches"></span><h3>Caches</h3>
+<h3>Caches</h3>
 <p>The following checks verify that your <a class="reference internal" href="settings.html#std-setting-CACHES"><code>CACHES</code></a> setting is correctly
 configured:</p>
 <ul class="simple">
@@ -132,9 +132,9 @@ is relative. Use an absolute path instead.</p></li>
 </ul>
 </section>
 <section id="s-database">
-<span data-markdownify-raw="" id="database"></span><h3>Database</h3>
+<h3>Database</h3>
 <section id="s-mysql-and-mariadb">
-<span data-markdownify-raw="" id="mysql-and-mariadb"></span><h4>MySQL and MariaDB</h4>
+<h4>MySQL and MariaDB</h4>
 <p>If you’re using MySQL or MariaDB, the following checks will be performed:</p>
 <ul class="simple">
 <li><p><strong>mysql.E001</strong>: MySQL/MariaDB does not allow unique <code>CharField</code>s to have a
@@ -148,7 +148,7 @@ is relative. Use an absolute path instead.</p></li>
 </section>
 </section>
 <section id="s-managing-files">
-<span data-markdownify-raw="" id="managing-files"></span><h3>Managing files</h3>
+<h3>Managing files</h3>
 <p>The following checks verify your setup for <a class="reference internal" href="../topics/files.html">Managing files</a>:</p>
 <ul class="simple">
 <li><p><strong>files.E001</strong>: The <a class="reference internal" href="settings.html#std-setting-FILE_UPLOAD_TEMP_DIR"><code>FILE_UPLOAD_TEMP_DIR</code></a> setting refers to the
@@ -156,7 +156,7 @@ nonexistent directory <code>&lt;path&gt;</code>.</p></li>
 </ul>
 </section>
 <section id="s-model-fields">
-<span data-markdownify-raw="" id="model-fields"></span><h3>Model fields</h3>
+<h3>Model fields</h3>
 <ul class="simple">
 <li><p><strong>fields.E001</strong>: Field names must not end with an underscore.</p></li>
 <li><p><strong>fields.E002</strong>: Field names must not contain <code>"__"</code>.</p></li>
@@ -252,7 +252,7 @@ in Django 5.1. <em>This check appeared in Django 4.2 and 5.0</em>.</p></li>
 except for support for historical migrations.</p></li>
 </ul>
 <section id="s-file-fields">
-<span data-markdownify-raw="" id="file-fields"></span><h4>File fields</h4>
+<h4>File fields</h4>
 <ul class="simple">
 <li><p><strong>fields.E200</strong>: <code>unique</code> is not a valid argument for a <code>FileField</code>.
 <em>This check is removed in Django 1.11</em>.</p></li>
@@ -263,7 +263,7 @@ path, not an absolute path.</p></li>
 </ul>
 </section>
 <section id="s-related-fields">
-<span data-markdownify-raw="" id="related-fields"></span><h4>Related fields</h4>
+<h4>Related fields</h4>
 <ul class="simple">
 <li><p><strong>fields.E300</strong>: Field defines a relation with model <code>&lt;model&gt;</code>, which is
 either not installed, or is abstract.</p></li>
@@ -341,7 +341,7 @@ has a <code>CompositePrimaryKey</code> and such relations are not supported.</p>
 </section>
 </section>
 <section id="s-models">
-<span data-markdownify-raw="" id="models"></span><h3>Models</h3>
+<h3>Models</h3>
 <ul class="simple">
 <li><p><strong>models.E001</strong>: <code>&lt;swappable&gt;</code> is not of the form <code>app_label.app_name</code>.</p></li>
 <li><p><strong>models.E002</strong>: <code>&lt;SETTING&gt;</code> references <code>&lt;model&gt;</code>, which has not been
@@ -438,7 +438,7 @@ not supported for that option.</p></li>
 </ul>
 </section>
 <section id="s-management-commands">
-<span data-markdownify-raw="" id="management-commands"></span><h3>Management Commands</h3>
+<h3>Management Commands</h3>
 <p>The following checks verify custom management commands are correctly configured:</p>
 <ul class="simple">
 <li><p><strong>commands.E001</strong>: The <code>migrate</code> and <code>makemigrations</code> commands must have
@@ -446,7 +446,7 @@ the same <code>autodetector</code>.</p></li>
 </ul>
 </section>
 <section id="s-security">
-<span data-markdownify-raw="" id="security"></span><h3>Security</h3>
+<h3>Security</h3>
 <p>The security checks do not make your site secure. They do not audit code, do
 intrusion detection, or do anything particularly complex. Rather, they help
 perform an automated, low-hanging-fruit checklist, that can help you to improve
@@ -576,7 +576,7 @@ imported.</p></li>
 </ul>
 </section>
 <section id="s-signals">
-<span data-markdownify-raw="" id="signals"></span><h3>Signals</h3>
+<h3>Signals</h3>
 <ul class="simple">
 <li><p><strong>signals.E001</strong>: <code>&lt;handler&gt;</code> was connected to the <code>&lt;signal&gt;</code> signal with
 a lazy reference to the sender <code>&lt;app label&gt;.&lt;model&gt;</code>, but app <code>&lt;app label&gt;</code>
@@ -584,7 +584,7 @@ isn’t installed or doesn’t provide model <code>&lt;model&gt;</code>.</p></li
 </ul>
 </section>
 <section id="s-templates">
-<span data-markdownify-raw="" id="templates"></span><h3>Templates</h3>
+<h3>Templates</h3>
 <p>The following checks verify that your <a class="reference internal" href="settings.html#std-setting-TEMPLATES"><code>TEMPLATES</code></a> setting is correctly
 configured:</p>
 <ul class="simple">
@@ -604,7 +604,7 @@ removed in Django 5.1 as system checks may now raise</em>
 </ul>
 </section>
 <section id="s-translation">
-<span data-markdownify-raw="" id="translation"></span><h3>Translation</h3>
+<h3>Translation</h3>
 <p>The following checks are performed on your translation configuration:</p>
 <ul class="simple">
 <li><p><strong>translation.E001</strong>: You have provided an invalid value for the
@@ -619,7 +619,7 @@ setting.</p></li>
 </ul>
 </section>
 <section id="s-urls">
-<span data-markdownify-raw="" id="urls"></span><h3>URLs</h3>
+<h3>URLs</h3>
 <p>The following checks are performed on your URL configuration:</p>
 <ul class="simple">
 <li><p><strong>urls.W001</strong>: Your URL pattern <code>&lt;pattern&gt;</code> uses
@@ -653,7 +653,7 @@ imported.</p></li>
 <section id="s-contrib-app-checks">
 <span data-markdownify-raw="" id="contrib-app-checks"></span><h2><code>contrib</code> app checks</h2>
 <section id="s-admin">
-<span data-markdownify-raw="" id="admin"></span><h3><code>admin</code></h3>
+<h3><code>admin</code></h3>
 <p>Admin checks are all performed as part of the <code>admin</code> tag.</p>
 <p>The following checks are performed on any
 <a class="reference internal" href="contrib/admin/index.html#django.contrib.admin.ModelAdmin"><code>ModelAdmin</code></a> (or subclass) that is registered
@@ -727,7 +727,7 @@ referenced by <code>&lt;modeladmin&gt;.autocomplete_fields</code>.</p></li>
 it’s referenced by <code>&lt;other_modeladmin&gt;.autocomplete_fields</code>.</p></li>
 </ul>
 <section id="s-modeladmin">
-<span data-markdownify-raw="" id="modeladmin"></span><h4><code>ModelAdmin</code></h4>
+<h4><code>ModelAdmin</code></h4>
 <p>The following checks are performed on any
 <a class="reference internal" href="contrib/admin/index.html#django.contrib.admin.ModelAdmin"><code>ModelAdmin</code></a> that is registered
 with the admin site:</p>
@@ -787,7 +787,7 @@ method for the <code>&lt;action&gt;</code> action.</p></li>
 </ul>
 </section>
 <section id="s-inlinemodeladmin">
-<span data-markdownify-raw="" id="inlinemodeladmin"></span><h4><code>InlineModelAdmin</code></h4>
+<h4><code>InlineModelAdmin</code></h4>
 <p>The following checks are performed on any
 <a class="reference internal" href="contrib/admin/index.html#django.contrib.admin.InlineModelAdmin"><code>InlineModelAdmin</code></a> that is registered as an
 inline on a <a class="reference internal" href="contrib/admin/index.html#django.contrib.admin.ModelAdmin"><code>ModelAdmin</code></a>.</p>
@@ -805,7 +805,7 @@ specify a <code>fk_name</code> attribute.</p></li>
 </ul>
 </section>
 <section id="s-genericinlinemodeladmin">
-<span data-markdownify-raw="" id="genericinlinemodeladmin"></span><h4><code>GenericInlineModelAdmin</code></h4>
+<h4><code>GenericInlineModelAdmin</code></h4>
 <p>The following checks are performed on any
 <a class="reference internal" href="contrib/contenttypes.html#django.contrib.contenttypes.admin.GenericInlineModelAdmin"><code>GenericInlineModelAdmin</code></a> that is
 registered as an inline on a <a class="reference internal" href="contrib/admin/index.html#django.contrib.admin.ModelAdmin"><code>ModelAdmin</code></a>.</p>
@@ -820,7 +820,7 @@ field <code>&lt;field name&gt;</code> and object ID field <code>&lt;field name&g
 </ul>
 </section>
 <section id="s-adminsite">
-<span data-markdownify-raw="" id="adminsite"></span><h4><code>AdminSite</code></h4>
+<h4><code>AdminSite</code></h4>
 <p>The following checks are performed on the default
 <a class="reference internal" href="contrib/admin/index.html#django.contrib.admin.AdminSite"><code>AdminSite</code></a>:</p>
 <ul class="simple">
@@ -854,7 +854,7 @@ enabled in <a class="reference internal" href="../topics/templates.html#django.t
 </section>
 </section>
 <section id="s-auth">
-<span data-markdownify-raw="" id="auth"></span><h3><code>auth</code></h3>
+<h3><code>auth</code></h3>
 <ul class="simple">
 <li><p><strong>auth.E001</strong>: <code>REQUIRED_FIELDS</code> must be a list or tuple.</p></li>
 <li><p><strong>auth.E002</strong>: The field named as the <code>USERNAME_FIELD</code> for a custom user
@@ -889,7 +889,7 @@ defined before it in MIDDLEWARE.</p></li>
 </ul>
 </section>
 <section id="s-contenttypes">
-<span data-markdownify-raw="" id="contenttypes"></span><h3><code>contenttypes</code></h3>
+<h3><code>contenttypes</code></h3>
 <p>The following checks are performed when a model contains a
 <a class="reference internal" href="contrib/contenttypes.html#django.contrib.contenttypes.fields.GenericForeignKey"><code>GenericForeignKey</code></a> or
 <a class="reference internal" href="contrib/contenttypes.html#django.contrib.contenttypes.fields.GenericRelation"><code>GenericRelation</code></a>:</p>
@@ -905,7 +905,7 @@ nonexistent field <code>&lt;field&gt;</code>.</p></li>
 </ul>
 </section>
 <section id="s-postgres">
-<span data-markdownify-raw="" id="postgres"></span><h3><code>postgres</code></h3>
+<h3><code>postgres</code></h3>
 <p>The following checks are performed on <a class="reference internal" href="contrib/postgres/index.html#module-django.contrib.postgres"><code>django.contrib.postgres</code></a> model
 fields:</p>
 <ul class="simple">
@@ -918,7 +918,7 @@ changed to</em> <code>fields.E010</code> <em>in Django 3.1</em>.</p></li>
 </ul>
 </section>
 <section id="s-sites">
-<span data-markdownify-raw="" id="s-sites-system-checks"></span><span data-markdownify-raw="" id="sites"></span><span data-markdownify-raw="" id="sites-system-checks"></span><h3><code>sites</code></h3>
+<span data-markdownify-raw="" id="s-sites-system-checks"></span><span data-markdownify-raw="" id="sites-system-checks"></span><h3><code>sites</code></h3>
 <p>The following checks are performed on any model using a
 <a class="reference internal" href="contrib/sites.html#django.contrib.sites.managers.CurrentSiteManager"><code>CurrentSiteManager</code></a>:</p>
 <ul class="simple">
@@ -934,7 +934,7 @@ configured:</p>
 </ul>
 </section>
 <section id="s-staticfiles">
-<span data-markdownify-raw="" id="staticfiles"></span><h3><code>staticfiles</code></h3>
+<h3><code>staticfiles</code></h3>
 <p>The following checks verify that <a class="reference internal" href="contrib/staticfiles.html#module-django.contrib.staticfiles"><code>django.contrib.staticfiles</code></a> is correctly
 configured:</p>
 <ul class="simple">

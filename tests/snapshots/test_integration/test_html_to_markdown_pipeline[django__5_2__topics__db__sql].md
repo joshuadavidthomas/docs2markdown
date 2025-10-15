@@ -1,5 +1,3 @@
-<span id="performing-raw-sql-queries"></span>
-
 # Performing raw SQL queries
 
 Django gives you two ways of performing raw SQL queries: you can use [`Manager.raw()`](#django.db.models.Manager.raw) to [perform raw queries and return model instances](#performing-raw-queries), or you can avoid the model layer entirely and [execute custom SQL directly](#executing-custom-sql-directly).
@@ -17,7 +15,7 @@ Django gives you two ways of performing raw SQL queries: you can use [`Manager.r
 >
 > You should be very careful whenever you write raw SQL. Every time you use it, you should properly escape any parameters that the user can control by using `params` in order to protect against SQL injection attacks. Please read more about [SQL injection protection](../security.md#sql-injection-protection).
 
-<span id="s-executing-raw-queries"></span><span id="performing-raw-queries"></span><span id="executing-raw-queries"></span>
+<span id="s-executing-raw-queries"></span><span id="executing-raw-queries"></span>
 
 ## Performing raw queries
 
@@ -69,8 +67,6 @@ This example isn’t very exciting – it’s exactly the same as running `Perso
 >
 > If you are performing queries on MySQL, note that MySQL’s silent type coercion may cause unexpected results when mixing types. If you query on a string type column, but with an integer value, MySQL will coerce the types of all values in the table to an integer before performing the comparison. For example, if your table contains the values `'abc'`, `'def'` and you query for `WHERE mycolumn=0`, both rows will match. To prevent this, perform the correct typecasting before using the value in a query.
 
-<span id="mapping-query-fields-to-model-fields"></span>
-
 ### Mapping query fields to model fields
 
 `raw()` automatically maps fields in the query to fields on the model.
@@ -105,8 +101,6 @@ Alternatively, you can map fields in the query to model fields using the `transl
 >>> Person.objects.raw("SELECT * FROM some_other_table", translations=name_map)
 ```
 
-<span id="index-lookups"></span>
-
 ### Index lookups
 
 `raw()` supports indexing, so if you need only the first result you can write:
@@ -120,8 +114,6 @@ However, the indexing and slicing are not performed at the database level. If yo
 ```python
 >>> first_person = Person.objects.raw("SELECT * FROM myapp_person LIMIT 1")[0]
 ```
-
-<span id="deferring-model-fields"></span>
 
 ### Deferring model fields
 
@@ -147,8 +139,6 @@ Jane Jones
 From outward appearances, this looks like the query has retrieved both the first name and last name. However, this example actually issued 3 queries. Only the first names were retrieved by the `raw()` query – the last names were both retrieved on demand when they were printed.
 
 There is only one field that you can’t leave out - the primary key field. Django uses the primary key to identify model instances, so it must always be included in a raw query. A [`FieldDoesNotExist`](../../ref/exceptions.md#django.core.exceptions.FieldDoesNotExist) exception will be raised if you forget to include the primary key.
-
-<span id="adding-annotations"></span>
 
 ### Adding annotations
 
@@ -204,7 +194,7 @@ If you need to perform parameterized queries, you can use the `params` argument 
 >
 > As discussed in [SQL injection protection](../security.md#sql-injection-protection), using the `params` argument and leaving the placeholders unquoted protects you from [SQL injection attacks](https://en.wikipedia.org/wiki/SQL_injection), a common exploit where attackers inject arbitrary SQL into your database. If you use string interpolation or quote the placeholder, you’re at risk for SQL injection.
 
-<span id="s-executing-custom-sql"></span><span id="executing-custom-sql-directly"></span><span id="executing-custom-sql"></span>
+<span id="s-executing-custom-sql"></span><span id="executing-custom-sql"></span>
 
 ## Executing custom SQL directly
 
@@ -299,8 +289,6 @@ Here is an example of the difference between the three:
 54360982
 ```
 
-<span id="connections-and-cursors"></span>
-
 ### Connections and cursors
 
 `connection` and `cursor` mostly implement the standard Python DB-API described in <span class="target" id="index-0"></span>[**PEP 249**](https://peps.python.org/pep-0249/) — except when it comes to [transaction handling](transactions.md).
@@ -325,8 +313,6 @@ try:
 finally:
     c.close()
 ```
-
-<span id="calling-stored-procedures"></span>
 
 #### Calling stored procedures
 

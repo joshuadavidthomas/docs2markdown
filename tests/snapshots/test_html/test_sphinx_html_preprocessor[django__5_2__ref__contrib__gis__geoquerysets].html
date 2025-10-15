@@ -7,16 +7,16 @@
 <div class="yui-b">
 <div class="yui-g" id="ref-contrib-gis-geoquerysets">
 <section id="s-gis-queryset-api-reference">
-<span data-markdownify-raw="" id="gis-queryset-api-reference"></span><h1>GIS QuerySet API Reference</h1>
+<h1>GIS QuerySet API Reference</h1>
 <section id="s-spatial-lookups">
-<span data-markdownify-raw="" id="s-id1"></span><span data-markdownify-raw="" id="spatial-lookups"></span><span data-markdownify-raw="" id="id1"></span><h2>Spatial Lookups</h2>
+<span data-markdownify-raw="" id="s-id1"></span><span data-markdownify-raw="" id="id1"></span><h2>Spatial Lookups</h2>
 <p>The spatial lookups in this section are available for <a class="reference internal" href="model-api.html#django.contrib.gis.db.models.GeometryField"><code>GeometryField</code></a>
 and <a class="reference internal" href="model-api.html#django.contrib.gis.db.models.RasterField"><code>RasterField</code></a>.</p>
 <p>For an introduction, see the <a class="reference internal" href="db-api.html#spatial-lookups-intro">spatial lookups introduction</a>.  For an overview of what lookups are
 compatible with a particular spatial backend, refer to the
 <a class="reference internal" href="db-api.html#spatial-lookup-compatibility">spatial lookup compatibility table</a>.</p>
 <section id="s-lookups-with-rasters">
-<span data-markdownify-raw="" id="lookups-with-rasters"></span><h3>Lookups with rasters</h3>
+<h3>Lookups with rasters</h3>
 <p>All examples in the reference below are given for geometry fields and inputs,
 but the lookups can be used the same way with rasters on both sides. Whenever
 a lookup doesn’t support raster input, the input is automatically
@@ -88,7 +88,7 @@ types of raster support. The same pattern applies to all spatial lookups.</p>
 (denominated as PGRaster in this section).</p>
 </section>
 <section id="s-bbcontains">
-<span data-markdownify-raw="" id="s-std-fieldlookup-bbcontains"></span><span data-markdownify-raw="" id="bbcontains"></span><span data-markdownify-raw="" id="std-fieldlookup-bbcontains"></span><h3><code>bbcontains</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-bbcontains"></span><span data-markdownify-raw="" id="std-fieldlookup-bbcontains"></span><h3><code>bbcontains</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Geometry_Contain.html">PostGIS</a>,
 MariaDB, MySQL, SpatiaLite, PGRaster (Native)</p>
 <p>Tests if the geometry or raster field’s bounding box completely contains the
@@ -119,7 +119,7 @@ lookup geometry’s bounding box.</p>
 </table>
 </section>
 <section id="s-bboverlaps">
-<span data-markdownify-raw="" id="s-std-fieldlookup-bboverlaps"></span><span data-markdownify-raw="" id="bboverlaps"></span><span data-markdownify-raw="" id="std-fieldlookup-bboverlaps"></span><h3><code>bboverlaps</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-bboverlaps"></span><span data-markdownify-raw="" id="std-fieldlookup-bboverlaps"></span><h3><code>bboverlaps</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/geometry_overlaps.html">PostGIS</a>,
 MariaDB, MySQL, SpatiaLite, PGRaster (Native)</p>
 <p>Tests if the geometry field’s bounding box overlaps the lookup geometry’s
@@ -150,7 +150,7 @@ bounding box.</p>
 </table>
 </section>
 <section id="s-contained">
-<span data-markdownify-raw="" id="s-std-fieldlookup-contained"></span><span data-markdownify-raw="" id="contained"></span><span data-markdownify-raw="" id="std-fieldlookup-contained"></span><h3><code>contained</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-contained"></span><span data-markdownify-raw="" id="std-fieldlookup-contained"></span><h3><code>contained</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Geometry_Contained.html">PostGIS</a>,
 MariaDB, MySQL, SpatiaLite, PGRaster (Native)</p>
 <p>Tests if the geometry field’s bounding box is completely contained by the
@@ -181,7 +181,7 @@ lookup geometry’s bounding box.</p>
 </table>
 </section>
 <section id="s-contains">
-<span data-markdownify-raw="" id="s-std-fieldlookup-gis-contains"></span><span data-markdownify-raw="" id="contains"></span><span data-markdownify-raw="" id="std-fieldlookup-gis-contains"></span><h3><code>contains</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-gis-contains"></span><span data-markdownify-raw="" id="std-fieldlookup-gis-contains"></span><h3><code>contains</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Contains.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 <p>Tests if the geometry field spatially contains the lookup geometry.</p>
@@ -236,7 +236,7 @@ geometry field, but not the boundary (or exterior).</p>
 </table>
 </section>
 <section id="s-coveredby">
-<span data-markdownify-raw="" id="s-std-fieldlookup-coveredby"></span><span data-markdownify-raw="" id="coveredby"></span><span data-markdownify-raw="" id="std-fieldlookup-coveredby"></span><h3><code>coveredby</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-coveredby"></span><span data-markdownify-raw="" id="std-fieldlookup-coveredby"></span><h3><code>coveredby</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_CoveredBy.html">PostGIS</a>,
 Oracle, MySQL, PGRaster (Bilateral), SpatiaLite</p>
 <p>Tests if no point in the geometry field is outside the lookup geometry.
@@ -270,7 +270,7 @@ Oracle, MySQL, PGRaster (Bilateral), SpatiaLite</p>
 </blockquote>
 </section>
 <section id="s-covers">
-<span data-markdownify-raw="" id="s-std-fieldlookup-covers"></span><span data-markdownify-raw="" id="covers"></span><span data-markdownify-raw="" id="std-fieldlookup-covers"></span><h3><code>covers</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-covers"></span><span data-markdownify-raw="" id="std-fieldlookup-covers"></span><h3><code>covers</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Covers.html">PostGIS</a>,
 Oracle, MySQL, PGRaster (Bilateral), SpatiaLite</p>
 <p>Tests if no point in the lookup geometry is outside the geometry field.
@@ -304,7 +304,7 @@ Oracle, MySQL, PGRaster (Bilateral), SpatiaLite</p>
 </blockquote>
 </section>
 <section id="s-crosses">
-<span data-markdownify-raw="" id="s-std-fieldlookup-crosses"></span><span data-markdownify-raw="" id="crosses"></span><span data-markdownify-raw="" id="std-fieldlookup-crosses"></span><h3><code>crosses</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-crosses"></span><span data-markdownify-raw="" id="std-fieldlookup-crosses"></span><h3><code>crosses</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Crosses.html">PostGIS</a>,
 MariaDB, MySQL, SpatiaLite, PGRaster (Conversion)</p>
 <p>Tests if the geometry field spatially crosses the lookup geometry.</p>
@@ -334,7 +334,7 @@ MariaDB, MySQL, SpatiaLite, PGRaster (Conversion)</p>
 </table>
 </section>
 <section id="s-disjoint">
-<span data-markdownify-raw="" id="s-std-fieldlookup-disjoint"></span><span data-markdownify-raw="" id="disjoint"></span><span data-markdownify-raw="" id="std-fieldlookup-disjoint"></span><h3><code>disjoint</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-disjoint"></span><span data-markdownify-raw="" id="std-fieldlookup-disjoint"></span><h3><code>disjoint</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Disjoint.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 <p>Tests if the geometry field is spatially disjoint from the lookup geometry.</p>
@@ -367,7 +367,7 @@ Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 </table>
 </section>
 <section id="s-equals">
-<span data-markdownify-raw="" id="s-std-fieldlookup-equals"></span><span data-markdownify-raw="" id="equals"></span><span data-markdownify-raw="" id="std-fieldlookup-equals"></span><h3><code>equals</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-equals"></span><span data-markdownify-raw="" id="std-fieldlookup-equals"></span><h3><code>equals</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Equals.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Conversion)</p>
 <p>Tests if the geometry field is spatially equal to the lookup geometry.</p>
@@ -435,7 +435,7 @@ equality of bounding boxes.</p>
 </table>
 </section>
 <section id="s-intersects">
-<span data-markdownify-raw="" id="s-std-fieldlookup-intersects"></span><span data-markdownify-raw="" id="intersects"></span><span data-markdownify-raw="" id="std-fieldlookup-intersects"></span><h3><code>intersects</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-intersects"></span><span data-markdownify-raw="" id="std-fieldlookup-intersects"></span><h3><code>intersects</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Intersects.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 <p>Tests if the geometry field spatially intersects the lookup geometry.</p>
@@ -468,7 +468,7 @@ Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 </table>
 </section>
 <section id="s-isempty">
-<span data-markdownify-raw="" id="s-std-fieldlookup-isempty"></span><span data-markdownify-raw="" id="isempty"></span><span data-markdownify-raw="" id="std-fieldlookup-isempty"></span><h3><code>isempty</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-isempty"></span><span data-markdownify-raw="" id="std-fieldlookup-isempty"></span><h3><code>isempty</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_IsEmpty.html">PostGIS</a></p>
 <p>Tests if the geometry is empty.</p>
 <p>Example:</p>
@@ -476,7 +476,7 @@ Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 </code></pre>
 </section>
 <section id="s-isvalid">
-<span data-markdownify-raw="" id="s-std-fieldlookup-isvalid"></span><span data-markdownify-raw="" id="isvalid"></span><span data-markdownify-raw="" id="std-fieldlookup-isvalid"></span><h3><code>isvalid</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-isvalid"></span><span data-markdownify-raw="" id="std-fieldlookup-isvalid"></span><h3><code>isvalid</code></h3>
 <p><em>Availability</em>: MySQL, <a class="reference external" href="https://postgis.net/docs/ST_IsValid.html">PostGIS</a>,
 Oracle, SpatiaLite</p>
 <p>Tests if the geometry is valid.</p>
@@ -500,7 +500,7 @@ Oracle, SpatiaLite</p>
 </table>
 </section>
 <section id="s-overlaps">
-<span data-markdownify-raw="" id="s-std-fieldlookup-overlaps"></span><span data-markdownify-raw="" id="overlaps"></span><span data-markdownify-raw="" id="std-fieldlookup-overlaps"></span><h3><code>overlaps</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-overlaps"></span><span data-markdownify-raw="" id="std-fieldlookup-overlaps"></span><h3><code>overlaps</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Overlaps.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 <p>Tests if the geometry field spatially overlaps the lookup geometry.</p>
@@ -530,14 +530,14 @@ Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 </table>
 </section>
 <section id="s-relate">
-<span data-markdownify-raw="" id="s-std-fieldlookup-relate"></span><span data-markdownify-raw="" id="relate"></span><span data-markdownify-raw="" id="std-fieldlookup-relate"></span><h3><code>relate</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-relate"></span><span data-markdownify-raw="" id="std-fieldlookup-relate"></span><h3><code>relate</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Relate.html">PostGIS</a>,
 MariaDB, Oracle, SpatiaLite, PGRaster (Conversion)</p>
 <p>Tests if the geometry field is spatially related to the lookup geometry by
 the values given in the given pattern.  This lookup requires a tuple parameter,
 <code>(geom, pattern)</code>; the form of <code>pattern</code> will depend on the spatial backend:</p>
 <section id="s-mariadb-postgis-and-spatialite">
-<span data-markdownify-raw="" id="mariadb-postgis-and-spatialite"></span><h4>MariaDB, PostGIS, and SpatiaLite</h4>
+<h4>MariaDB, PostGIS, and SpatiaLite</h4>
 <p>On these spatial backends the intersection pattern is a string comprising
 nine characters, which  define intersections between  the interior, boundary,
 and exterior of the geometry field and the lookup geometry.
@@ -565,7 +565,7 @@ SELECT ... WHERE ST_Relate(ST_Polygon(rast, 2), ST_Polygon(rast, 1), 'T*T***FF*'
 </code></pre>
 </section>
 <section id="s-oracle">
-<span data-markdownify-raw="" id="oracle"></span><h4>Oracle</h4>
+<h4>Oracle</h4>
 <p>Here the relation pattern is comprised of at least one of the nine relation
 strings: <code>TOUCH</code>, <code>OVERLAPBDYDISJOINT</code>, <code>OVERLAPBDYINTERSECT</code>,
 <code>EQUAL</code>, <code>INSIDE</code>, <code>COVEREDBY</code>, <code>CONTAINS</code>, <code>COVERS</code>, <code>ON</code>, and
@@ -581,7 +581,7 @@ strings are case-insensitive.</p>
 </section>
 </section>
 <section id="s-touches">
-<span data-markdownify-raw="" id="s-std-fieldlookup-touches"></span><span data-markdownify-raw="" id="touches"></span><span data-markdownify-raw="" id="std-fieldlookup-touches"></span><h3><code>touches</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-touches"></span><span data-markdownify-raw="" id="std-fieldlookup-touches"></span><h3><code>touches</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Touches.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite</p>
 <p>Tests if the geometry field spatially touches the lookup geometry.</p>
@@ -614,7 +614,7 @@ Oracle, MariaDB, MySQL, SpatiaLite</p>
 </table>
 </section>
 <section id="s-within">
-<span data-markdownify-raw="" id="s-std-fieldlookup-within"></span><span data-markdownify-raw="" id="within"></span><span data-markdownify-raw="" id="std-fieldlookup-within"></span><h3><code>within</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-within"></span><span data-markdownify-raw="" id="std-fieldlookup-within"></span><h3><code>within</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Within.html">PostGIS</a>,
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 <p>Tests if the geometry field is spatially within the lookup geometry.</p>
@@ -647,7 +647,7 @@ Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)</p>
 </table>
 </section>
 <section id="s-left">
-<span data-markdownify-raw="" id="s-std-fieldlookup-left"></span><span data-markdownify-raw="" id="left"></span><span data-markdownify-raw="" id="std-fieldlookup-left"></span><h3><code>left</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-left"></span><span data-markdownify-raw="" id="std-fieldlookup-left"></span><h3><code>left</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Geometry_Left.html">PostGIS</a>,
 PGRaster (Conversion)</p>
 <p>Tests if the geometry field’s bounding box is strictly to the left of the
@@ -660,7 +660,7 @@ lookup geometry’s bounding box.</p>
 </code></pre>
 </section>
 <section id="s-right">
-<span data-markdownify-raw="" id="s-std-fieldlookup-right"></span><span data-markdownify-raw="" id="right"></span><span data-markdownify-raw="" id="std-fieldlookup-right"></span><h3><code>right</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-right"></span><span data-markdownify-raw="" id="std-fieldlookup-right"></span><h3><code>right</code></h3>
 <p><em>Availability</em>: <a class="reference external" href="https://postgis.net/docs/ST_Geometry_Right.html">PostGIS</a>,
 PGRaster (Conversion)</p>
 <p>Tests if the geometry field’s bounding box is strictly to the right of the
@@ -752,7 +752,7 @@ geometry’s bounding box.</p>
 </section>
 </section>
 <section id="s-distance-lookups">
-<span data-markdownify-raw="" id="s-id6"></span><span data-markdownify-raw="" id="distance-lookups"></span><span data-markdownify-raw="" id="id6"></span><h2>Distance Lookups</h2>
+<span data-markdownify-raw="" id="s-id6"></span><span data-markdownify-raw="" id="id6"></span><h2>Distance Lookups</h2>
 <p><em>Availability</em>: PostGIS, Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Native)</p>
 <p>For an overview on performing distance queries, please refer to
 the <a class="reference internal" href="db-api.html#distance-queries">distance queries introduction</a>.</p>
@@ -904,7 +904,7 @@ geometry is less than or equal to the given distance value.</p>
 </table>
 </section>
 <section id="s-dwithin">
-<span data-markdownify-raw="" id="s-std-fieldlookup-dwithin"></span><span data-markdownify-raw="" id="dwithin"></span><span data-markdownify-raw="" id="std-fieldlookup-dwithin"></span><h3><code>dwithin</code></h3>
+<span data-markdownify-raw="" id="s-std-fieldlookup-dwithin"></span><span data-markdownify-raw="" id="std-fieldlookup-dwithin"></span><h3><code>dwithin</code></h3>
 <p>Returns models where the distance to the geometry field from the lookup
 geometry are within the given distance from one another. Note that you can only
 provide <a class="reference internal" href="measure.html#django.contrib.gis.measure.Distance"><code>Distance</code></a> objects if the targeted
@@ -933,7 +933,7 @@ units of the geometry field (e.g. degrees for <code>WGS84</code>) .</p>
 </table>
 </section>
 <section id="s-aggregate-functions">
-<span data-markdownify-raw="" id="s-gis-aggregation-functions"></span><span data-markdownify-raw="" id="aggregate-functions"></span><span data-markdownify-raw="" id="gis-aggregation-functions"></span><h3>Aggregate Functions</h3>
+<span data-markdownify-raw="" id="s-gis-aggregation-functions"></span><span data-markdownify-raw="" id="gis-aggregation-functions"></span><h3>Aggregate Functions</h3>
 <p>Django provides some GIS-specific aggregate functions. For details on how to
 use these aggregate functions, see <a class="reference internal" href="../../../topics/db/aggregation.html">the topic guide on aggregation</a>.</p>
 <table class="docutils">
@@ -956,7 +956,7 @@ details.</p></td>
 &gt;&gt;&gt; WorldBorder.objects.aggregate(Extent("mpoly"), Union("mpoly"))
 </code></pre>
 <section id="s-collect">
-<span data-markdownify-raw="" id="collect"></span><h4><code>Collect</code></h4>
+<h4><code>Collect</code></h4>
 <dl data-markdownify-raw="">
 <dt id="django.contrib.gis.db.models.Collect"><code>classCollect(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L61">[source]</a></dt>
 <dd></dd></dl>
@@ -972,7 +972,7 @@ caring about dissolving boundaries.</p>
 </blockquote>
 </section>
 <section id="s-extent">
-<span data-markdownify-raw="" id="extent"></span><h4><code>Extent</code></h4>
+<h4><code>Extent</code></h4>
 <dl data-markdownify-raw="">
 <dt id="django.contrib.gis.db.models.Extent"><code>classExtent(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L66">[source]</a></dt>
 <dd></dd></dl>
@@ -987,7 +987,7 @@ comprising the lower left coordinate and the upper right coordinate.</p>
 </code></pre>
 </section>
 <section id="s-extent3d">
-<span data-markdownify-raw="" id="extent3d"></span><h4><code>Extent3D</code></h4>
+<h4><code>Extent3D</code></h4>
 <dl data-markdownify-raw="">
 <dt id="django.contrib.gis.db.models.Extent3D"><code>classExtent3D(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L77">[source]</a></dt>
 <dd></dd></dl>
@@ -1002,7 +1002,7 @@ and z coordinates).</p>
 </code></pre>
 </section>
 <section id="s-makeline">
-<span data-markdownify-raw="" id="makeline"></span><h4><code>MakeLine</code></h4>
+<h4><code>MakeLine</code></h4>
 <dl data-markdownify-raw="">
 <dt id="django.contrib.gis.db.models.MakeLine"><code>classMakeLine(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L88">[source]</a></dt>
 <dd></dd></dl>
@@ -1017,7 +1017,7 @@ LINESTRING (-95.3631510000000020 29.7633739999999989, -96.8016109999999941 32.78
 </code></pre>
 </section>
 <section id="s-union">
-<span data-markdownify-raw="" id="union"></span><h4><code>Union</code></h4>
+<h4><code>Union</code></h4>
 <dl data-markdownify-raw="">
 <dt id="django.contrib.gis.db.models.Union"><code>classUnion(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L93">[source]</a></dt>
 <dd></dd></dl>

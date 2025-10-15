@@ -354,7 +354,22 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         div.replace_with(new_pre)
 
     def process_span(self, span: Tag) -> None:
-        if span.has_attr("id"):
-            span["data-markdownify-raw"] = ""
-        else:
+        if not span.has_attr("id"):
             span.unwrap()
+            return
+
+        next_heading = span.find_next_sibling(["h1", "h2", "h3", "h4", "h5", "h6"])
+
+        if next_heading:
+            heading_text = next_heading.get_text(strip=True)
+            if heading_text.endswith("¶"):
+                heading_text = heading_text[:-1].strip()
+
+            slug = heading_text.lower().replace(" ", "-")
+            slug = "".join(c for c in slug if c.isalnum() or c == "-")
+
+            if span["id"] == slug:
+                span.decompose()
+                return
+
+        span["data-markdownify-raw"] = ""
