@@ -116,19 +116,19 @@ def convert(
 
     ```bash
     # Single file to stdout
-    docs2md convert docs/index.html
+    docs2md docs/index.html
 
     # Single file to specific output
-    docs2md convert docs/index.html output.md
+    docs2md docs/index.html output.md
 
     # Directory with default output location
-    docs2md convert docs/_build/html
+    docs2md docs/_build/html
 
     # Directory with custom output
-    docs2md convert docs/_build/html markdown/
+    docs2md docs/_build/html markdown/
 
     # Sphinx documentation
-    docs2md convert docs/_build/html --type sphinx
+    docs2md docs/_build/html --type sphinx
     ```
     """
 
