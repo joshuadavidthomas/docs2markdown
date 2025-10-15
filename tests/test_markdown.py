@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import pytest
 from bs4 import BeautifulSoup
 
@@ -13,17 +11,6 @@ from docs2md.markdown import normalize_whitespace
 def test_md(doc_file, snapshot_md):
     output = md(doc_file.read_text())
     assert output == snapshot_md
-
-    # check if we've met a GOAL, if it exists
-    snapshot_location = snapshot_md.extension_class.get_location(
-        test_location=snapshot_md.test_location, index=0
-    )
-    goal_file = Path(str(snapshot_location).replace(".md", ".GOAL.md"))
-    if goal_file.exists():
-        goal = goal_file.read_text()
-        assert output != goal, (
-            f"Output matches GOAL for {doc_file.stem}. You can now delete {goal_file.name}"
-        )
 
 
 @pytest.mark.parametrize(
