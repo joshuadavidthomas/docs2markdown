@@ -106,10 +106,11 @@ def convert(
             resolve_path=True,
         ),
     ] = None,
-    type: Annotated[
+    doc_type: Annotated[
         str,
         typer.Option(
-            help="Documentation type (default uses BaseHtmlPreprocessor, sphinx uses SphinxHtmlPreprocessor)",
+            "--type",
+            help="Documentation type (default=BaseHtmlPreprocessor, sphinx=SphinxHtmlPreprocessor)",
         ),
     ] = "default",
 ) -> None:
@@ -135,7 +136,13 @@ def convert(
     ```
     """
 
+    if doc_type not in ("default", "sphinx"):
+        console.print(
+            f"[red]Error:[/red] Invalid type '{doc_type}'. Must be 'default' or 'sphinx'.",
+        )
+        raise typer.Exit(1)
+
     if input.is_file():
-        convert_single_file(input, output, type)
+        convert_single_file(input, output, doc_type)
     else:
-        convert_directory(input, output or Path("./dist"), type)
+        convert_directory(input, output or Path("./dist"), doc_type)
