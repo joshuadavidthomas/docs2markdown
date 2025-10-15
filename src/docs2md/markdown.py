@@ -67,14 +67,21 @@ class Docs2MdConverter(MarkdownConverter):
         code_language_callback = extract_language
         heading_style = "ATX"
 
+    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
+        href = el.get("href")
+        if href:
+            modified_href = re.sub(r"\.html(#|$)", r".md\1", href)
+            el["href"] = modified_href
+
+        return super().convert_a(el, text, **kwargs)
+
     def convert_code(self, el: Tag, text: str, parent_tags, **kwargs: Any) -> Any:
-        # Inside <pre> tags, use default behavior (part of code blocks)
         if "pre" in parent_tags:
             return super().convert_code(el, text, parent_tags, **kwargs)
 
-        # Inside <dd> tags (but not <pre>), keep as HTML <code> for GFM compatibility
         if "dd" in parent_tags:
             return f"<code>{text}</code>"
+
         return super().convert_code(el, text, parent_tags, **kwargs)
 
     def convert_dl(self, el: Tag, text: str, **kwargs: Any) -> Any:
@@ -83,7 +90,6 @@ class Docs2MdConverter(MarkdownConverter):
             dd = el.find("dd")
 
             if dd and dd.get_text(strip=True):
-                # Process dd children with proper parent context
                 parent_tags_for_dd = kwargs.get("parent_tags", set()) | {"dl", "dd"}
                 dd_parts = []
                 for child in dd.children:
@@ -96,11 +102,9 @@ class Docs2MdConverter(MarkdownConverter):
                         dd_parts.append(str(child))
 
                 dd_markdown = "".join(dd_parts).strip()
-                # Clean up excessive blank lines
                 dd_markdown = re.sub(r"\n{3,}", "\n\n", dd_markdown)
                 return f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
             else:
-                # dd is empty - convert to **method** `signature` format
                 code = dt.find("code")
                 if code:
                     signature = code.get_text()
