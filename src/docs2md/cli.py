@@ -7,6 +7,10 @@ import typer
 from rich.console import Console
 from rich.progress import Progress
 
+from docs2md.html import BaseHtmlPreprocessor
+from docs2md.html import SphinxHtmlPreprocessor
+from docs2md.markdown import md
+
 console = Console()
 
 app = typer.Typer(
@@ -14,6 +18,15 @@ app = typer.Typer(
     no_args_is_help=True,
     rich_markup_mode="markdown",
 )
+
+
+def process_file(html_file: Path, doc_type: str) -> str:
+    html = html_file.read_text()
+    PreprocessorClass = (
+        SphinxHtmlPreprocessor if doc_type == "sphinx" else BaseHtmlPreprocessor
+    )
+    preprocessed = PreprocessorClass(html).process()
+    return md(preprocessed)
 
 
 @app.command()
