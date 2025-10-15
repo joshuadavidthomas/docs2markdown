@@ -58,7 +58,7 @@ class Docs2MdSnapshotExtension(SingleFileSnapshotExtension):
         include: PropertyFilter | None = None,
         matcher: PropertyMatcher | None = None,
     ) -> SerializedData:
-        return str(data)
+        return str(data).rstrip() + "\n"
 
 
 class HtmlSnapshotExtension(Docs2MdSnapshotExtension):
