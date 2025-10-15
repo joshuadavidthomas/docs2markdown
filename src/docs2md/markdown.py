@@ -75,15 +75,16 @@ class Docs2MdConverter(MarkdownConverter):
 
         return super().convert_a(el, text, **kwargs)
 
-    def convert_code(self, el: Tag, text: str, parent_tags, **kwargs: Any) -> Any:
+    def convert_code(self, el: Tag, text: str, **kwargs: Any) -> Any:
+        parent_tags = kwargs.get("parent_tags", set())
+
         if "pre" in parent_tags:
             return super().convert_code(el, text, parent_tags, **kwargs)
 
         # Only keep as HTML if inside a dd within a raw dl
         if "dd" in parent_tags:
-            # Find parent dl
-            parent = el.find_parent("dl")
-            if parent and parent.has_attr("data-markdownify-raw"):
+            dl_parent = el.find_parent("dl")
+            if dl_parent and dl_parent.has_attr("data-markdownify-raw"):
                 return f"<code>{text}</code>"
 
         return super().convert_code(el, text, parent_tags, **kwargs)
