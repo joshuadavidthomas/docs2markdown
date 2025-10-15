@@ -163,9 +163,11 @@ Zipcode.objects.filter(poly__coveredby=geom)
 | MySQL | `MBRCoveredBy(poly, geom)` |
 | SpatiaLite | `CoveredBy(poly, geom)` |
 
-Changed in Django 5.2:
-
-MySQL support was added.
+> [!NOTE]
+>
+> **Changed in Django 5.2:**
+>
+> MySQL support was added.
 
 <span id="s-std-fieldlookup-covers"></span><span id="covers"></span><span id="std-fieldlookup-covers"></span>
 
@@ -188,9 +190,11 @@ Zipcode.objects.filter(poly__covers=geom)
 | MySQL | `MBRCovers(poly, geom)` |
 | SpatiaLite | `Covers(poly, geom)` |
 
-Changed in Django 5.2:
-
-MySQL support was added.
+> [!NOTE]
+>
+> **Changed in Django 5.2:**
+>
+> MySQL support was added.
 
 <span id="s-std-fieldlookup-crosses"></span><span id="crosses"></span><span id="std-fieldlookup-crosses"></span>
 
@@ -772,9 +776,11 @@ Example:
 
 Returns a `GEOMETRYCOLLECTION` or a `MULTI` geometry object from the geometry column. This is analogous to a simplified version of the [`Union`](#django.contrib.gis.db.models.Union) aggregate, except it can be several orders of magnitude faster than performing a union because it rolls up geometries into a collection or multi object, not caring about dissolving boundaries.
 
-Changed in Django 5.1:
-
-MySQL 8.0.24+ support was added.
+> [!NOTE]
+>
+> **Changed in Django 5.1:**
+>
+> MySQL 8.0.24+ support was added.
 
 <span id="extent"></span>
 

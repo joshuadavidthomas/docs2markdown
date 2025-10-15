@@ -114,6 +114,19 @@ SPHINX_ADMONITION_MAP = {
     "warning": Admonition.WARNING,
 }
 
+SPHINX_VERSION_DIRECTIVE_MAP = {
+    "versionadded": Admonition.NOTE,
+    "version-added": Admonition.NOTE,
+    "versionchanged": Admonition.NOTE,
+    "version-changed": Admonition.NOTE,
+    "versionmodified": Admonition.NOTE,
+    "version-modified": Admonition.NOTE,
+    "deprecated": Admonition.WARNING,
+    "version-deprecated": Admonition.WARNING,
+    "versionremoved": Admonition.WARNING,
+    "version-removed": Admonition.WARNING,
+}
+
 SPHINX_LANGUAGE_OVERRIDES = {
     "highlight-default": "python",
     "highlight-pycon": "python",
@@ -250,6 +263,11 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
             return
 
         for cls in classes:
+            if cls in SPHINX_VERSION_DIRECTIVE_MAP:
+                alert_type = SPHINX_VERSION_DIRECTIVE_MAP[cls]
+                self._process_version_directive(div, alert_type)
+                return
+
             if cls.startswith("highlight-"):
                 self._process_code_block(div, cls)
                 return
@@ -277,6 +295,29 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         marker = self.soup.new_tag("p")
         marker.string = f"[!{alert_type.name}]"
         blockquote.append(marker)
+
+        blockquote.extend(list(div.children))
+
+        div.replace_with(blockquote)
+
+    def _process_version_directive(self, div: Tag, alert_type: Admonition) -> None:
+        title_span = div.find("span", class_="title")
+        title = title_span.get_text(strip=True) if title_span else ""
+        if title_span:
+            title_span.decompose()
+
+        blockquote = self.soup.new_tag("blockquote")
+
+        marker = self.soup.new_tag("p")
+        marker.string = f"[!{alert_type.name}]"
+        blockquote.append(marker)
+
+        if title:
+            title_p = self.soup.new_tag("p")
+            strong = self.soup.new_tag("strong")
+            strong.string = title
+            title_p.append(strong)
+            blockquote.append(title_p)
 
         blockquote.extend(list(div.children))
 
