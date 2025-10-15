@@ -40,14 +40,12 @@ def convert_single_file(input_file: Path, output: Path | None, doc_type: str) ->
         console.print(f"[green]✓[/green] Converted {input_file} → {output}")
 
 
-def convert_directory(
-    input_dir: Path, output_dir: Path, doc_type: str
-) -> None:
+def convert_directory(input_dir: Path, output_dir: Path, doc_type: str) -> None:
     html_files = list(input_dir.rglob("*.html"))
 
     if not html_files:
         console.print(
-            "[yellow]Warning:[/yellow] No HTML files found in {0}".format(input_dir),
+            f"[yellow]Warning:[/yellow] No HTML files found in {input_dir}",
             style="yellow",
         )
         console.print("Nothing to convert.")
@@ -58,9 +56,7 @@ def convert_directory(
     failed_files: list[tuple[Path, str]] = []
 
     with Progress(console=console) as progress:
-        task = progress.add_task(
-            "[cyan]Converting files...", total=len(html_files)
-        )
+        task = progress.add_task("[cyan]Converting files...", total=len(html_files))
 
         for html_file in html_files:
             try:
