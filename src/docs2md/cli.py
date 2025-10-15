@@ -4,6 +4,10 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
+from rich.console import Console
+from rich.progress import Progress
+
+console = Console()
 
 app = typer.Typer(
     help="Convert HTML documentation to GitHub-flavored Markdown",
@@ -17,49 +21,48 @@ def convert(
     input: Annotated[
         Path,
         typer.Argument(
-            help="Directory containing HTML documentation",
+            help="File or directory containing HTML documentation",
             exists=True,
-            file_okay=False,
-            dir_okay=True,
             resolve_path=True,
         ),
     ],
     output: Annotated[
-        Path,
+        Path | None,
         typer.Argument(
-            help="Directory for markdown output",
-            file_okay=False,
-            dir_okay=True,
+            help="Output file or directory (default: stdout for files, ./dist/ for directories)",
             resolve_path=True,
         ),
-    ],
+    ] = None,
+    type: Annotated[
+        str,
+        typer.Option(
+            help="Documentation type (default uses BaseHtmlPreprocessor, sphinx uses SphinxHtmlPreprocessor)",
+        ),
+    ] = "default",
 ) -> None:
     """Convert HTML documentation to GitHub-flavored Markdown.
 
     ## Examples
 
     ```bash
-    docs2md convert docs/_build/html output/markdown
+    # Single file to stdout
+    docs2md convert docs/index.html
+
+    # Single file to specific output
+    docs2md convert docs/index.html output.md
+
+    # Directory with default output location
+    docs2md convert docs/_build/html
+
+    # Directory with custom output
+    docs2md convert docs/_build/html markdown/
+
+    # Sphinx documentation
+    docs2md convert docs/_build/html --type sphinx
     ```
     """
 
-    if not input.exists():
-        typer.secho(
-            f"Error: Input directory does not exist: {input}",
-            fg=typer.colors.RED,
-        )
-        raise typer.Exit(1)
-
-    html_files = list(input.rglob("*.html"))
-
-    if not html_files:
-        typer.secho(
-            f"Warning: No HTML files found in {input}",
-            fg=typer.colors.YELLOW,
-        )
-        typer.echo("Nothing to convert.")
-        return
-
-    output.mkdir(parents=True, exist_ok=True)
-
-    typer.echo(f"Output written to: {output}")
+    if input.is_file():
+        convert_single_file(input, output, type)
+    else:
+        convert_directory(input, output or Path("./dist"), type)
