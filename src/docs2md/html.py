@@ -162,7 +162,7 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
     def process_code(self, code: Tag) -> None:
         classes = code.get("class", [])
-        if classes:  # Simpler check
+        if classes:
             keep = [c for c in classes if c.startswith("language-")]
             if keep:
                 code["class"] = keep
@@ -170,7 +170,7 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
                 del code["class"]
 
     def process_dl(self, dl: Tag) -> None:
-        classes = dl.get("class", [])  # Add default
+        classes = dl.get("class", [])
         if "py" in classes:
             self._process_api_doc(dl)
 
@@ -185,11 +185,9 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         if dt.has_attr("class"):
             del dt["class"]
 
-        # Remove headerlinks (more BS4-idiomatic)
         for a in dt.select("a.headerlink"):
             a.decompose()
 
-        # Capture signature exactly as rendered by Sphinx
         sig_text = dt.get_text("", strip=True)
         if sig_text.endswith("¶"):
             sig_text = sig_text[:-1]
