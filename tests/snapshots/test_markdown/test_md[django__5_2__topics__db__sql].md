@@ -321,7 +321,7 @@ finally:
 #### Calling stored procedures[¶](#calling-stored-procedures "Link to this heading")
 
 CursorWrapper.callproc(*procname*, *params=None*, *kparams=None*)[¶](#django.db.models.CursorWrapper.callproc "Link to this definition")
-:   Calls a database stored procedure with the given name. A sequence (`params`) or dictionary (`kparams`) of input parameters may be provided. Most databases don’t support `kparams`. Of Django’s built-in backends, only Oracle supports it.
+:   Calls a database stored procedure with the given name. A sequence (<code>params</code>) or dictionary (<code>kparams</code>) of input parameters may be provided. Most databases don’t support <code>kparams</code>. Of Django’s built-in backends, only Oracle supports it.
 
     For example, given this stored procedure in an Oracle database:
 

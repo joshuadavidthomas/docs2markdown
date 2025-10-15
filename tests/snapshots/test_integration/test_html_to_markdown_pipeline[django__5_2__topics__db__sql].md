@@ -19,7 +19,7 @@ Django gives you two ways of performing raw SQL queries: you can use [`Manager.r
 
 The `raw()` manager method can be used to perform raw SQL queries that return model instances:
 
-Manager.raw(*raw\_query*, *params=()*, *translations=None*)
+**method** `Manager.raw(raw_query,params=(),translations=None)`
 
 This method takes a raw SQL query, executes it, and returns a `django.db.models.query.RawQuerySet` instance. This `RawQuerySet` instance can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.html#django.db.models.query.QuerySet) to provide object instances.
 
@@ -305,25 +305,29 @@ finally:
 
 #### Calling stored procedures
 
-CursorWrapper.callproc(*procname*, *params=None*, *kparams=None*)
-:   Calls a database stored procedure with the given name. A sequence (`params`) or dictionary (`kparams`) of input parameters may be provided. Most databases don’t support `kparams`. Of Django’s built-in backends, only Oracle supports it.
+<dl>
+<dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname,params=None,kparams=None)</code></dt>
+<dd>
+Calls a database stored procedure with the given name. A sequence (<code>params</code>) or dictionary (<code>kparams</code>) of input parameters may be provided. Most databases don’t support <code>kparams</code>. Of Django’s built-in backends, only Oracle supports it.
 
-    For example, given this stored procedure in an Oracle database:
+For example, given this stored procedure in an Oracle database:
 
-    ```sql
-    CREATE PROCEDURE "TEST_PROCEDURE"(v_i INTEGER, v_text NVARCHAR2(10)) AS
-        p_i INTEGER;
-        p_text NVARCHAR2(10);
-    BEGIN
-        p_i := v_i;
-        p_text := v_text;
-        ...
-    END;
-    ```
+```sql
+CREATE PROCEDURE "TEST_PROCEDURE"(v_i INTEGER, v_text NVARCHAR2(10)) AS
+    p_i INTEGER;
+    p_text NVARCHAR2(10);
+BEGIN
+    p_i := v_i;
+    p_text := v_text;
+    ...
+END;
+```
 
-    This will call it:
+This will call it:
 
-    ```python
-    with connection.cursor() as cursor:
-        cursor.callproc("test_procedure", [1, "test"])
-    ```
+```python
+with connection.cursor() as cursor:
+    cursor.callproc("test_procedure", [1, "test"])
+```
+</dd>
+</dl>

@@ -64,7 +64,12 @@ class BaseHtmlPreprocessor:
             for element in content.select(selector):
                 element.decompose()
 
-        elements = list(content.find_all(True))
+        self.process_elements(content)
+
+        return str(content)
+
+    def process_elements(self, container: Tag) -> None:
+        elements = list(container.find_all(True))
 
         for element in elements:
             if element.parent is None:
@@ -74,8 +79,6 @@ class BaseHtmlPreprocessor:
             if hasattr(self, method_name):
                 method = getattr(self, method_name)
                 method(element)
-
-        return str(content)
 
 
 class Admonition(Enum):
@@ -157,32 +160,80 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         if "headerlink" in tag.get("class", []):
             tag.decompose()
 
-    def process_div(self, tag: Tag) -> None:
-        classes = tag.get("class")
-        if classes is None:
+    def process_code(self, code: Tag) -> None:
+        classes = code.get("class", [])
+        if classes:  # Simpler check
+            keep = [c for c in classes if c.startswith("language-")]
+            if keep:
+                code["class"] = keep
+            elif code.has_attr("class"):
+                del code["class"]
+
+    def process_dl(self, dl: Tag) -> None:
+        classes = dl.get("class", [])  # Add default
+        if "py" in classes:
+            self._process_api_doc(dl)
+
+    def _process_api_doc(self, dl: Tag) -> None:
+        if dl.has_attr("class"):
+            del dl["class"]
+
+        dt = dl.find("dt")
+        if not dt:
             return
 
-        if not isinstance(classes, list):
-            classes = [classes]
+        if dt.has_attr("class"):
+            del dt["class"]
+
+        # Remove headerlinks (more BS4-idiomatic)
+        for a in dt.select("a.headerlink"):
+            a.decompose()
+
+        # Capture signature exactly as rendered by Sphinx
+        sig_text = dt.get_text("", strip=True)
+        if sig_text.endswith("¶"):
+            sig_text = sig_text[:-1]
+
+        dt_id = dt.get("id")
+        dt.clear()
+        if dt_id:
+            dt["id"] = dt_id
+
+        code = self.soup.new_tag("code")
+        code.string = sig_text
+        dt.append(code)
+
+        dd = dl.find("dd")
+        if dd:
+            if dd.has_attr("class"):
+                del dd["class"]
+
+            self.process_elements(dd)
+
+            for span in dd.find_all("span"):
+                span.unwrap()
+
+        dl["data-markdownify-raw"] = ""
+
+    def process_div(self, div: Tag) -> None:
+        classes = div.get("class", [])
 
         if "admonition" in classes:
-            self._process_admonition(tag)
+            self._process_admonition(div)
             return
 
         for cls in classes:
             if cls.startswith("highlight-"):
-                self._process_code_block(tag, cls)
+                self._process_code_block(div, cls)
                 return
 
-    def _process_admonition(self, tag: Tag) -> None:
-        admonition_classes = tag.get("class", [])
-        if not isinstance(admonition_classes, list):
-            admonition_classes = [admonition_classes]
+    def _process_admonition(self, div: Tag) -> None:
+        admonition_classes = div.get("class", [])
 
-        title_elem = tag.find("p", class_="admonition-title")
-        title = title_elem.get_text(strip=True) if title_elem else "Note"
-        if title_elem:
-            title_elem.decompose()
+        title_p = div.find("p", class_="admonition-title")
+        title = title_p.get_text(strip=True) if title_p else "Note"
+        if title_p:
+            title_p.decompose()
 
         alert_type = Admonition.NOTE
         for cls in admonition_classes:
@@ -200,12 +251,11 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         marker.string = f"[!{alert_type.name}]"
         blockquote.append(marker)
 
-        for child in list(tag.children):
-            blockquote.append(child)
+        blockquote.extend(list(div.children))
 
-        tag.replace_with(blockquote)
+        div.replace_with(blockquote)
 
-    def _process_code_block(self, tag: Tag, highlight_class: str) -> None:
+    def _process_code_block(self, div: Tag, highlight_class: str) -> None:
         """Sphinx code block to standard HTML code block
 
         Transforms:
@@ -219,19 +269,18 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
             <pre><code class="language-{lang}">code</code></pre>
         """
 
-        pre_tag = tag.find("pre")
-        if not pre_tag:
+        pre = div.find("pre")
+        if not pre:
             return
 
         new_pre = self.soup.new_tag("pre")
-        code_tag = self.soup.new_tag("code")
+        code = self.soup.new_tag("code")
 
         language = get_language_from_class(highlight_class)
         if language:
-            code_tag["class"] = f"language-{language}"
+            code["class"] = f"language-{language}"
 
-        for child in list(pre_tag.children):
-            code_tag.append(child)
+        code.extend(list(pre.children))
 
-        new_pre.append(code_tag)
-        tag.replace_with(new_pre)
+        new_pre.append(code)
+        div.replace_with(new_pre)

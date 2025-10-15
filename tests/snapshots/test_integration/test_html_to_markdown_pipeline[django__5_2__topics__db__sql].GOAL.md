@@ -298,9 +298,10 @@ finally:
 
 #### Calling stored procedures
 
-**method** `callproc(procname, params=None, kparams=None)`
-
-Calls a database stored procedure with the given name. A sequence (`params`) or dictionary (`kparams`) of input parameters may be provided. Most databases don’t support `kparams`. Of Django’s built-in backends, only Oracle supports it.
+<dl>
+<dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname,params=None,kparams=None)</code></dt>
+<dd>
+Calls a database stored procedure with the given name. A sequence (<code>params</code>) or dictionary (<code>kparams</code>) of input parameters may be provided. Most databases don’t support <code>kparams</code>. Of Django’s built-in backends, only Oracle supports it.
 
 For example, given this stored procedure in an Oracle database:
 
@@ -321,3 +322,5 @@ This will call it:
 with connection.cursor() as cursor:
     cursor.callproc("test_procedure", [1, "test"])
 ```
+</dd>
+</dl>
