@@ -173,6 +173,8 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         classes = dl.get("class", [])
         if "py" in classes:
             self._process_api_doc(dl)
+        elif "simple" in classes:
+            self._process_simple_dl(dl)
 
     def _process_api_doc(self, dl: Tag) -> None:
         if dl.has_attr("class"):
@@ -188,9 +190,15 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         for a in dt.select("a.headerlink"):
             a.decompose()
 
+        source_link = dt.find("a", class_="reference external")
+        if source_link:
+            source_link = source_link.extract()
+            for span in source_link.find_all("span"):
+                span.unwrap()
+            if source_link.has_attr("class"):
+                del source_link["class"]
+
         sig_text = dt.get_text("", strip=True)
-        if sig_text.endswith("¶"):
-            sig_text = sig_text[:-1]
 
         dt_id = dt.get("id")
         dt.clear()
@@ -200,6 +208,9 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         code = self.soup.new_tag("code")
         code.string = sig_text
         dt.append(code)
+
+        if source_link:
+            dt.append(source_link)
 
         dd = dl.find("dd")
         if dd:
@@ -212,6 +223,24 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
                 span.unwrap()
 
         dl["data-markdownify-raw"] = ""
+
+    def _process_simple_dl(self, dl: Tag) -> None:
+        div = self.soup.new_tag("div")
+
+        for dt in dl.find_all("dt", recursive=False):
+            p = self.soup.new_tag("p")
+            strong = self.soup.new_tag("strong")
+
+            strong.extend(list(dt.children))
+            p.append(strong)
+            div.append(p)
+
+            dd = dt.find_next_sibling("dd")
+            if dd:
+                for child in list(dd.children):
+                    div.append(child)
+
+        dl.replace_with(div)
 
     def process_div(self, div: Tag) -> None:
         classes = div.get("class", [])
