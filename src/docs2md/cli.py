@@ -29,6 +29,17 @@ def process_file(html_file: Path, doc_type: str) -> str:
     return md(preprocessed)
 
 
+def convert_single_file(input_file: Path, output: Path | None, doc_type: str) -> None:
+    markdown = process_file(input_file, doc_type)
+
+    if output is None:
+        console.print(markdown)
+    else:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(markdown)
+        console.print(f"[green]✓[/green] Converted {input_file} → {output}")
+
+
 @app.command()
 def convert(
     input: Annotated[
