@@ -40,6 +40,55 @@ def convert_single_file(input_file: Path, output: Path | None, doc_type: str) ->
         console.print(f"[green]✓[/green] Converted {input_file} → {output}")
 
 
+def convert_directory(
+    input_dir: Path, output_dir: Path, doc_type: str
+) -> None:
+    html_files = list(input_dir.rglob("*.html"))
+
+    if not html_files:
+        console.print(
+            "[yellow]Warning:[/yellow] No HTML files found in {0}".format(input_dir),
+            style="yellow",
+        )
+        console.print("Nothing to convert.")
+        return
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    failed_files: list[tuple[Path, str]] = []
+
+    with Progress(console=console) as progress:
+        task = progress.add_task(
+            "[cyan]Converting files...", total=len(html_files)
+        )
+
+        for html_file in html_files:
+            try:
+                relative_path = html_file.relative_to(input_dir)
+                output_file = output_dir / relative_path.with_suffix(".md")
+
+                markdown = process_file(html_file, doc_type)
+
+                output_file.parent.mkdir(parents=True, exist_ok=True)
+                output_file.write_text(markdown)
+
+                progress.update(task, advance=1)
+            except Exception as e:
+                failed_files.append((html_file, str(e)))
+                progress.update(task, advance=1)
+
+    if failed_files:
+        console.print("\n[red]Failed conversions:[/red]")
+        for file, error in failed_files:
+            console.print(f"  [red]✗[/red] {file}: {error}")
+        raise typer.Exit(1)
+
+    console.print(
+        f"\n[green]✓[/green] Converted {len(html_files) - len(failed_files)} files"
+    )
+    console.print(f"Output written to: {output_dir}")
+
+
 @app.command()
 def convert(
     input: Annotated[
