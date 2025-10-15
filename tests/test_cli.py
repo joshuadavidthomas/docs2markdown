@@ -31,16 +31,18 @@ def test_single_file_to_file(tmp_path):
     assert "# System check framework" in output_file.read_text()
 
 
-def test_directory_to_default_dist(tmp_path):
+def test_directory_to_default_dist(tmp_path, monkeypatch):
     html_dir = Path("tests/fixtures/sphinx/").absolute()
-    output_dir = tmp_path / "dist"
 
-    result = runner.invoke(app, [str(html_dir), str(output_dir)])
+    monkeypatch.chdir(tmp_path)
+
+    result = runner.invoke(app, [str(html_dir)])
 
     assert result.exit_code == 0
     assert "✓" in result.stdout
     assert "Converted 3 files" in result.stdout
 
+    output_dir = tmp_path / "dist"
     assert output_dir.exists()
     assert (output_dir / "django__5_2__ref__checks.md").exists()
 
@@ -84,3 +86,48 @@ def test_empty_directory(tmp_path):
 
     assert result.exit_code == 0
     assert "No HTML files found" in result.stdout
+
+
+def test_directory_with_file_processing_error(tmp_path, monkeypatch):
+    html_dir = tmp_path / "html"
+    html_dir.mkdir()
+
+    bad_html = html_dir / "bad.html"
+    bad_html.write_text("<html><body>Test</body></html>")
+
+    def mock_process_file(html_file, doc_type):
+        raise ValueError("Simulated processing error")
+
+    from docs2md import cli
+
+    monkeypatch.setattr(cli, "process_file", mock_process_file)
+
+    result = runner.invoke(app, [str(html_dir)])
+
+    assert result.exit_code == 1
+    assert "Failed conversions:" in result.stdout
+    assert "html" in result.stdout
+    assert "Simulated processing error" in result.stdout
+
+
+def test_directory_with_io_error(tmp_path, monkeypatch):
+    html_dir = tmp_path / "html"
+    html_dir.mkdir()
+
+    html_file = html_dir / "test.html"
+    html_file.write_text("<html><body>Test</body></html>")
+
+    original_write_text = Path.write_text
+
+    def mock_write_text(self, data, *args, **kwargs):
+        if self.suffix == ".md":
+            raise OSError("Simulated I/O error")
+        return original_write_text(self, data, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", mock_write_text)
+
+    result = runner.invoke(app, [str(html_dir)])
+
+    assert result.exit_code == 1
+    assert "Failed conversions:" in result.stdout
+    assert "Simulated I/O error" in result.stdout

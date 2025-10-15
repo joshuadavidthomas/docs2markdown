@@ -83,10 +83,10 @@ def convert(
 Replace lines 46-65 with:
 
 ```python
-    if input.is_file():
-        convert_single_file(input, output, type)
-    else:
-        convert_directory(input, output or Path("./dist"), type)
+if input.is_file():
+    convert_single_file(input, output, type)
+else:
+    convert_directory(input, output or Path("./dist"), type)
 ```
 
 **Step 4: Verify code compiles**
@@ -206,9 +206,7 @@ git commit -m "feat: implement single file conversion with stdout support"
 Add after the `convert_single_file` function:
 
 ```python
-def convert_directory(
-    input_dir: Path, output_dir: Path, doc_type: str
-) -> None:
+def convert_directory(input_dir: Path, output_dir: Path, doc_type: str) -> None:
     html_files = list(input_dir.rglob("*.html"))
 
     if not html_files:
@@ -224,9 +222,7 @@ def convert_directory(
     failed_files: list[tuple[Path, str]] = []
 
     with Progress(console=console) as progress:
-        task = progress.add_task(
-            "[cyan]Converting files...", total=len(html_files)
-        )
+        task = progress.add_task("[cyan]Converting files...", total=len(html_files))
 
         for html_file in html_files:
             try:
@@ -293,24 +289,24 @@ git commit -m "feat: implement directory conversion with Rich progress UI"
 In the `convert` function signature, replace the `type` parameter definition:
 
 ```python
-    type: Annotated[
-        str,
-        typer.Option(
-            help="Documentation type",
-        ),
-    ] = "default",
+type: Annotated[
+    str,
+    typer.Option(
+        help="Documentation type",
+    ),
+] = ("default",)
 ```
 
 With:
 
 ```python
-    doc_type: Annotated[
-        str,
-        typer.Option(
-            "--type",
-            help="Documentation type (default=BaseHtmlPreprocessor, sphinx=SphinxHtmlPreprocessor)",
-        ),
-    ] = "default",
+doc_type: Annotated[
+    str,
+    typer.Option(
+        "--type",
+        help="Documentation type (default=BaseHtmlPreprocessor, sphinx=SphinxHtmlPreprocessor)",
+    ),
+] = ("default",)
 ```
 
 **Step 2: Update routing logic to use new parameter name**
@@ -318,10 +314,10 @@ With:
 Update the convert function body to use `doc_type` instead of `type`:
 
 ```python
-    if input.is_file():
-        convert_single_file(input, output, doc_type)
-    else:
-        convert_directory(input, output or Path("./dist"), doc_type)
+if input.is_file():
+    convert_single_file(input, output, doc_type)
+else:
+    convert_directory(input, output or Path("./dist"), doc_type)
 ```
 
 **Step 3: Add validation at start of convert function**
@@ -329,11 +325,11 @@ Update the convert function body to use `doc_type` instead of `type`:
 Add after the docstring and before the routing logic:
 
 ```python
-    if doc_type not in ("default", "sphinx"):
-        console.print(
-            f"[red]Error:[/red] Invalid type '{doc_type}'. Must be 'default' or 'sphinx'.",
-        )
-        raise typer.Exit(1)
+if doc_type not in ("default", "sphinx"):
+    console.print(
+        f"[red]Error:[/red] Invalid type '{doc_type}'. Must be 'default' or 'sphinx'.",
+    )
+    raise typer.Exit(1)
 ```
 
 **Step 4: Verify code compiles**
@@ -381,9 +377,9 @@ runner = CliRunner()
 
 def test_single_file_to_stdout(tmp_path):
     html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
-    
+
     result = runner.invoke(app, ["convert", str(html_file)])
-    
+
     assert result.exit_code == 0
     assert "# System check framework" in result.stdout
     assert "[!NOTE]" in result.stdout
@@ -392,9 +388,9 @@ def test_single_file_to_stdout(tmp_path):
 def test_single_file_to_file(tmp_path):
     html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
     output_file = tmp_path / "output.md"
-    
+
     result = runner.invoke(app, ["convert", str(html_file), str(output_file)])
-    
+
     assert result.exit_code == 0
     assert "✓" in result.stdout
     assert output_file.exists()
@@ -404,13 +400,13 @@ def test_single_file_to_file(tmp_path):
 def test_directory_to_default_dist(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     html_dir = Path("tests/fixtures/sphinx/")
-    
+
     result = runner.invoke(app, ["convert", str(html_dir)])
-    
+
     assert result.exit_code == 0
     assert "✓" in result.stdout
     assert "Converted 3 files" in result.stdout
-    
+
     dist_dir = tmp_path / "dist"
     assert dist_dir.exists()
     assert (dist_dir / "django__5_2__ref__checks.md").exists()
@@ -419,9 +415,9 @@ def test_directory_to_default_dist(tmp_path, monkeypatch):
 def test_directory_to_custom_output(tmp_path):
     html_dir = Path("tests/fixtures/sphinx/")
     output_dir = tmp_path / "custom-output"
-    
+
     result = runner.invoke(app, ["convert", str(html_dir), str(output_dir)])
-    
+
     assert result.exit_code == 0
     assert "✓" in result.stdout
     assert output_dir.exists()
@@ -431,20 +427,20 @@ def test_directory_to_custom_output(tmp_path):
 def test_sphinx_type_flag(tmp_path):
     html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
     output_file = tmp_path / "output.md"
-    
+
     result = runner.invoke(
         app, ["convert", str(html_file), str(output_file), "--type", "sphinx"]
     )
-    
+
     assert result.exit_code == 0
     assert output_file.exists()
 
 
 def test_invalid_type(tmp_path):
     html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
-    
+
     result = runner.invoke(app, ["convert", str(html_file), "--type", "invalid"])
-    
+
     assert result.exit_code == 1
     assert "Invalid type" in result.stdout
 
@@ -452,9 +448,9 @@ def test_invalid_type(tmp_path):
 def test_empty_directory(tmp_path):
     empty_dir = tmp_path / "empty"
     empty_dir.mkdir()
-    
+
     result = runner.invoke(app, ["convert", str(empty_dir)])
-    
+
     assert result.exit_code == 0
     assert "No HTML files found" in result.stdout
 ```

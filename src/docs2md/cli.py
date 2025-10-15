@@ -69,7 +69,7 @@ def convert_directory(input_dir: Path, output_dir: Path, doc_type: str) -> None:
                 output_file.write_text(markdown)
 
                 progress.update(task, advance=1)
-            except Exception as e:
+            except (OSError, ValueError, UnicodeDecodeError) as e:
                 failed_files.append((html_file, str(e)))
                 progress.update(task, advance=1)
 
