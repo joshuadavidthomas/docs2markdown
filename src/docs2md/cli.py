@@ -7,9 +7,9 @@ import typer
 from rich.console import Console
 from rich.progress import Progress
 
-from docs2md.html import BaseHtmlPreprocessor
-from docs2md.html import SphinxHtmlPreprocessor
-from docs2md.markdown import md
+from docs2md.convert import DocType
+from docs2md.convert import convert_directory
+from docs2md.convert import convert_file
 
 console = Console()
 
@@ -18,71 +18,6 @@ app = typer.Typer(
     no_args_is_help=True,
     rich_markup_mode="markdown",
 )
-
-
-def process_file(html_file: Path, doc_type: str) -> str:
-    html = html_file.read_text()
-    PreprocessorClass = (
-        SphinxHtmlPreprocessor if doc_type == "sphinx" else BaseHtmlPreprocessor
-    )
-    preprocessed = PreprocessorClass(html).process()
-    return md(preprocessed)
-
-
-def convert_single_file(input_file: Path, output: Path | None, doc_type: str) -> None:
-    markdown = process_file(input_file, doc_type)
-
-    if output is None:
-        console.print(markdown)
-    else:
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(markdown)
-        console.print(f"[green]✓[/green] Converted {input_file} → {output}")
-
-
-def convert_directory(input_dir: Path, output_dir: Path, doc_type: str) -> None:
-    html_files = list(input_dir.rglob("*.html"))
-
-    if not html_files:
-        console.print(
-            f"[yellow]Warning:[/yellow] No HTML files found in {input_dir}",
-            style="yellow",
-        )
-        console.print("Nothing to convert.")
-        return
-
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    failed_files: list[tuple[Path, str]] = []
-
-    with Progress(console=console) as progress:
-        task = progress.add_task("[cyan]Converting files...", total=len(html_files))
-
-        for html_file in html_files:
-            try:
-                relative_path = html_file.relative_to(input_dir)
-                output_file = output_dir / relative_path.with_suffix(".md")
-
-                markdown = process_file(html_file, doc_type)
-
-                output_file.parent.mkdir(parents=True, exist_ok=True)
-                output_file.write_text(markdown)
-
-                progress.update(task, advance=1)
-            except (OSError, ValueError, UnicodeDecodeError) as e:
-                failed_files.append((html_file, str(e)))
-                progress.update(task, advance=1)
-
-    if failed_files:
-        console.print("\n[red]Failed conversions:[/red]")
-        for file, error in failed_files:
-            console.print(f"  [red]✗[/red] {file}: {error}")
-        raise typer.Exit(1)
-
-    console.print(
-        f"\n[green]✓[/green] Converted {len(html_files) - len(failed_files)} files"
-    )
-    console.print(f"Output written to: {output_dir}")
 
 
 @app.command()
@@ -103,12 +38,12 @@ def convert(
         ),
     ] = None,
     doc_type: Annotated[
-        str,
+        DocType,
         typer.Option(
             "--type",
-            help="Documentation type (default=BaseHtmlPreprocessor, sphinx=SphinxHtmlPreprocessor)",
+            help="Documentation type",
         ),
-    ] = "default",
+    ] = DocType.DEFAULT,
 ) -> None:
     """Convert HTML documentation to GitHub-flavored Markdown.
 
@@ -132,13 +67,46 @@ def convert(
     ```
     """
 
-    if doc_type not in ("default", "sphinx"):
-        console.print(
-            f"[red]Error:[/red] Invalid type '{doc_type}'. Must be 'default' or 'sphinx'.",
-        )
-        raise typer.Exit(1)
-
     if input.is_file():
-        convert_single_file(input, output, doc_type)
+        markdown = convert_file(input, doc_type)
+
+        if output is None:
+            console.print(markdown)
+        else:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(markdown)
+            console.print(f"[green]✓[/green] Converted {input} → {output}")
     else:
-        convert_directory(input, output or Path("./dist"), doc_type)
+        output_dir = output or Path("./dist")
+
+        html_files = list(input.rglob("*.html"))
+
+        if not html_files:
+            console.print(
+                f"[yellow]Warning:[/yellow] No HTML files found in {input}",
+                style="yellow",
+            )
+            console.print("Nothing to convert.")
+            raise typer.Exit(0)
+
+        successes = []
+        failures = []
+
+        with Progress(console=console) as progress:
+            task = progress.add_task("[cyan]Converting files...", total=len(html_files))
+
+            for input_file, result in convert_directory(input, output_dir, doc_type):
+                if isinstance(result, Exception):
+                    failures.append((input_file, result))
+                else:
+                    successes.append(result)
+                progress.update(task, advance=1)
+
+        if failures:
+            console.print("\n[red]Failed conversions:[/red]")
+            for file, error in failures:
+                console.print(f"  [red]✗[/red] {file}: {error}")
+            raise typer.Exit(1)
+
+        console.print(f"\n[green]✓[/green] Converted {len(successes)} files")
+        console.print(f"Output written to: {output_dir}")

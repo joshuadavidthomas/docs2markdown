@@ -4,7 +4,6 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from docs2md import cli
 from docs2md.cli import app
 
 runner = CliRunner()
@@ -75,8 +74,8 @@ def test_invalid_type(tmp_path):
 
     result = runner.invoke(app, [str(html_file), "--type", "invalid"])
 
-    assert result.exit_code == 1
-    assert "Invalid type" in result.stdout
+    assert result.exit_code == 2
+    assert "Invalid value" in result.output
 
 
 def test_empty_directory(tmp_path):
@@ -96,10 +95,12 @@ def test_directory_with_file_processing_error(tmp_path, monkeypatch):
     bad_html = html_dir / "bad.html"
     bad_html.write_text("<html><body>Test</body></html>")
 
-    def mock_process_file(html_file, doc_type):
+    from docs2md import convert
+
+    def mock_convert_file(html_file, doc_type):
         raise ValueError("Simulated processing error")
 
-    monkeypatch.setattr(cli, "process_file", mock_process_file)
+    monkeypatch.setattr(convert, "convert_file", mock_convert_file)
 
     result = runner.invoke(app, [str(html_dir)])
 
