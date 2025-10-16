@@ -21,6 +21,7 @@ repos:
         alias: autoformat
         additional_dependencies:
           - black==22.12.0
+        exclude: ^tests/snapshots/
 
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.24.1
