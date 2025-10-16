@@ -474,14 +474,14 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
 class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
     """Preprocessor for Starlight/Astro documentation HTML.
-    
+
     Handles Starlight-specific structures:
     - Expressive code blocks with data-language attributes
     - Code block titles in figcaptions
     - <span class="indent"> elements
     - <starlight-tabs> custom elements
     """
-    
+
     @override
     def get_generic_chrome_selectors(self) -> list[str]:
         base_selectors = super().get_generic_chrome_selectors()
@@ -501,14 +501,14 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
         """Override to handle custom elements before standard processing."""
         for tabs in container.find_all("starlight-tabs"):
             self._process_starlight_tabs(tabs)
-        
+
         for figure in list(container.find_all("figure")):
             if figure.parent is not None:
                 parent = figure.parent
                 classes = parent.get("class", [])  # type: ignore
                 if classes and "expressive-code" in classes:  # type: ignore
                     self.process_figure(figure)
-        
+
         super().process_elements(container)
 
     def _process_starlight_tabs(self, tabs_element: Tag) -> None:
@@ -520,11 +520,11 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 label = tab.get_text(strip=True)
                 if label:
                     tab_labels.append(label)
-        
+
         panels = tabs_element.find_all("div", role="tabpanel")
-        
+
         container = self.soup.new_tag("div")
-        
+
         for i, panel in enumerate(panels):
             if i < len(tab_labels):
                 li = self.soup.new_tag("li")
@@ -532,10 +532,10 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 strong.string = tab_labels[i]
                 li.append(strong)
                 container.append(li)
-            
+
             for child in list(panel.children):
                 container.append(child)
-        
+
         tabs_element.replace_with(container)
 
     def process_figure(self, figure: Tag) -> None:
@@ -543,9 +543,9 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
         parent = figure.parent
         if not parent or "expressive-code" not in parent.get("class", []):
             return
-        
+
         is_terminal = "is-terminal" in figure.get("class", [])
-        
+
         title = None
         figcaption = figure.find("figcaption", class_="header")
         if figcaption:
@@ -553,23 +553,23 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
             if title_span:
                 title = title_span.get_text(strip=True)
             figcaption.decompose()
-        
+
         pre = figure.find("pre")
         if not pre:
             return
-        
+
         language = str(pre.get("data-language", ""))
-        
+
         if is_terminal and not language:
             language = "bash"
-        
+
         code = pre.find("code")
         if not code:
             code = self.soup.new_tag("code")
             code.extend(list(pre.children))
             pre.clear()
             pre.append(code)
-        
+
         ec_lines = list(code.find_all("div", class_="ec-line"))
         for i, ec_line in enumerate(ec_lines):
             for span in ec_line.find_all("span", class_="indent"):
@@ -581,16 +581,15 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
             if i < len(ec_lines) - 1:
                 ec_line.insert_after(self.soup.new_string("\n"))
             ec_line.unwrap()
-        
+
         if title and language and title.lower() not in ["terminal window", ""]:
             comment = get_comment_for_language(language, title)
             if comment:
                 code_text = code.get_text()
                 code.clear()
                 code.string = f"{comment}\n{code_text}".lstrip()
-        
+
         if language:
             code["class"] = f"language-{language}"
-        
-        figure.replace_with(pre)
 
+        figure.replace_with(pre)

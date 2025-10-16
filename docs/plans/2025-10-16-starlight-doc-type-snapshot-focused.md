@@ -23,6 +23,7 @@ Add after existing imports in `src/docs2md/html.py`:
 ```python
 from enum import Enum
 
+
 class CommentStyle(Enum):
     HASH = "#"  # Python, Ruby, Shell, YAML, etc.
     DOUBLE_SLASH = "//"  # JavaScript, TypeScript, Java, C++, etc.
@@ -106,7 +107,7 @@ LANGUAGE_COMMENT_MAP = {
 def get_comment_for_language(language: str, text: str) -> str:
     """Generate a comment for the given language containing text."""
     style = LANGUAGE_COMMENT_MAP.get(language.lower(), CommentStyle.NONE)
-    
+
     if style == CommentStyle.NONE:
         return ""
     elif style == CommentStyle.HASH:
@@ -121,7 +122,7 @@ def get_comment_for_language(language: str, text: str) -> str:
         return f"-- {text}"
     elif style == CommentStyle.LUA_STYLE:
         return f"-- {text}"
-    
+
     return ""
 ```
 
@@ -146,14 +147,14 @@ Add to `src/docs2md/html.py` after `SphinxHtmlPreprocessor` (around line 375):
 ```python
 class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
     """Preprocessor for Starlight/Astro documentation HTML.
-    
+
     Handles Starlight-specific structures:
     - Expressive code blocks with data-language attributes
     - Code block titles in figcaptions
     - <span class="indent"> elements
     - <starlight-tabs> custom elements
     """
-    
+
     @override
     def get_generic_chrome_selectors(self) -> list[str]:
         base_selectors = super().get_generic_chrome_selectors()
@@ -175,7 +176,7 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
         # Process starlight-tabs first
         for tabs in container.find_all("starlight-tabs"):
             self._process_starlight_tabs(tabs)
-        
+
         # Then continue with standard processing
         super().process_elements(container)
 
@@ -189,13 +190,13 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 label = tab.get_text(strip=True)
                 if label:
                     tab_labels.append(label)
-        
+
         # Extract tab panels
         panels = tabs_element.find_all("div", role="tabpanel")
-        
+
         # Create new container for sequential content
         container = self.soup.new_tag("div")
-        
+
         # Add each tab's content with its label as a list item
         for i, panel in enumerate(panels):
             # Add label as a list item if we have it
@@ -205,11 +206,11 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 strong.string = tab_labels[i]
                 li.append(strong)
                 container.append(li)
-            
+
             # Add panel content
             for child in list(panel.children):
                 container.append(child)
-        
+
         # Replace tabs element with the container
         tabs_element.replace_with(container)
 
@@ -219,10 +220,10 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
         parent = figure.parent
         if not parent or "expressive-code" not in parent.get("class", []):
             return
-        
+
         # Check if this is a terminal block
         is_terminal = "is-terminal" in figure.get("class", [])
-        
+
         # Extract title from figcaption if present
         title = None
         figcaption = figure.find("figcaption", class_="header")
@@ -231,19 +232,19 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
             if title_span:
                 title = title_span.get_text(strip=True)
             figcaption.decompose()
-        
+
         # Find the pre tag
         pre = figure.find("pre")
         if not pre:
             return
-        
+
         # Extract language from data-language attribute
         language = pre.get("data-language", "")
-        
+
         # Default to bash for terminal blocks if no language specified
         if is_terminal and not language:
             language = "bash"
-        
+
         # Find or create code tag
         code = pre.find("code")
         if not code:
@@ -251,20 +252,20 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
             code.extend(list(pre.children))
             pre.clear()
             pre.append(code)
-        
+
         # Clean up Starlight's code structure
         # Remove ec-line and code wrapper divs
         for div in code.find_all("div", class_=["ec-line", "code"]):
             div.unwrap()
-        
+
         # Unwrap indent spans (preserves their text content)
         for span in code.find_all("span", class_="indent"):
             span.unwrap()
-        
+
         # Unwrap all remaining spans (color/style spans)
         for span in code.find_all("span"):
             span.unwrap()
-        
+
         # Inject title as comment if present (but not for generic terminal labels)
         if title and language and title.lower() not in ["terminal window", ""]:
             comment = get_comment_for_language(language, title)
@@ -272,11 +273,11 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 code_text = code.get_text()
                 code.clear()
                 code.string = f"{comment}\n{code_text}"
-        
+
         # Set language class on code tag
         if language:
             code["class"] = f"language-{language}"
-        
+
         # Replace figure with just the pre tag
         figure.replace_with(pre)
 ```
@@ -370,7 +371,7 @@ from docs2md.html import StarlightHtmlPreprocessor
 @pytest.mark.fixture_tags(["starlight"])
 def test_starlight_html_preprocessing(doc_file, snapshot_html):
     """Test Starlight HTML preprocessing with real documentation.
-    
+
     This validates:
     - Code block language extraction from data-language
     - Proper indentation (no excessive blank lines)
@@ -384,7 +385,7 @@ def test_starlight_html_preprocessing(doc_file, snapshot_html):
 @pytest.mark.fixture_tags(["starlight"])
 def test_starlight_markdown_conversion(doc_file, snapshot_md):
     """Test full Starlight to Markdown conversion with real documentation.
-    
+
     This validates:
     - Code blocks have proper language identifiers (```json, ```bash, etc.)
     - Code blocks have titles as comments (// filename, /* filename */, etc.)
@@ -473,7 +474,7 @@ python -m docs2md convert opencode/docs/agents/index.html /tmp/test_output.md --
 cat /tmp/test_output.md | head -100
 ```
 
-Expected: 
+Expected:
 - Command succeeds
 - Output shows proper code block formatting
 - Language identifiers present
@@ -634,5 +635,5 @@ We only need unit tests if:
 2. Test with other Starlight documentation sites if available
 3. Add more Starlight-specific features if needed:
    - Aside/callout blocks
-   - Card components  
+   - Card components
    - Badge components
