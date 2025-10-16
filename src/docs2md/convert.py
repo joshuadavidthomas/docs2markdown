@@ -22,6 +22,27 @@ class DocType(Enum):
         return cls(html)
 
 
+class Format(Enum):
+    GHFM = "ghfm"
+    LLMSTXT = "llmstxt"
+
+    def get_converter(self):
+        from docs2md.markdown import Docs2MdConverter, LlmsTxtConverter
+
+        match self:
+            case self.GHFM:
+                return Docs2MdConverter
+            case self.LLMSTXT:
+                return LlmsTxtConverter
+
+    def get_extension(self):
+        match self:
+            case self.GHFM:
+                return ".md"
+            case self.LLMSTXT:
+                return ".txt"
+
+
 def convert_file(html_file: Path, doc_type: DocType) -> str:
     html = html_file.read_text()
     preprocessed = doc_type.preprocessor(html).process()

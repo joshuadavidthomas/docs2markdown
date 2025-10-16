@@ -131,3 +131,7 @@ class Docs2MdConverter(MarkdownConverter):
             del el["data-markdownify-raw"]
             return str(el)
         return text
+
+
+class LlmsTxtConverter(MarkdownConverter):
+    pass
