@@ -81,17 +81,11 @@ def convert(
         if output is None:
             console.print(markdown)
         else:
-            if not output.suffix:
-                output = output.with_suffix(format.get_extension())
-            elif format == Format.LLMSTXT and output.suffix != ".txt":
-                console.print(
-                    f"[yellow]Warning:[/yellow] Using {output.suffix} extension with llmstxt format",
-                    style="yellow",
-                )
-
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_text(markdown)
-            console.print(f"[green]✓[/green] Converted {input} → {output} (format: {format.value})")
+            console.print(
+                f"[green]✓[/green] Converted {input} → {output} (format: {format.value})"
+            )
     else:
         output_dir = output or Path("./dist")
 
@@ -111,7 +105,9 @@ def convert(
         with Progress(console=console) as progress:
             task = progress.add_task("[cyan]Converting files...", total=len(html_files))
 
-            for input_file, result in convert_directory(input, output_dir, doc_type, format):
+            for input_file, result in convert_directory(
+                input, output_dir, doc_type, format
+            ):
                 if isinstance(result, Exception):
                     failures.append((input_file, result))
                 else:
@@ -124,5 +120,7 @@ def convert(
                 console.print(f"  [red]✗[/red] {file}: {error}")
             raise typer.Exit(1)
 
-        console.print(f"\n[green]✓[/green] Converted {len(successes)} files (format: {format.value})")
+        console.print(
+            f"\n[green]✓[/green] Converted {len(successes)} files (format: {format.value})"
+        )
         console.print(f"Output written to: {output_dir}")
