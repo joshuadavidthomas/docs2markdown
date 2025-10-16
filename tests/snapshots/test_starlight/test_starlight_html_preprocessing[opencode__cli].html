@@ -1,0 +1,85 @@
+<main class="astro-3453j7es" data-pagefind-body="" dir="ltr" lang="en"> <div class="content-panel astro-hiqdptjl"> <div class="sl-container astro-hiqdptjl"> <h1 class="astro-kp3j3rdu" id="_top">CLI</h1><p class="page-description astro-kp3j3rdu">OpenCode CLI options and commands.</p> </div> </div> <div class="content-panel astro-hiqdptjl"> <div class="sl-container astro-hiqdptjl"> <div class="sl-markdown-content"> <p>The OpenCode CLI by default starts the <a href="/docs/tui">TUI</a> when run without any arguments.</p>
+<div class="expressive-code"><link href="/docs/_astro/ec.4c0k7.css" rel="stylesheet"/></div>
+<p>But it also accepts commands as documented on this page. This allows you to interact with OpenCode programmatically.</p>
+<div class="expressive-code"></div>
+<hr/>
+<h2 id="commands"><a href="#commands">Commands</a></h2>
+<p>The OpenCode CLI also has the following commands.</p>
+<hr/>
+<h3 id="agent"><a href="#agent">agent</a></h3>
+<p>Manage agents for OpenCode.</p>
+<div class="expressive-code"></div>
+<hr/>
+<h4 id="create"><a href="#create">create</a></h4>
+<p>Create a new agent with custom configuration.</p>
+<div class="expressive-code"></div>
+<p>This command will guide you through creating a new agent with a custom system prompt and tool configuration.</p>
+<hr/>
+<h3 id="auth"><a href="#auth">auth</a></h3>
+<p>Command to manage credentials and login for providers.</p>
+<div class="expressive-code"></div>
+<hr/>
+<h4 id="login"><a href="#login">login</a></h4>
+<p>OpenCode is powered by the provider list at <a href="https://models.dev">Models.dev</a>, so you can use <code dir="auto">opencode auth login</code> to configure API keys for any provider you’d like to use. This is stored in <code dir="auto">~/.local/share/opencode/auth.json</code>.</p>
+<div class="expressive-code"></div>
+<p>When OpenCode starts up it loads the providers from the credentials file. And if there are any keys defined in your environments or a <code dir="auto">.env</code> file in your project.</p>
+<hr/>
+<h4 id="list"><a href="#list">list</a></h4>
+<p>Lists all the authenticated providers as stored in the credentials file.</p>
+<div class="expressive-code"></div>
+<p>Or the short version.</p>
+<div class="expressive-code"></div>
+<hr/>
+<h4 id="logout"><a href="#logout">logout</a></h4>
+<p>Logs you out of a provider by clearing it from the credentials file.</p>
+<div class="expressive-code"></div>
+<hr/>
+<h3 id="github"><a href="#github">github</a></h3>
+<p>Manage the GitHub agent for repository automation.</p>
+<div class="expressive-code"></div>
+<hr/>
+<h4 id="install"><a href="#install">install</a></h4>
+<p>Install the GitHub agent in your repository.</p>
+<div class="expressive-code"></div>
+<p>This sets up the necessary GitHub Actions workflow and guides you through the configuration process. <a href="/docs/github">Learn more</a>.</p>
+<hr/>
+<h4 id="run"><a href="#run">run</a></h4>
+<p>Run the GitHub agent. This is typically used in GitHub Actions.</p>
+<div class="expressive-code"></div>
+<h5 id="flags"><a href="#flags">Flags</a></h5>
+<table><thead><tr><th>Flag</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--event</code></td><td>GitHub mock event to run the agent for</td></tr><tr><td><code dir="auto">--token</code></td><td>GitHub personal access token</td></tr></tbody></table>
+<hr/>
+<h3 id="models"><a href="#models">models</a></h3>
+<p>List all available models from configured providers.</p>
+<div class="expressive-code"></div>
+<p>This command displays all models available across your configured providers in the format <code dir="auto">provider/model</code>.</p>
+<p>This is useful for figuring out the exact model name to use in <a href="/docs/config/">your config</a>.</p>
+<hr/>
+<h3 id="run-1"><a href="#run-1">run</a></h3>
+<p>Run opencode in non-interactive mode by passing a prompt directly.</p>
+<div class="expressive-code"></div>
+<p>This is useful for scripting, automation, or when you want a quick answer without launching the full TUI. For example.</p>
+<div class="expressive-code"></div>
+<h4 id="flags-1"><a href="#flags-1">Flags</a></h4>
+<table><thead><tr><th>Flag</th><th>Short</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--continue</code></td><td><code dir="auto">-c</code></td><td>Continue the last session</td></tr><tr><td><code dir="auto">--session</code></td><td><code dir="auto">-s</code></td><td>Session ID to continue</td></tr><tr><td><code dir="auto">--share</code></td><td></td><td>Share the session</td></tr><tr><td><code dir="auto">--model</code></td><td><code dir="auto">-m</code></td><td>Model to use in the form of provider/model</td></tr><tr><td><code dir="auto">--agent</code></td><td></td><td>Agent to use</td></tr></tbody></table>
+<hr/>
+<h3 id="serve"><a href="#serve">serve</a></h3>
+<p>Start a headless opencode server for API access. Check out the <a href="/docs/server">server docs</a> for the full HTTP interface.</p>
+<div class="expressive-code"></div>
+<p>This starts an HTTP server that provides API access to opencode functionality without the TUI interface.</p>
+<h4 id="flags-2"><a href="#flags-2">Flags</a></h4>
+<table><thead><tr><th>Flag</th><th>Short</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--port</code></td><td><code dir="auto">-p</code></td><td>Port to listen on</td></tr><tr><td><code dir="auto">--hostname</code></td><td><code dir="auto">-h</code></td><td>Hostname to listen on</td></tr></tbody></table>
+<hr/>
+<h3 id="upgrade"><a href="#upgrade">upgrade</a></h3>
+<p>Updates opencode to the latest version or a specific version.</p>
+<div class="expressive-code"></div>
+<p>To upgrade to the latest version.</p>
+<div class="expressive-code"></div>
+<p>To upgrade to a specific version.</p>
+<div class="expressive-code"></div>
+<h4 id="flags-3"><a href="#flags-3">Flags</a></h4>
+<table><thead><tr><th>Flag</th><th>Short</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--method</code></td><td><code dir="auto">-m</code></td><td>The installation method that was used; curl, npm, pnpm, bun, brew</td></tr></tbody></table>
+<hr/>
+<h2 id="flags-4"><a href="#flags-4">Flags</a></h2>
+<p>The opencode CLI takes the following global flags.</p>
+<table><thead><tr><th>Flag</th><th>Short</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--help</code></td><td><code dir="auto">-h</code></td><td>Display help</td></tr><tr><td><code dir="auto">--version</code></td><td></td><td>Print version number</td></tr><tr><td><code dir="auto">--print-logs</code></td><td></td><td>Print logs to stderr</td></tr><tr><td><code dir="auto">--log-level</code></td><td></td><td>Log level (DEBUG, INFO, WARN, ERROR)</td></tr><tr><td><code dir="auto">--prompt</code></td><td><code dir="auto">-p</code></td><td>Prompt to use</td></tr><tr><td><code dir="auto">--model</code></td><td><code dir="auto">-m</code></td><td>Model to use in the form of provider/model</td></tr><tr><td><code dir="auto">--agent</code></td><td></td><td>Agent to use</td></tr><tr><td><code dir="auto">--port</code></td><td></td><td>Port to listen on</td></tr><tr><td><code dir="auto">--hostname</code></td><td></td><td>Hostname to listen on</td></tr></tbody></table> </div>  </div> </div> </main>
