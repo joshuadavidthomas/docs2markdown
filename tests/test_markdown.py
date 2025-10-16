@@ -22,12 +22,28 @@ def test_md(doc_file, snapshot_md):
             "javascript",
         ),
         ("<pre><code>plain code</code></pre>", ""),
+        ('<pre><code class="language-python">code</code></pre>', "python"),
     ],
 )
 def test_converter_code_blocks(html, expected):
     soup = BeautifulSoup(html, features="lxml")
     assert soup.pre is not None
     assert extract_language(soup.pre) == expected
+
+
+def test_extract_language_string_class():
+    soup = BeautifulSoup('<pre><code class="language-python">code</code></pre>', features="lxml")
+    assert soup.pre is not None
+    code = soup.find("code")
+    assert code is not None
+    code["class"] = "language-python"
+    assert extract_language(soup.pre) == "python"
+
+
+def test_extract_language_no_match():
+    soup = BeautifulSoup('<pre><code class="other-class">code</code></pre>', features="lxml")
+    assert soup.pre is not None
+    assert extract_language(soup.pre) == ""
 
 
 @pytest.mark.parametrize(
@@ -62,6 +78,8 @@ line breaks</td>
 </table>""",
             "<table> <tr> <th>Header with breaks</th> </tr> <tr> <td>Cell with line breaks</td> </tr> </table>",
         ),
+        (None, None),
+        ("", ""),
     ],
 )
 def test_normalize_whitespace(text, expected):

@@ -74,7 +74,8 @@ fail_under = 100
 
 [tool.coverage.run]
 omit = [
-  "tests/*"
+  "tests/*",
+  "src/docs2md/__main__.py"
 ]
 source = ["src/docs2md"]
 
