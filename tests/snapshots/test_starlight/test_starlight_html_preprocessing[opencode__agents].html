@@ -68,8 +68,7 @@ By default, all of the following are set to <code dir="auto">ask</code>:</p>
 <hr/>
 <h3 id="json"><a href="#json">JSON</a></h3>
 <p>Configure agents in your <code dir="auto">opencode.json</code> config file:</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "build": {
@@ -110,8 +109,7 @@ By default, all of the following are set to <code dir="auto">ask</code>:</p>
 <li>Global: <code dir="auto">~/.config/opencode/agent/</code></li>
 <li>Per-project: <code dir="auto">.opencode/agent/</code></li>
 </ul>
-<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown">&lt;!-- ~/.config/opencode/agent/review.md --&gt;
----
+<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown" data-markdownify-title="~/.config/opencode/agent/review.md">---
 description: Reviews code for quality and best practices
 mode: subagent
 model: anthropic/claude-sonnet-4-20250514
@@ -140,8 +138,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <hr/>
 <h3 id="description"><a href="#description">Description</a></h3>
 <p>Use the <code dir="auto">description</code> option to provide a brief description of what the agent does and when to use it.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "review": {
       "description": "Reviews code for best practices and potential issues"
@@ -153,8 +150,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <h3 id="temperature"><a href="#temperature">Temperature</a></h3>
 <p>Control the randomness and creativity of the LLM’s responses with the <code dir="auto">temperature</code> config.</p>
 <p>Lower values make responses more focused and deterministic, while higher values increase creativity and variability.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "plan": {
       "temperature": 0.1
@@ -170,8 +166,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <li><strong>0.3-0.5</strong>: Balanced responses with some creativity, good for general development tasks</li>
 <li><strong>0.6-1.0</strong>: More creative and varied responses, useful for brainstorming and exploration</li>
 </ul>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "analyze": {
       "temperature": 0.1,
@@ -190,8 +185,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <hr/>
 <h3 id="disable"><a href="#disable">Disable</a></h3>
 <p>Set to <code dir="auto">true</code> to disable the agent.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "review": {
       "disable": true
@@ -201,8 +195,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <hr/>
 <h3 id="prompt"><a href="#prompt">Prompt</a></h3>
 <p>Specify a custom system prompt file for this agent with the <code dir="auto">prompt</code> config. The prompt file should contain instructions specific to the agent’s purpose.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "review": {
       "prompt": "{file:./prompts/code-review.txt}"
@@ -213,8 +206,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <hr/>
 <h3 id="model"><a href="#model">Model</a></h3>
 <p>Use the <code dir="auto">model</code> config to override the default model for this agent. Useful for using different models optimized for different tasks. For example, a faster model for planning, a more capable model for implementation.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "plan": {
       "model": "anthropic/claude-haiku-4-20250514"
@@ -224,8 +216,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <hr/>
 <h3 id="tools"><a href="#tools">Tools</a></h3>
 <p>Control which tools are available in this agent with the <code dir="auto">tools</code> config. You can enable or disable specific tools by setting them to <code dir="auto">true</code> or <code dir="auto">false</code>.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "tools": {
     "write": true,
@@ -242,8 +233,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 }</code></pre></div>
 
 <p>You can also use wildcards to control multiple tools at once. For example, to disable all tools from an MCP server:</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "readonly": {
@@ -264,16 +254,14 @@ Provide constructive feedback without making direct changes.</code></pre></div>
 <li><code dir="auto">"allow"</code> — Allow all operations without approval</li>
 <li><code dir="auto">"deny"</code> — Disable the tool</li>
 </ul>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "permission": {
     "edit": "deny"
   }
 }</code></pre></div>
 <p>You can override these permissions per agent.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "permission": {
     "edit": "deny"
@@ -287,8 +275,7 @@ Provide constructive feedback without making direct changes.</code></pre></div>
   }
 }</code></pre></div>
 <p>You can also set permissions in Markdown agents.</p>
-<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown">&lt;!-- ~/.config/opencode/agent/review.md --&gt;
----
+<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown" data-markdownify-title="~/.config/opencode/agent/review.md">---
 description: Code review without edits
 mode: subagent
 permission:
@@ -300,8 +287,7 @@ permission:
 
 Only analyze code and suggest changes.</code></pre></div>
 <p>You can set permissions for specific bash commands.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "build": {
@@ -314,8 +300,7 @@ Only analyze code and suggest changes.</code></pre></div>
   }
 }</code></pre></div>
 <p>This can take a glob pattern.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "build": {
@@ -329,8 +314,7 @@ Only analyze code and suggest changes.</code></pre></div>
 }</code></pre></div>
 <p>And you can also use the <code dir="auto">*</code> wildcard to manage permissions for all commands.
 Where the specific rule can override the <code dir="auto">*</code> wildcard.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "build": {
@@ -347,8 +331,7 @@ Where the specific rule can override the <code dir="auto">*</code> wildcard.</p>
 <hr/>
 <h3 id="mode"><a href="#mode">Mode</a></h3>
 <p>Control the agent’s mode with the <code dir="auto">mode</code> config. The <code dir="auto">mode</code> option is used to determine how the agent can be used.</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "review": {
       "mode": "subagent"
@@ -360,8 +343,7 @@ Where the specific rule can override the <code dir="auto">*</code> wildcard.</p>
 <h3 id="additional"><a href="#additional">Additional</a></h3>
 <p>Any other options you specify in your agent configuration will be <strong>passed through directly</strong> to the provider as model options. This allows you to use provider-specific features and parameters.</p>
 <p>For example, with OpenAI’s reasoning models, you can control the reasoning effort:</p>
-<div class="expressive-code"><pre data-language="json"><code class="language-json">// opencode.json
-{
+<div class="expressive-code"><pre data-language="json"><code class="language-json" data-markdownify-title="opencode.json">{
   "agent": {
     "deep-thinker": {
       "description": "Agent that uses high reasoning effort for complex problems",
@@ -401,8 +383,7 @@ Where the specific rule can override the <code dir="auto">*</code> wildcard.</p>
 
 <hr/>
 <h3 id="documentation-agent"><a href="#documentation-agent">Documentation agent</a></h3>
-<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown">&lt;!-- ~/.config/opencode/agent/docs-writer.md --&gt;
----
+<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown" data-markdownify-title="~/.config/opencode/agent/docs-writer.md">---
 description: Writes and maintains project documentation
 mode: subagent
 tools:
@@ -422,8 +403,7 @@ Focus on:
 - User-friendly language</code></pre></div>
 <hr/>
 <h3 id="security-auditor"><a href="#security-auditor">Security auditor</a></h3>
-<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown">&lt;!-- ~/.config/opencode/agent/security-auditor.md --&gt;
----
+<div class="expressive-code"><pre data-language="markdown"><code class="language-markdown" data-markdownify-title="~/.config/opencode/agent/security-auditor.md">---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent
 tools:

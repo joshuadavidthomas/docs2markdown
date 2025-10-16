@@ -144,6 +144,16 @@ class GhfmConverter(Docs2MdConverter):
         text = normalize_whitespace(text)
         return super().convert_p(el, text, **kwargs)
 
+    def convert_pre(self, el: Tag, text: str, **kwargs: Any) -> str:
+        code = el.find("code")
+        title = code.get("data-markdownify-title") if code else None
+
+        if title:
+            # Wrap in figure with figcaption for titled code blocks
+            return f"<figure>\n<figcaption>{title}</figcaption>\n\n{super().convert_pre(el, text, **kwargs)}\n</figure>\n\n"
+
+        return super().convert_pre(el, text, **kwargs)
+
     def convert_span(self, el: Tag, text: str, **kwargs: Any) -> str:
         if el.has_attr("data-markdownify-raw"):
             del el["data-markdownify-raw"]
@@ -162,3 +172,13 @@ class LlmsTxtConverter(Docs2MdConverter):
             text = f"**{header_text}**" + text
 
         return super().convert_blockquote(el, text, **kwargs)
+
+    def convert_pre(self, el: Tag, text: str, **kwargs: Any) -> str:
+        code = el.find("code")
+        title = code.get("data-markdownify-title") if code else None
+
+        if title:
+            # Put italicized title above code block for LLM consumption
+            return f"*{title}*\n\n{super().convert_pre(el, text, **kwargs)}"
+
+        return super().convert_pre(el, text, **kwargs)

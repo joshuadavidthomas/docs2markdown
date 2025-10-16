@@ -16,7 +16,13 @@ from docs2md.convert import convert_file
     [Format.GHFM, Format.LLMSTXT],
 )
 def test_convert_file(format, doc_file, snapshot_md):
-    doc_type = DocType.SPHINX if "sphinx" in str(doc_file.parent) else DocType.DEFAULT
+    if "sphinx" in str(doc_file.parent):
+        doc_type = DocType.SPHINX
+    elif "starlight" in str(doc_file.parent):
+        doc_type = DocType.STARLIGHT
+    else:
+        doc_type = DocType.DEFAULT
+
     output = convert_file(doc_file, doc_type=doc_type, format=format)
     assert output == snapshot_md
 

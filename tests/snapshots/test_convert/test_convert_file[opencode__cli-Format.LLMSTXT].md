@@ -4,17 +4,13 @@ OpenCode CLI options and commands.
 
 The OpenCode CLI by default starts the [TUI](/docs/tui) when run without any arguments.
 
-Terminal window
-
-```
+```bash
 opencode
 ```
 
 But it also accepts commands as documented on this page. This allows you to interact with OpenCode programmatically.
 
-Terminal window
-
-```
+```bash
 opencode run "Explain how closures work in JavaScript"
 ```
 
@@ -30,9 +26,7 @@ The OpenCode CLI also has the following commands.
 
 Manage agents for OpenCode.
 
-Terminal window
-
-```
+```bash
 opencode agent [command]
 ```
 
@@ -42,9 +36,7 @@ opencode agent [command]
 
 Create a new agent with custom configuration.
 
-Terminal window
-
-```
+```bash
 opencode agent create
 ```
 
@@ -56,9 +48,7 @@ This command will guide you through creating a new agent with a custom system pr
 
 Command to manage credentials and login for providers.
 
-Terminal window
-
-```
+```bash
 opencode auth [command]
 ```
 
@@ -68,9 +58,7 @@ opencode auth [command]
 
 OpenCode is powered by the provider list at [Models.dev](https://models.dev), so you can use `opencode auth login` to configure API keys for any provider you’d like to use. This is stored in `~/.local/share/opencode/auth.json`.
 
-Terminal window
-
-```
+```bash
 opencode auth login
 ```
 
@@ -82,17 +70,13 @@ When OpenCode starts up it loads the providers from the credentials file. And if
 
 Lists all the authenticated providers as stored in the credentials file.
 
-Terminal window
-
-```
+```bash
 opencode auth list
 ```
 
 Or the short version.
 
-Terminal window
-
-```
+```bash
 opencode auth ls
 ```
 
@@ -102,9 +86,7 @@ opencode auth ls
 
 Logs you out of a provider by clearing it from the credentials file.
 
-Terminal window
-
-```
+```bash
 opencode auth logout
 ```
 
@@ -114,9 +96,7 @@ opencode auth logout
 
 Manage the GitHub agent for repository automation.
 
-Terminal window
-
-```
+```bash
 opencode github [command]
 ```
 
@@ -126,9 +106,7 @@ opencode github [command]
 
 Install the GitHub agent in your repository.
 
-Terminal window
-
-```
+```bash
 opencode github install
 ```
 
@@ -140,9 +118,7 @@ This sets up the necessary GitHub Actions workflow and guides you through the co
 
 Run the GitHub agent. This is typically used in GitHub Actions.
 
-Terminal window
-
-```
+```bash
 opencode github run
 ```
 
@@ -159,9 +135,7 @@ opencode github run
 
 List all available models from configured providers.
 
-Terminal window
-
-```
+```bash
 opencode models
 ```
 
@@ -175,17 +149,13 @@ This is useful for figuring out the exact model name to use in [your config](/do
 
 Run opencode in non-interactive mode by passing a prompt directly.
 
-Terminal window
-
-```
+```bash
 opencode run [message..]
 ```
 
 This is useful for scripting, automation, or when you want a quick answer without launching the full TUI. For example.
 
-Terminal window
-
-```
+```bash
 opencode run Explain the use of context in Go
 ```
 
@@ -205,9 +175,7 @@ opencode run Explain the use of context in Go
 
 Start a headless opencode server for API access. Check out the [server docs](/docs/server) for the full HTTP interface.
 
-Terminal window
-
-```
+```bash
 opencode serve
 ```
 
@@ -226,25 +194,19 @@ This starts an HTTP server that provides API access to opencode functionality wi
 
 Updates opencode to the latest version or a specific version.
 
-Terminal window
-
-```
+```bash
 opencode upgrade [target]
 ```
 
 To upgrade to the latest version.
 
-Terminal window
-
-```
+```bash
 opencode upgrade
 ```
 
 To upgrade to a specific version.
 
-Terminal window
-
-```
+```bash
 opencode upgrade v0.1.48
 ```
 

@@ -582,12 +582,8 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 ec_line.insert_after(self.soup.new_string("\n"))
             ec_line.unwrap()
 
-        if title and language and title.lower() not in ["terminal window", ""]:
-            comment = get_comment_for_language(language, title)
-            if comment:
-                code_text = code.get_text()
-                code.clear()
-                code.string = f"{comment}\n{code_text}".lstrip()
+        if title and title.lower() not in ["terminal window", ""]:
+            code["data-markdownify-title"] = title
 
         if language:
             code["class"] = f"language-{language}"
