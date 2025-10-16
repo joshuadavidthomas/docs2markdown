@@ -73,6 +73,16 @@ class Docs2MdConverter(MarkdownConverter):
             modified_href = re.sub(r"\.html(#|$)", r".md\1", href)
             el["href"] = modified_href
 
+        parent_tags = kwargs.get("parent_tags", set())
+
+        # Only keep as HTML if inside a dd within a raw dl
+        if "dd" in parent_tags and "pre" not in parent_tags:
+            dl_parent = el.find_parent("dl")
+            if dl_parent and dl_parent.has_attr("data-markdownify-raw"):
+                if el.has_attr("class"):
+                    del el["class"]
+                return str(el)
+
         return super().convert_a(el, text, **kwargs)
 
     def convert_code(self, el: Tag, text: str, **kwargs: Any) -> Any:
