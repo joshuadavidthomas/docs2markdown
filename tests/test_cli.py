@@ -122,3 +122,48 @@ def test_directory_with_io_error(tmp_path, monkeypatch):
     result = runner.invoke(app, [str(html_dir)])
 
     assert result.exit_code == 1
+
+
+def test_convert_with_format_option(tmp_path):
+    html_file = tmp_path / "test.html"
+    html_file.write_text("<p>Test content</p>")
+    output_file = tmp_path / "output.txt"
+
+    result = runner.invoke(app, [
+        str(html_file),
+        str(output_file),
+        "--format", "llmstxt"
+    ])
+
+    assert result.exit_code == 0
+    assert output_file.exists()
+    assert output_file.suffix == ".txt"
+
+    output_md = tmp_path / "output.md"
+    result = runner.invoke(app, [
+        str(html_file),
+        str(output_md),
+        "--format", "ghfm"
+    ])
+
+    assert result.exit_code == 0
+    assert output_md.exists()
+    assert output_md.suffix == ".md"
+
+
+def test_convert_directory_with_format(tmp_path):
+    input_dir = tmp_path / "input"
+    input_dir.mkdir()
+    (input_dir / "test.html").write_text("<p>Test content</p>")
+
+    output_dir = tmp_path / "output"
+
+    result = runner.invoke(app, [
+        str(input_dir),
+        str(output_dir),
+        "--format", "llmstxt"
+    ])
+
+    assert result.exit_code == 0
+    output_files = list(output_dir.glob("*.txt"))
+    assert len(output_files) == 1
