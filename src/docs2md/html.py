@@ -486,14 +486,14 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
     def get_generic_chrome_selectors(self) -> list[str]:
         base_selectors = super().get_generic_chrome_selectors()
         starlight_selectors = [
-            ".header",
+            "div.header, header.header",
             ".sidebar",
             ".right-sidebar",
             ".mobile-preferences",
             "starlight-menu-button",
             "starlight-theme-select",
             "site-search",
-            ".copy",
+            "div.copy, button.copy",
         ]
         return base_selectors + starlight_selectors
 
@@ -501,6 +501,13 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
         """Override to handle custom elements before standard processing."""
         for tabs in container.find_all("starlight-tabs"):
             self._process_starlight_tabs(tabs)
+        
+        for figure in list(container.find_all("figure")):
+            if figure.parent is not None:
+                parent = figure.parent
+                classes = parent.get("class", [])  # type: ignore
+                if classes and "expressive-code" in classes:  # type: ignore
+                    self.process_figure(figure)
         
         super().process_elements(container)
 

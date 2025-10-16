@@ -96,6 +96,7 @@ You can customize the built-in agents or create your own through configuration. 
 Configure agents in your `opencode.json` config file:
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "agent": {
@@ -142,6 +143,7 @@ You can also define agents using markdown files. Place them in:
 - Per-project: `.opencode/agent/`
 
 ```markdown
+<!-- ~/.config/opencode/agent/review.md -->
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -181,6 +183,7 @@ Let’s look at these configuration options in detail.
 Use the `description` option to provide a brief description of what the agent does and when to use it.
 
 ```json
+// opencode.json
 {
   "agent": {
     "review": {
@@ -201,6 +204,7 @@ Control the randomness and creativity of the LLM’s responses with the `tempera
 Lower values make responses more focused and deterministic, while higher values increase creativity and variability.
 
 ```json
+// opencode.json
 {
   "agent": {
     "plan": {
@@ -220,6 +224,7 @@ Temperature values typically range from 0.0 to 1.0:
 - **0.6-1.0**: More creative and varied responses, useful for brainstorming and exploration
 
 ```json
+// opencode.json
 {
   "agent": {
     "analyze": {
@@ -246,6 +251,7 @@ If no temperature is specified, OpenCode uses model-specific defaults; typically
 Set to `true` to disable the agent.
 
 ```json
+// opencode.json
 {
   "agent": {
     "review": {
@@ -262,6 +268,7 @@ Set to `true` to disable the agent.
 Specify a custom system prompt file for this agent with the `prompt` config. The prompt file should contain instructions specific to the agent’s purpose.
 
 ```json
+// opencode.json
 {
   "agent": {
     "review": {
@@ -280,6 +287,7 @@ This path is relative to where the config file is located. So this works for bot
 Use the `model` config to override the default model for this agent. Useful for using different models optimized for different tasks. For example, a faster model for planning, a more capable model for implementation.
 
 ```json
+// opencode.json
 {
   "agent": {
     "plan": {
@@ -296,6 +304,7 @@ Use the `model` config to override the default model for this agent. Useful for 
 Control which tools are available in this agent with the `tools` config. You can enable or disable specific tools by setting them to `true` or `false`.
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "tools": {
@@ -316,6 +325,7 @@ Control which tools are available in this agent with the `tools` config. You can
 You can also use wildcards to control multiple tools at once. For example, to disable all tools from an MCP server:
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "agent": {
@@ -343,6 +353,7 @@ You can configure permissions to manage what actions an agent can take. Currentl
 - `"deny"` — Disable the tool
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "permission": {
@@ -354,6 +365,7 @@ You can configure permissions to manage what actions an agent can take. Currentl
 You can override these permissions per agent.
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "permission": {
@@ -372,6 +384,7 @@ You can override these permissions per agent.
 You can also set permissions in Markdown agents.
 
 ```markdown
+<!-- ~/.config/opencode/agent/review.md -->
 ---
 description: Code review without edits
 mode: subagent
@@ -388,6 +401,7 @@ Only analyze code and suggest changes.
 You can set permissions for specific bash commands.
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "agent": {
@@ -405,6 +419,7 @@ You can set permissions for specific bash commands.
 This can take a glob pattern.
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "agent": {
@@ -422,6 +437,7 @@ This can take a glob pattern.
 And you can also use the `*` wildcard to manage permissions for all commands. Where the specific rule can override the `*` wildcard.
 
 ```json
+// opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
   "agent": {
@@ -446,6 +462,7 @@ And you can also use the `*` wildcard to manage permissions for all commands. Wh
 Control the agent’s mode with the `mode` config. The `mode` option is used to determine how the agent can be used.
 
 ```json
+// opencode.json
 {
   "agent": {
     "review": {
@@ -466,6 +483,7 @@ Any other options you specify in your agent configuration will be **passed throu
 For example, with OpenAI’s reasoning models, you can control the reasoning effort:
 
 ```json
+// opencode.json
 {
   "agent": {
     "deep-thinker": {
@@ -521,6 +539,7 @@ Here are some examples agents you might find useful.
 ### [Documentation agent](#documentation-agent)
 
 ```markdown
+<!-- ~/.config/opencode/agent/docs-writer.md -->
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -546,6 +565,7 @@ Focus on:
 ### [Security auditor](#security-auditor)
 
 ```markdown
+<!-- ~/.config/opencode/agent/security-auditor.md -->
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent
