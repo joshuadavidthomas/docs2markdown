@@ -8,14 +8,6 @@ from bs4 import Tag
 from markdownify import MarkdownConverter
 
 
-def md(html: str, format=None):
-    if format is None:
-        return Docs2MdConverter().convert(html)
-
-    converter_class = format.get_converter()
-    return converter_class().convert(html)
-
-
 def extract_language(el: Tag):
     """Extract language from code element's class attribute.
 
@@ -63,7 +55,7 @@ def normalize_whitespace(text: str):
     return text
 
 
-class Docs2MdConverter(MarkdownConverter):
+class GhfmConverter(MarkdownConverter):
     @final
     class Options:
         bs4_options = "lxml"

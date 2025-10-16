@@ -6,6 +6,8 @@ from pathlib import Path
 
 from docs2md.html import BaseHtmlPreprocessor
 from docs2md.html import SphinxHtmlPreprocessor
+from docs2md.markdown import GhfmConverter
+from docs2md.markdown import LlmsTxtConverter
 
 
 class DocType(Enum):
@@ -26,12 +28,9 @@ class Format(Enum):
     LLMSTXT = "llmstxt"
 
     def get_converter(self):
-        from docs2md.markdown import Docs2MdConverter
-        from docs2md.markdown import LlmsTxtConverter
-
         match self:
             case self.GHFM:
-                return Docs2MdConverter
+                return GhfmConverter
             case self.LLMSTXT:
                 return LlmsTxtConverter
 
