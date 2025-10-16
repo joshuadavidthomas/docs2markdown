@@ -8,19 +8,19 @@ you can avoid the model layer entirely and [execute custom SQL directly](#execut
 The Django ORM provides many tools to express queries without writing raw
 SQL. For example:
 
-- The [QuerySet API](../../ref/models/querysets.html) is extensive.
-- You can [`annotate`](../../ref/models/querysets.html#django.db.models.query.QuerySet.annotate) and [aggregate](aggregation.html) using many built-in [database functions](../../ref/models/database-functions.html). Beyond those, you can create
-  [custom query expressions](../../ref/models/expressions.html).
+- The [QuerySet API](../../ref/models/querysets.md) is extensive.
+- You can [`annotate`](../../ref/models/querysets.md#django.db.models.query.QuerySet.annotate) and [aggregate](aggregation.md) using many built-in [database functions](../../ref/models/database-functions.md). Beyond those, you can create
+  [custom query expressions](../../ref/models/expressions.md).
 
-Before using raw SQL, explore [the ORM](index.html). Ask on
-one of [the support channels](../../faq/help.html) to see if the ORM supports
+Before using raw SQL, explore [the ORM](index.md). Ask on
+one of [the support channels](../../faq/help.md) to see if the ORM supports
 your use case.
 
 **WARNING:**
 You should be very careful whenever you write raw SQL. Every time you use
 it, you should properly escape any parameters that the user can control
 by using `params` in order to protect against SQL injection attacks.
-Please read more about [SQL injection protection](../security.html#sql-injection-protection).
+Please read more about [SQL injection protection](../security.md#sql-injection-protection).
 
 ## Performing raw queries
 
@@ -31,7 +31,7 @@ return model instances:
 
 This method takes a raw SQL query, executes it, and returns a
 `django.db.models.query.RawQuerySet` instance. This `RawQuerySet` instance
-can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.html#django.db.models.query.QuerySet) to
+can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.md#django.db.models.query.QuerySet) to
 provide object instances.
 
 This is best illustrated with an example. Suppose you have the following
@@ -68,7 +68,7 @@ we’ve assumed that the `Person` model lives in an app named `myapp`,
 so its table would be `myapp_person`.
 
 For more details check out the documentation for the
-[`db_table`](../../ref/models/options.html#django.db.models.Options.db_table) option, which also lets you manually set the
+[`db_table`](../../ref/models/options.md#django.db.models.Options.db_table) option, which also lets you manually set the
 database table name.
 
 **WARNING:**
@@ -152,7 +152,7 @@ Fields may also be left out:
 ```
 
 The `Person` objects returned by this query will be deferred model instances
-(see [`defer()`](../../ref/models/querysets.html#django.db.models.query.QuerySet.defer)). This means that the
+(see [`defer()`](../../ref/models/querysets.md#django.db.models.query.QuerySet.defer)). This means that the
 fields that are omitted from the query will be loaded on demand. For example:
 
 ```python
@@ -174,13 +174,13 @@ last names were both retrieved on demand when they were printed.
 There is only one field that you can’t leave out - the primary key
 field. Django uses the primary key to identify model instances, so it
 must always be included in a raw query. A
-[`FieldDoesNotExist`](../../ref/exceptions.html#django.core.exceptions.FieldDoesNotExist) exception will be raised if
+[`FieldDoesNotExist`](../../ref/exceptions.md#django.core.exceptions.FieldDoesNotExist) exception will be raised if
 you forget to include the primary key.
 
 ### Adding annotations
 
 You can also execute queries containing fields that aren’t defined on the
-model. For example, we could use [PostgreSQL’s age() function](https://www.postgresql.org/docs/current/functions-datetime.html) to get a list
+model. For example, we could use [PostgreSQL’s age() function](https://www.postgresql.org/docs/current/functions-datetime.md) to get a list
 of people with their ages calculated by the database:
 
 ```python
@@ -194,7 +194,7 @@ Jane is 42.
 ```
 
 You can often avoid using raw SQL to compute annotations by instead using a
-[Func() expression](../../ref/models/expressions.html#func-expressions).
+[Func() expression](../../ref/models/expressions.md#func-expressions).
 
 ### Passing parameters into `raw()`
 
@@ -236,7 +236,7 @@ around `%s`):
 
 **Don’t make either of these mistakes.**
 
-As discussed in [SQL injection protection](../security.html#sql-injection-protection), using the `params`
+As discussed in [SQL injection protection](../security.md#sql-injection-protection), using the `params`
 argument and leaving the placeholders unquoted protects you from [SQL
 injection attacks](https://en.wikipedia.org/wiki/SQL_injection), a common exploit where attackers inject arbitrary
 SQL into your database. If you use string interpolation or quote the
@@ -283,7 +283,7 @@ cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%%' AND id = %s", [self.id])
 ```
 
-If you are using [more than one database](multi-db.html), you can
+If you are using [more than one database](multi-db.md), you can
 use `django.db.connections` to obtain the connection (and cursor) for a
 specific database. `django.db.connections` is a dictionary-like
 object that allows you to retrieve a specific connection using its
@@ -312,7 +312,7 @@ def dictfetchall(cursor):
     return [dict(zip(columns, row)) for row in cursor.fetchall()]
 ```
 
-Another option is to use [`collections.namedtuple()`](https://docs.python.org/3/library/collections.html#collections.namedtuple) from the Python
+Another option is to use [`collections.namedtuple()`](https://docs.python.org/3/library/collections.md#collections.namedtuple) from the Python
 standard library. A `namedtuple` is a tuple-like object that has fields
 accessible by attribute lookup; it’s also indexable and iterable. Results are
 immutable and accessible by field names or indices, which might be useful:
@@ -358,7 +358,7 @@ Here is an example of the difference between the three:
 ### Connections and cursors
 
 `connection` and `cursor` mostly implement the standard Python DB-API
-described in [**PEP 249**](https://peps.python.org/pep-0249/) — except when it comes to [transaction handling](transactions.html).
+described in [**PEP 249**](https://peps.python.org/pep-0249/) — except when it comes to [transaction handling](transactions.md).
 
 If you’re not familiar with the Python DB-API, note that the SQL statement in
 `cursor.execute()` uses placeholders, `"%s"`, rather than adding

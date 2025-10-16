@@ -137,6 +137,14 @@ class LlmsTxtConverter(MarkdownConverter):
         code_language_callback = extract_language
         heading_style = "ATX"
 
+    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
+        href = el.get("href")
+        if href:
+            modified_href = re.sub(r"\.html(#|$)", r".md\1", href)
+            el["href"] = modified_href
+
+        return super().convert_a(el, text, **kwargs)
+
     def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
         lines = text.strip().split("\n")
         if lines and lines[0].startswith("[!") and lines[0].endswith("]"):

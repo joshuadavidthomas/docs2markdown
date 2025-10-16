@@ -41,5 +41,4 @@ def test_convert_directory(format):
 
         assert len(results) == 1
         _, output_file = results[0]
-        assert output_file.suffix == format.get_extension()
         assert output_file.exists()

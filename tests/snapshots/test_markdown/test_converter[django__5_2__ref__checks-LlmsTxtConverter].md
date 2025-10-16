@@ -1,17 +1,17 @@
 System check framework — Django 5.2.8.dev20251011170327 documentation
 
-# [Django 5.2.8.dev20251011170327 documentation](../index.html)
+# [Django 5.2.8.dev20251011170327 documentation](../index.md)
 
-[Home](../index.html "Home page") |
-[Table of contents](../contents.html "Table of contents") |
-[Index](../genindex.html "Global index") |
-[Modules](../py-modindex.html "Module index")
+[Home](../index.md "Home page") |
+[Table of contents](../contents.md "Table of contents") |
+[Index](../genindex.md "Global index") |
+[Modules](../py-modindex.md "Module index")
 
-« [previous](applications.html "Applications")
+« [previous](applications.md "Applications")
 |
-[up](index.html "API Reference")
+[up](index.md "API Reference")
 |
-[next](class-based-views/index.html "Built-in class-based views API") »
+[next](class-based-views/index.md "Built-in class-based views API") »
 
 # System check framework[¶](#system-check-framework "Link to this heading")
 
@@ -20,7 +20,7 @@ projects. It detects common problems and provides hints for how to fix them.
 The framework is extensible so you can easily add your own checks.
 
 For details on how to add your own checks and integrate them with Django’s
-system checks, see the [System check topic guide](../topics/checks.html).
+system checks, see the [System check topic guide](../topics/checks.md).
 
 ## API reference[¶](#api-reference "Link to this heading")
 
@@ -90,15 +90,15 @@ Django’s system checks are organized using the following tags:
 - `commands`: Checks custom management commands related configuration.
 - `database`: Checks database-related configuration issues. Database checks
   are not run by default because they do more than static code analysis as
-  regular checks do. They are only run by the [`migrate`](django-admin.html#django-admin-migrate) command or if
+  regular checks do. They are only run by the [`migrate`](django-admin.md#django-admin-migrate) command or if
   you specify configured database aliases using the `--database` option when
-  calling the [`check`](django-admin.html#django-admin-check) command.
+  calling the [`check`](django-admin.md#django-admin-check) command.
 - `files`: Checks files related configuration.
 - `models`: Checks of model, field, and manager definitions.
 - `security`: Checks security related configuration.
 - `signals`: Checks on signal declarations and handler registrations.
-- `sites`: Checks [`django.contrib.sites`](contrib/sites.html#module-django.contrib.sites "django.contrib.sites: Lets you operate multiple websites from the same database and Django project") configuration.
-- `staticfiles`: Checks [`django.contrib.staticfiles`](contrib/staticfiles.html#module-django.contrib.staticfiles "django.contrib.staticfiles: An app for handling static files.") configuration.
+- `sites`: Checks [`django.contrib.sites`](contrib/sites.md#module-django.contrib.sites "django.contrib.sites: Lets you operate multiple websites from the same database and Django project") configuration.
+- `staticfiles`: Checks [`django.contrib.staticfiles`](contrib/staticfiles.md#module-django.contrib.staticfiles "django.contrib.staticfiles: An app for handling static files.") configuration.
 - `templates`: Checks template related configuration.
 - `translation`: Checks translation related configuration.
 - `urls`: Checks URL configuration.
@@ -109,11 +109,11 @@ Some checks may be registered with multiple tags.
 
 ### Asynchronous support[¶](#asynchronous-support "Link to this heading")
 
-The following checks verify your setup for [Asynchronous support](../topics/async.html):
+The following checks verify your setup for [Asynchronous support](../topics/async.md):
 
-- **async.E001**: You should not set the [`DJANGO_ALLOW_ASYNC_UNSAFE`](../topics/async.html#envvar-DJANGO_ALLOW_ASYNC_UNSAFE)
+- **async.E001**: You should not set the [`DJANGO_ALLOW_ASYNC_UNSAFE`](../topics/async.md#envvar-DJANGO_ALLOW_ASYNC_UNSAFE)
   environment variable in deployment. This disables [async safety
-  protection](../topics/async.html#async-safety).
+  protection](../topics/async.md#async-safety).
 
 ### Backwards compatibility[¶](#backwards-compatibility "Link to this heading")
 
@@ -122,23 +122,23 @@ upgrading Django.
 
 - **2\_0.W001**: Your URL pattern `<pattern>` has a `route` that contains
   `(?P<`, begins with a `^`, or ends with a `$`. This was likely an
-  oversight when migrating from `url()` to [`path()`](urls.html#django.urls.path "django.urls.path").
+  oversight when migrating from `url()` to [`path()`](urls.md#django.urls.path "django.urls.path").
 - **4\_0.E001**: As of Django 4.0, the values in the
-  [`CSRF_TRUSTED_ORIGINS`](settings.html#std-setting-CSRF_TRUSTED_ORIGINS) setting must start with a scheme (usually
+  [`CSRF_TRUSTED_ORIGINS`](settings.md#std-setting-CSRF_TRUSTED_ORIGINS) setting must start with a scheme (usually
   `http://` or `https://`) but found `<hostname>`.
 
 ### Caches[¶](#caches "Link to this heading")
 
-The following checks verify that your [`CACHES`](settings.html#std-setting-CACHES) setting is correctly
+The following checks verify that your [`CACHES`](settings.md#std-setting-CACHES) setting is correctly
 configured:
 
 - **caches.E001**: You must define a `'default'` cache in your
-  [`CACHES`](settings.html#std-setting-CACHES) setting.
+  [`CACHES`](settings.md#std-setting-CACHES) setting.
 - **caches.W002**: Your `<cache>` configuration might expose your cache or
   lead to corruption of your data because its
-  [`LOCATION`](settings.html#std-setting-CACHES-LOCATION) matches/is inside/contains
-  [`MEDIA_ROOT`](settings.html#std-setting-MEDIA_ROOT)/[`STATIC_ROOT`](settings.html#std-setting-STATIC_ROOT)/[`STATICFILES_DIRS`](settings.html#std-setting-STATICFILES_DIRS).
-- **caches.W003**: Your `<cache>` cache [`LOCATION`](settings.html#std-setting-CACHES-LOCATION)
+  [`LOCATION`](settings.md#std-setting-CACHES-LOCATION) matches/is inside/contains
+  [`MEDIA_ROOT`](settings.md#std-setting-MEDIA_ROOT)/[`STATIC_ROOT`](settings.md#std-setting-STATIC_ROOT)/[`STATICFILES_DIRS`](settings.md#std-setting-STATICFILES_DIRS).
+- **caches.W003**: Your `<cache>` cache [`LOCATION`](settings.md#std-setting-CACHES-LOCATION)
   is relative. Use an absolute path instead.
 
 ### Database[¶](#database "Link to this heading")
@@ -151,15 +151,15 @@ If you’re using MySQL or MariaDB, the following checks will be performed:
   `max_length` > 255. *This check was changed to* `mysql.W003` *in Django
   3.1 as the real maximum size depends on many factors.*
 - **mysql.W002**: MySQL/MariaDB Strict Mode is not set for database connection
-  `<alias>`. See also [Setting sql\_mode](databases.html#mysql-sql-mode).
+  `<alias>`. See also [Setting sql\_mode](databases.md#mysql-sql-mode).
 - **mysql.W003**: MySQL/MariaDB may not allow unique `CharField`s to have a
   `max_length` > 255.
 
 ### Managing files[¶](#managing-files "Link to this heading")
 
-The following checks verify your setup for [Managing files](../topics/files.html):
+The following checks verify your setup for [Managing files](../topics/files.md):
 
-- **files.E001**: The [`FILE_UPLOAD_TEMP_DIR`](settings.html#std-setting-FILE_UPLOAD_TEMP_DIR) setting refers to the
+- **files.E001**: The [`FILE_UPLOAD_TEMP_DIR`](settings.md#std-setting-FILE_UPLOAD_TEMP_DIR) setting refers to the
   nonexistent directory `<path>`.
 
 ### Model fields[¶](#model-fields "Link to this heading")
@@ -453,40 +453,40 @@ your site’s security.
 Some of these checks may not be appropriate for your particular deployment
 configuration. For instance, if you do your HTTP to HTTPS redirection in a load
 balancer, it’d be irritating to be constantly warned about not having enabled
-[`SECURE_SSL_REDIRECT`](settings.html#std-setting-SECURE_SSL_REDIRECT). Use [`SILENCED_SYSTEM_CHECKS`](settings.html#std-setting-SILENCED_SYSTEM_CHECKS) to
+[`SECURE_SSL_REDIRECT`](settings.md#std-setting-SECURE_SSL_REDIRECT). Use [`SILENCED_SYSTEM_CHECKS`](settings.md#std-setting-SILENCED_SYSTEM_CHECKS) to
 silence unneeded checks.
 
-The following checks are run if you use the [`check --deploy`](django-admin.html#cmdoption-check-deploy) option:
+The following checks are run if you use the [`check --deploy`](django-admin.md#cmdoption-check-deploy) option:
 
 - **security.W001**: You do not have
-  [`django.middleware.security.SecurityMiddleware`](middleware.html#django.middleware.security.SecurityMiddleware "django.middleware.security.SecurityMiddleware") in your
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE) so the [`SECURE_HSTS_SECONDS`](settings.html#std-setting-SECURE_HSTS_SECONDS),
-  [`SECURE_CONTENT_TYPE_NOSNIFF`](settings.html#std-setting-SECURE_CONTENT_TYPE_NOSNIFF), [`SECURE_REFERRER_POLICY`](settings.html#std-setting-SECURE_REFERRER_POLICY),
-  [`SECURE_CROSS_ORIGIN_OPENER_POLICY`](settings.html#std-setting-SECURE_CROSS_ORIGIN_OPENER_POLICY), and
-  [`SECURE_SSL_REDIRECT`](settings.html#std-setting-SECURE_SSL_REDIRECT) settings will have no effect.
+  [`django.middleware.security.SecurityMiddleware`](middleware.md#django.middleware.security.SecurityMiddleware "django.middleware.security.SecurityMiddleware") in your
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE) so the [`SECURE_HSTS_SECONDS`](settings.md#std-setting-SECURE_HSTS_SECONDS),
+  [`SECURE_CONTENT_TYPE_NOSNIFF`](settings.md#std-setting-SECURE_CONTENT_TYPE_NOSNIFF), [`SECURE_REFERRER_POLICY`](settings.md#std-setting-SECURE_REFERRER_POLICY),
+  [`SECURE_CROSS_ORIGIN_OPENER_POLICY`](settings.md#std-setting-SECURE_CROSS_ORIGIN_OPENER_POLICY), and
+  [`SECURE_SSL_REDIRECT`](settings.md#std-setting-SECURE_SSL_REDIRECT) settings will have no effect.
 - **security.W002**: You do not have
-  [`django.middleware.clickjacking.XFrameOptionsMiddleware`](middleware.html#django.middleware.clickjacking.XFrameOptionsMiddleware "django.middleware.clickjacking.XFrameOptionsMiddleware") in your
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE), so your pages will not be served with an
+  [`django.middleware.clickjacking.XFrameOptionsMiddleware`](middleware.md#django.middleware.clickjacking.XFrameOptionsMiddleware "django.middleware.clickjacking.XFrameOptionsMiddleware") in your
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE), so your pages will not be served with an
   `'x-frame-options'` header. Unless there is a good reason for your
   site to be served in a frame, you should consider enabling this
   header to help prevent clickjacking attacks.
 - **security.W003**: You don’t appear to be using Django’s built-in cross-site
   request forgery protection via the middleware
-  ([`django.middleware.csrf.CsrfViewMiddleware`](middleware.html#django.middleware.csrf.CsrfViewMiddleware "django.middleware.csrf.CsrfViewMiddleware") is not in your
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE)). Enabling the middleware is the safest
+  ([`django.middleware.csrf.CsrfViewMiddleware`](middleware.md#django.middleware.csrf.CsrfViewMiddleware "django.middleware.csrf.CsrfViewMiddleware") is not in your
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE)). Enabling the middleware is the safest
   approach to ensure you don’t leave any holes.
 - **security.W004**: You have not set a value for the
-  [`SECURE_HSTS_SECONDS`](settings.html#std-setting-SECURE_HSTS_SECONDS) setting. If your entire site is served only
+  [`SECURE_HSTS_SECONDS`](settings.md#std-setting-SECURE_HSTS_SECONDS) setting. If your entire site is served only
   over SSL, you may want to consider setting a value and enabling [HTTP
-  Strict Transport Security](middleware.html#http-strict-transport-security). Be sure to read
+  Strict Transport Security](middleware.md#http-strict-transport-security). Be sure to read
   the documentation first; enabling HSTS carelessly can cause serious,
   irreversible problems.
 - **security.W005**: You have not set the
-  [`SECURE_HSTS_INCLUDE_SUBDOMAINS`](settings.html#std-setting-SECURE_HSTS_INCLUDE_SUBDOMAINS) setting to `True`. Without this,
+  [`SECURE_HSTS_INCLUDE_SUBDOMAINS`](settings.md#std-setting-SECURE_HSTS_INCLUDE_SUBDOMAINS) setting to `True`. Without this,
   your site is potentially vulnerable to attack via an insecure connection to a
   subdomain. Only set this to `True` if you are certain that all subdomains of
   your domain should be served exclusively via SSL.
-- **security.W006**: Your [`SECURE_CONTENT_TYPE_NOSNIFF`](settings.html#std-setting-SECURE_CONTENT_TYPE_NOSNIFF) setting is not
+- **security.W006**: Your [`SECURE_CONTENT_TYPE_NOSNIFF`](settings.md#std-setting-SECURE_CONTENT_TYPE_NOSNIFF) setting is not
   set to `True`, so your pages will not be served with an
   `'X-Content-Type-Options: nosniff'` header. You should consider enabling
   this header to prevent the browser from identifying content types incorrectly.
@@ -496,69 +496,69 @@ The following checks are run if you use the [`check --deploy`](django-admin.html
   this header to activate the browser’s XSS filtering and help prevent XSS
   attacks. *This check is removed in Django 3.0 as the* `X-XSS-Protection`
   *header is no longer honored by modern browsers.*
-- **security.W008**: Your [`SECURE_SSL_REDIRECT`](settings.html#std-setting-SECURE_SSL_REDIRECT) setting is not set to
+- **security.W008**: Your [`SECURE_SSL_REDIRECT`](settings.md#std-setting-SECURE_SSL_REDIRECT) setting is not set to
   `True`. Unless your site should be available over both SSL and non-SSL
   connections, you may want to either set this setting to `True` or configure
   a load balancer or reverse-proxy server to redirect all connections to HTTPS.
-- **security.W009**: Your [`SECRET_KEY`](settings.html#std-setting-SECRET_KEY) has less than 50 characters,
+- **security.W009**: Your [`SECRET_KEY`](settings.md#std-setting-SECRET_KEY) has less than 50 characters,
   less than 5 unique characters, or it’s prefixed with `'django-insecure-'`
   indicating that it was generated automatically by Django. Please generate a
   long and random value, otherwise many of Django’s security-critical features
   will be vulnerable to attack.
-- **security.W010**: You have [`django.contrib.sessions`](../topics/http/sessions.html#module-django.contrib.sessions "django.contrib.sessions: Provides session management for Django projects.") in your
-  [`INSTALLED_APPS`](settings.html#std-setting-INSTALLED_APPS) but you have not set
-  [`SESSION_COOKIE_SECURE`](settings.html#std-setting-SESSION_COOKIE_SECURE) to `True`. Using a secure-only session
+- **security.W010**: You have [`django.contrib.sessions`](../topics/http/sessions.md#module-django.contrib.sessions "django.contrib.sessions: Provides session management for Django projects.") in your
+  [`INSTALLED_APPS`](settings.md#std-setting-INSTALLED_APPS) but you have not set
+  [`SESSION_COOKIE_SECURE`](settings.md#std-setting-SESSION_COOKIE_SECURE) to `True`. Using a secure-only session
   cookie makes it more difficult for network traffic sniffers to hijack user
   sessions.
 - **security.W011**: You have
-  [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.html#django.contrib.sessions.middleware.SessionMiddleware "django.contrib.sessions.middleware.SessionMiddleware") in your
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE), but you have not set [`SESSION_COOKIE_SECURE`](settings.html#std-setting-SESSION_COOKIE_SECURE)
+  [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.md#django.contrib.sessions.middleware.SessionMiddleware "django.contrib.sessions.middleware.SessionMiddleware") in your
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE), but you have not set [`SESSION_COOKIE_SECURE`](settings.md#std-setting-SESSION_COOKIE_SECURE)
   to `True`. Using a secure-only session cookie makes it more difficult for
   network traffic sniffers to hijack user sessions.
-- **security.W012**: [`SESSION_COOKIE_SECURE`](settings.html#std-setting-SESSION_COOKIE_SECURE) is not set to `True`.
+- **security.W012**: [`SESSION_COOKIE_SECURE`](settings.md#std-setting-SESSION_COOKIE_SECURE) is not set to `True`.
   Using a secure-only session cookie makes it more difficult for network traffic
   sniffers to hijack user sessions.
-- **security.W013**: You have [`django.contrib.sessions`](../topics/http/sessions.html#module-django.contrib.sessions "django.contrib.sessions: Provides session management for Django projects.") in your
-  [`INSTALLED_APPS`](settings.html#std-setting-INSTALLED_APPS), but you have not set
-  [`SESSION_COOKIE_HTTPONLY`](settings.html#std-setting-SESSION_COOKIE_HTTPONLY) to `True`. Using an `HttpOnly` session
+- **security.W013**: You have [`django.contrib.sessions`](../topics/http/sessions.md#module-django.contrib.sessions "django.contrib.sessions: Provides session management for Django projects.") in your
+  [`INSTALLED_APPS`](settings.md#std-setting-INSTALLED_APPS), but you have not set
+  [`SESSION_COOKIE_HTTPONLY`](settings.md#std-setting-SESSION_COOKIE_HTTPONLY) to `True`. Using an `HttpOnly` session
   cookie makes it more difficult for cross-site scripting attacks to hijack user
   sessions.
 - **security.W014**: You have
-  [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.html#django.contrib.sessions.middleware.SessionMiddleware "django.contrib.sessions.middleware.SessionMiddleware") in your
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE), but you have not set [`SESSION_COOKIE_HTTPONLY`](settings.html#std-setting-SESSION_COOKIE_HTTPONLY)
+  [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.md#django.contrib.sessions.middleware.SessionMiddleware "django.contrib.sessions.middleware.SessionMiddleware") in your
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE), but you have not set [`SESSION_COOKIE_HTTPONLY`](settings.md#std-setting-SESSION_COOKIE_HTTPONLY)
   to `True`. Using an `HttpOnly` session cookie makes it more difficult for
   cross-site scripting attacks to hijack user sessions.
-- **security.W015**: [`SESSION_COOKIE_HTTPONLY`](settings.html#std-setting-SESSION_COOKIE_HTTPONLY) is not set to `True`.
+- **security.W015**: [`SESSION_COOKIE_HTTPONLY`](settings.md#std-setting-SESSION_COOKIE_HTTPONLY) is not set to `True`.
   Using an `HttpOnly` session cookie makes it more difficult for cross-site
   scripting attacks to hijack user sessions.
-- **security.W016**: [`CSRF_COOKIE_SECURE`](settings.html#std-setting-CSRF_COOKIE_SECURE) is not set to `True`.
+- **security.W016**: [`CSRF_COOKIE_SECURE`](settings.md#std-setting-CSRF_COOKIE_SECURE) is not set to `True`.
   Using a secure-only CSRF cookie makes it more difficult for network traffic
   sniffers to steal the CSRF token.
-- **security.W017**: [`CSRF_COOKIE_HTTPONLY`](settings.html#std-setting-CSRF_COOKIE_HTTPONLY) is not set to `True`.
+- **security.W017**: [`CSRF_COOKIE_HTTPONLY`](settings.md#std-setting-CSRF_COOKIE_HTTPONLY) is not set to `True`.
   Using an `HttpOnly` CSRF cookie makes it more difficult for cross-site
   scripting attacks to steal the CSRF token. *This check is removed in Django
-  1.11 as the* [`CSRF_COOKIE_HTTPONLY`](settings.html#std-setting-CSRF_COOKIE_HTTPONLY) *setting offers no practical
+  1.11 as the* [`CSRF_COOKIE_HTTPONLY`](settings.md#std-setting-CSRF_COOKIE_HTTPONLY) *setting offers no practical
   benefit.*
-- **security.W018**: You should not have [`DEBUG`](settings.html#std-setting-DEBUG) set to `True` in
+- **security.W018**: You should not have [`DEBUG`](settings.md#std-setting-DEBUG) set to `True` in
   deployment.
 - **security.W019**: You have
-  [`django.middleware.clickjacking.XFrameOptionsMiddleware`](middleware.html#django.middleware.clickjacking.XFrameOptionsMiddleware "django.middleware.clickjacking.XFrameOptionsMiddleware") in your
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE), but [`X_FRAME_OPTIONS`](settings.html#std-setting-X_FRAME_OPTIONS) is not set to
+  [`django.middleware.clickjacking.XFrameOptionsMiddleware`](middleware.md#django.middleware.clickjacking.XFrameOptionsMiddleware "django.middleware.clickjacking.XFrameOptionsMiddleware") in your
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE), but [`X_FRAME_OPTIONS`](settings.md#std-setting-X_FRAME_OPTIONS) is not set to
   `'DENY'`. Unless there is a good reason for your site to serve other parts
   of itself in a frame, you should change it to `'DENY'`.
-- **security.W020**: [`ALLOWED_HOSTS`](settings.html#std-setting-ALLOWED_HOSTS) must not be empty in deployment.
+- **security.W020**: [`ALLOWED_HOSTS`](settings.md#std-setting-ALLOWED_HOSTS) must not be empty in deployment.
 - **security.W021**: You have not set the
-  [`SECURE_HSTS_PRELOAD`](settings.html#std-setting-SECURE_HSTS_PRELOAD) setting to `True`. Without this, your site
+  [`SECURE_HSTS_PRELOAD`](settings.md#std-setting-SECURE_HSTS_PRELOAD) setting to `True`. Without this, your site
   cannot be submitted to the browser preload list.
-- **security.W022**: You have not set the [`SECURE_REFERRER_POLICY`](settings.html#std-setting-SECURE_REFERRER_POLICY)
+- **security.W022**: You have not set the [`SECURE_REFERRER_POLICY`](settings.md#std-setting-SECURE_REFERRER_POLICY)
   setting. Without this, your site will not send a Referrer-Policy header. You
   should consider enabling this header to protect user privacy.
-- **security.E023**: You have set the [`SECURE_REFERRER_POLICY`](settings.html#std-setting-SECURE_REFERRER_POLICY) setting
+- **security.E023**: You have set the [`SECURE_REFERRER_POLICY`](settings.md#std-setting-SECURE_REFERRER_POLICY) setting
   to an invalid value.
 - **security.E024**: You have set the
-  [`SECURE_CROSS_ORIGIN_OPENER_POLICY`](settings.html#std-setting-SECURE_CROSS_ORIGIN_OPENER_POLICY) setting to an invalid value.
+  [`SECURE_CROSS_ORIGIN_OPENER_POLICY`](settings.md#std-setting-SECURE_CROSS_ORIGIN_OPENER_POLICY) setting to an invalid value.
 - **security.W025**: Your
-  [`SECRET_KEY_FALLBACKS[n]`](settings.html#std-setting-SECRET_KEY_FALLBACKS) has less than 50
+  [`SECRET_KEY_FALLBACKS[n]`](settings.md#std-setting-SECRET_KEY_FALLBACKS) has less than 50
   characters, less than 5 unique characters, or it’s prefixed with
   `'django-insecure-'` indicating that it was generated automatically by
   Django. Please generate a long and random value, otherwise many of Django’s
@@ -582,16 +582,16 @@ configured:
 
 ### Templates[¶](#templates "Link to this heading")
 
-The following checks verify that your [`TEMPLATES`](settings.html#std-setting-TEMPLATES) setting is correctly
+The following checks verify that your [`TEMPLATES`](settings.md#std-setting-TEMPLATES) setting is correctly
 configured:
 
 - **templates.E001**: You have `'APP_DIRS': True` in your
-  [`TEMPLATES`](settings.html#std-setting-TEMPLATES) but also specify `'loaders'` in `OPTIONS`. Either
+  [`TEMPLATES`](settings.md#std-setting-TEMPLATES) but also specify `'loaders'` in `OPTIONS`. Either
   remove `APP_DIRS` or remove the `'loaders'` option. *This check is
   removed in Django 5.1 as system checks may now raise*
   `ImproperlyConfigured` *instead.*
-- **templates.E002**: `string_if_invalid` in [`TEMPLATES`](settings.html#std-setting-TEMPLATES)
-  [`OPTIONS`](settings.html#std-setting-TEMPLATES-OPTIONS) must be a string but got: `{value}`
+- **templates.E002**: `string_if_invalid` in [`TEMPLATES`](settings.md#std-setting-TEMPLATES)
+  [`OPTIONS`](settings.md#std-setting-TEMPLATES-OPTIONS) must be a string but got: `{value}`
   (`{type}`).
 - **templates.E003**:`<name>` is used for multiple template tag modules:
   `<module list>`. *This check was changed to* `templates.W003` *in Django
@@ -604,13 +604,13 @@ configured:
 The following checks are performed on your translation configuration:
 
 - **translation.E001**: You have provided an invalid value for the
-  [`LANGUAGE_CODE`](settings.html#std-setting-LANGUAGE_CODE) setting: `<value>`.
+  [`LANGUAGE_CODE`](settings.md#std-setting-LANGUAGE_CODE) setting: `<value>`.
 - **translation.E002**: You have provided an invalid language code in the
-  [`LANGUAGES`](settings.html#std-setting-LANGUAGES) setting: `<value>`.
+  [`LANGUAGES`](settings.md#std-setting-LANGUAGES) setting: `<value>`.
 - **translation.E003**: You have provided an invalid language code in the
-  [`LANGUAGES_BIDI`](settings.html#std-setting-LANGUAGES_BIDI) setting: `<value>`.
+  [`LANGUAGES_BIDI`](settings.md#std-setting-LANGUAGES_BIDI) setting: `<value>`.
 - **translation.E004**: You have provided a value for the
-  [`LANGUAGE_CODE`](settings.html#std-setting-LANGUAGE_CODE) setting that is not in the [`LANGUAGES`](settings.html#std-setting-LANGUAGES)
+  [`LANGUAGE_CODE`](settings.md#std-setting-LANGUAGE_CODE) setting that is not in the [`LANGUAGES`](settings.md#std-setting-LANGUAGES)
   setting.
 
 ### URLs[¶](#urls "Link to this heading")
@@ -618,21 +618,21 @@ The following checks are performed on your translation configuration:
 The following checks are performed on your URL configuration:
 
 - **urls.W001**: Your URL pattern `<pattern>` uses
-  [`include()`](urls.html#django.urls.include "django.urls.include") with a `route` ending with a `$`. Remove the
+  [`include()`](urls.md#django.urls.include "django.urls.include") with a `route` ending with a `$`. Remove the
   dollar from the `route` to avoid problems including URLs.
 - **urls.W002**: Your URL pattern `<pattern>` has a `route` beginning with
   a `/`. Remove this slash as it is unnecessary. If this pattern is targeted
-  in an [`include()`](urls.html#django.urls.include "django.urls.include"), ensure the [`include()`](urls.html#django.urls.include "django.urls.include")
+  in an [`include()`](urls.md#django.urls.include "django.urls.include"), ensure the [`include()`](urls.md#django.urls.include "django.urls.include")
   pattern has a trailing `/`.
 - **urls.W003**: Your URL pattern `<pattern>` has a `name`
   including a `:`. Remove the colon, to avoid ambiguous namespace
   references.
 - **urls.E004**: Your URL pattern `<pattern>` is invalid. Ensure that
-  `urlpatterns` is a list of [`path()`](urls.html#django.urls.path "django.urls.path") and/or
-  [`re_path()`](urls.html#django.urls.re_path "django.urls.re_path") instances.
+  `urlpatterns` is a list of [`path()`](urls.md#django.urls.path "django.urls.path") and/or
+  [`re_path()`](urls.md#django.urls.re_path "django.urls.re_path") instances.
 - **urls.W005**: URL namespace `<namespace>` isn’t unique. You may not be
   able to reverse all URLs in this namespace.
-- **urls.E006**: The [`MEDIA_URL`](settings.html#std-setting-MEDIA_URL)/ [`STATIC_URL`](settings.html#std-setting-STATIC_URL) setting must
+- **urls.E006**: The [`MEDIA_URL`](settings.md#std-setting-MEDIA_URL)/ [`STATIC_URL`](settings.md#std-setting-STATIC_URL) setting must
   end with a slash.
 - **urls.E007**: The custom `handlerXXX` view `'path.to.view'` does not
   take the correct number of arguments (…).
@@ -650,7 +650,7 @@ The following checks are performed on your URL configuration:
 Admin checks are all performed as part of the `admin` tag.
 
 The following checks are performed on any
-[`ModelAdmin`](contrib/admin/index.html#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin") (or subclass) that is registered
+[`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin") (or subclass) that is registered
 with the admin site:
 
 - **admin.E001**: The value of `raw_id_fields` must be a list or tuple.
@@ -723,7 +723,7 @@ with the admin site:
 #### `ModelAdmin`[¶](#modeladmin "Link to this heading")
 
 The following checks are performed on any
-[`ModelAdmin`](contrib/admin/index.html#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin") that is registered
+[`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin") that is registered
 with the admin site:
 
 - **admin.E101**: The value of `save_as` must be a boolean.
@@ -782,8 +782,8 @@ with the admin site:
 #### `InlineModelAdmin`[¶](#inlinemodeladmin "Link to this heading")
 
 The following checks are performed on any
-[`InlineModelAdmin`](contrib/admin/index.html#django.contrib.admin.InlineModelAdmin "django.contrib.admin.InlineModelAdmin") that is registered as an
-inline on a [`ModelAdmin`](contrib/admin/index.html#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin").
+[`InlineModelAdmin`](contrib/admin/index.md#django.contrib.admin.InlineModelAdmin "django.contrib.admin.InlineModelAdmin") that is registered as an
+inline on a [`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin").
 
 - **admin.E201**: Cannot exclude the field `<field name>`, because it is the
   foreign key to the parent model `<app_label>.<model>`.
@@ -799,8 +799,8 @@ inline on a [`ModelAdmin`](contrib/admin/index.html#django.contrib.admin.ModelAd
 #### `GenericInlineModelAdmin`[¶](#genericinlinemodeladmin "Link to this heading")
 
 The following checks are performed on any
-[`GenericInlineModelAdmin`](contrib/contenttypes.html#django.contrib.contenttypes.admin.GenericInlineModelAdmin "django.contrib.contenttypes.admin.GenericInlineModelAdmin") that is
-registered as an inline on a [`ModelAdmin`](contrib/admin/index.html#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin").
+[`GenericInlineModelAdmin`](contrib/contenttypes.md#django.contrib.contenttypes.admin.GenericInlineModelAdmin "django.contrib.contenttypes.admin.GenericInlineModelAdmin") that is
+registered as an inline on a [`ModelAdmin`](contrib/admin/index.md#django.contrib.admin.ModelAdmin "django.contrib.admin.ModelAdmin").
 
 - **admin.E301**: `<model>` has no `GenericForeignKey`.
 - **admin.E302**: `'ct_field'` references `<label>`, which is not a field
@@ -813,34 +813,34 @@ registered as an inline on a [`ModelAdmin`](contrib/admin/index.html#django.cont
 #### `AdminSite`[¶](#adminsite "Link to this heading")
 
 The following checks are performed on the default
-[`AdminSite`](contrib/admin/index.html#django.contrib.admin.AdminSite "django.contrib.admin.AdminSite"):
+[`AdminSite`](contrib/admin/index.md#django.contrib.admin.AdminSite "django.contrib.admin.AdminSite"):
 
-- **admin.E401**: [`django.contrib.contenttypes`](contrib/contenttypes.html#module-django.contrib.contenttypes "django.contrib.contenttypes: Provides generic interface to installed models.") must be in
-  [`INSTALLED_APPS`](settings.html#std-setting-INSTALLED_APPS) in order to use the admin application.
-- **admin.E402**: [`django.contrib.auth.context_processors.auth`](templates/api.html#django.contrib.auth.context_processors.auth "django.contrib.auth.context_processors.auth")
-  must be enabled in [`DjangoTemplates`](../topics/templates.html#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
-  ([`TEMPLATES`](settings.html#std-setting-TEMPLATES)) if using the default auth backend in order to use the
+- **admin.E401**: [`django.contrib.contenttypes`](contrib/contenttypes.md#module-django.contrib.contenttypes "django.contrib.contenttypes: Provides generic interface to installed models.") must be in
+  [`INSTALLED_APPS`](settings.md#std-setting-INSTALLED_APPS) in order to use the admin application.
+- **admin.E402**: [`django.contrib.auth.context_processors.auth`](templates/api.md#django.contrib.auth.context_processors.auth "django.contrib.auth.context_processors.auth")
+  must be enabled in [`DjangoTemplates`](../topics/templates.md#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
+  ([`TEMPLATES`](settings.md#std-setting-TEMPLATES)) if using the default auth backend in order to use the
   admin application.
-- **admin.E403**: A [`django.template.backends.django.DjangoTemplates`](../topics/templates.html#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
-  instance must be configured in [`TEMPLATES`](settings.html#std-setting-TEMPLATES) in order to use the
+- **admin.E403**: A [`django.template.backends.django.DjangoTemplates`](../topics/templates.md#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
+  instance must be configured in [`TEMPLATES`](settings.md#std-setting-TEMPLATES) in order to use the
   admin application.
 - **admin.E404**: `django.contrib.messages.context_processors.messages`
-  must be enabled in [`DjangoTemplates`](../topics/templates.html#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
-  ([`TEMPLATES`](settings.html#std-setting-TEMPLATES)) in order to use the admin application.
-- **admin.E405**: [`django.contrib.auth`](../topics/auth/index.html#module-django.contrib.auth "django.contrib.auth: Django's authentication framework.") must be in
-  [`INSTALLED_APPS`](settings.html#std-setting-INSTALLED_APPS) in order to use the admin application.
-- **admin.E406**: [`django.contrib.messages`](contrib/messages.html#module-django.contrib.messages "django.contrib.messages: Provides cookie- and session-based temporary message storage.") must be in
-  [`INSTALLED_APPS`](settings.html#std-setting-INSTALLED_APPS) in order to use the admin application.
+  must be enabled in [`DjangoTemplates`](../topics/templates.md#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
+  ([`TEMPLATES`](settings.md#std-setting-TEMPLATES)) in order to use the admin application.
+- **admin.E405**: [`django.contrib.auth`](../topics/auth/index.md#module-django.contrib.auth "django.contrib.auth: Django's authentication framework.") must be in
+  [`INSTALLED_APPS`](settings.md#std-setting-INSTALLED_APPS) in order to use the admin application.
+- **admin.E406**: [`django.contrib.messages`](contrib/messages.md#module-django.contrib.messages "django.contrib.messages: Provides cookie- and session-based temporary message storage.") must be in
+  [`INSTALLED_APPS`](settings.md#std-setting-INSTALLED_APPS) in order to use the admin application.
 - **admin.E408**:
-  [`django.contrib.auth.middleware.AuthenticationMiddleware`](middleware.html#django.contrib.auth.middleware.AuthenticationMiddleware "django.contrib.auth.middleware.AuthenticationMiddleware") must be in
-  [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE) in order to use the admin application.
-- **admin.E409**: [`django.contrib.messages.middleware.MessageMiddleware`](middleware.html#django.contrib.messages.middleware.MessageMiddleware "django.contrib.messages.middleware.MessageMiddleware")
-  must be in [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE) in order to use the admin application.
-- **admin.E410**: [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.html#django.contrib.sessions.middleware.SessionMiddleware "django.contrib.sessions.middleware.SessionMiddleware")
-  must be in [`MIDDLEWARE`](settings.html#std-setting-MIDDLEWARE) in order to use the admin application.
+  [`django.contrib.auth.middleware.AuthenticationMiddleware`](middleware.md#django.contrib.auth.middleware.AuthenticationMiddleware "django.contrib.auth.middleware.AuthenticationMiddleware") must be in
+  [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE) in order to use the admin application.
+- **admin.E409**: [`django.contrib.messages.middleware.MessageMiddleware`](middleware.md#django.contrib.messages.middleware.MessageMiddleware "django.contrib.messages.middleware.MessageMiddleware")
+  must be in [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE) in order to use the admin application.
+- **admin.E410**: [`django.contrib.sessions.middleware.SessionMiddleware`](middleware.md#django.contrib.sessions.middleware.SessionMiddleware "django.contrib.sessions.middleware.SessionMiddleware")
+  must be in [`MIDDLEWARE`](settings.md#std-setting-MIDDLEWARE) in order to use the admin application.
 - **admin.W411**: `django.template.context_processors.request` must be
-  enabled in [`DjangoTemplates`](../topics/templates.html#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
-  ([`TEMPLATES`](settings.html#std-setting-TEMPLATES)) in order to use the admin navigation sidebar.
+  enabled in [`DjangoTemplates`](../topics/templates.md#django.template.backends.django.DjangoTemplates "django.template.backends.django.DjangoTemplates")
+  ([`TEMPLATES`](settings.md#std-setting-TEMPLATES)) in order to use the admin navigation sidebar.
 
 ### `auth`[¶](#auth "Link to this heading")
 
@@ -855,7 +855,7 @@ The following checks are performed on the default
   permission for model `<model>`.
 - **auth.E006**: The permission codenamed `<codename>` is duplicated for model
   `<model>`.
-- **auth.E007**: The [`verbose_name`](models/options.html#django.db.models.Options.verbose_name "django.db.models.Options.verbose_name") of model `<model>` must be at most
+- **auth.E007**: The [`verbose_name`](models/options.md#django.db.models.Options.verbose_name "django.db.models.Options.verbose_name") of model `<model>` must be at most
   244 characters for its builtin permission names
   to be at most 255 characters.
 - **auth.E008**: The permission named `<name>` of model `<model>` is longer
@@ -871,15 +871,15 @@ The following checks are performed on the default
 - **auth.E012**: The permission codenamed `<codename>` of model `<model>`
   is longer than 100 characters.
 - **auth.E013**: In order to use
-  [`django.contrib.auth.middleware.LoginRequiredMiddleware`](middleware.html#django.contrib.auth.middleware.LoginRequiredMiddleware "django.contrib.auth.middleware.LoginRequiredMiddleware"),
-  [`django.contrib.auth.middleware.AuthenticationMiddleware`](middleware.html#django.contrib.auth.middleware.AuthenticationMiddleware "django.contrib.auth.middleware.AuthenticationMiddleware") must be
+  [`django.contrib.auth.middleware.LoginRequiredMiddleware`](middleware.md#django.contrib.auth.middleware.LoginRequiredMiddleware "django.contrib.auth.middleware.LoginRequiredMiddleware"),
+  [`django.contrib.auth.middleware.AuthenticationMiddleware`](middleware.md#django.contrib.auth.middleware.AuthenticationMiddleware "django.contrib.auth.middleware.AuthenticationMiddleware") must be
   defined before it in MIDDLEWARE.
 
 ### `contenttypes`[¶](#contenttypes "Link to this heading")
 
 The following checks are performed when a model contains a
-[`GenericForeignKey`](contrib/contenttypes.html#django.contrib.contenttypes.fields.GenericForeignKey "django.contrib.contenttypes.fields.GenericForeignKey") or
-[`GenericRelation`](contrib/contenttypes.html#django.contrib.contenttypes.fields.GenericRelation "django.contrib.contenttypes.fields.GenericRelation"):
+[`GenericForeignKey`](contrib/contenttypes.md#django.contrib.contenttypes.fields.GenericForeignKey "django.contrib.contenttypes.fields.GenericForeignKey") or
+[`GenericRelation`](contrib/contenttypes.md#django.contrib.contenttypes.fields.GenericRelation "django.contrib.contenttypes.fields.GenericRelation"):
 
 - **contenttypes.E001**: The `GenericForeignKey` object ID references the
   nonexistent field `<field>`.
@@ -892,7 +892,7 @@ The following checks are performed when a model contains a
 
 ### `postgres`[¶](#postgres "Link to this heading")
 
-The following checks are performed on [`django.contrib.postgres`](contrib/postgres/index.html#module-django.contrib.postgres "django.contrib.postgres: PostgreSQL-specific fields and features") model
+The following checks are performed on [`django.contrib.postgres`](contrib/postgres/index.md#module-django.contrib.postgres "django.contrib.postgres: PostgreSQL-specific fields and features") model
 fields:
 
 - **postgres.E001**: Base field for array has errors: …
@@ -905,35 +905,35 @@ fields:
 ### `sites`[¶](#sites "Link to this heading")
 
 The following checks are performed on any model using a
-[`CurrentSiteManager`](contrib/sites.html#django.contrib.sites.managers.CurrentSiteManager "django.contrib.sites.managers.CurrentSiteManager"):
+[`CurrentSiteManager`](contrib/sites.md#django.contrib.sites.managers.CurrentSiteManager "django.contrib.sites.managers.CurrentSiteManager"):
 
 - **sites.E001**: `CurrentSiteManager` could not find a field named
   `<field name>`.
 - **sites.E002**: `CurrentSiteManager` cannot use `<field>` as it is not a
   foreign key or a many-to-many field.
 
-The following checks verify that [`django.contrib.sites`](contrib/sites.html#module-django.contrib.sites "django.contrib.sites: Lets you operate multiple websites from the same database and Django project") is correctly
+The following checks verify that [`django.contrib.sites`](contrib/sites.md#module-django.contrib.sites "django.contrib.sites: Lets you operate multiple websites from the same database and Django project") is correctly
 configured:
 
-- **sites.E101**: The [`SITE_ID`](settings.html#std-setting-SITE_ID) setting must be an integer.
+- **sites.E101**: The [`SITE_ID`](settings.md#std-setting-SITE_ID) setting must be an integer.
 
 ### `staticfiles`[¶](#staticfiles "Link to this heading")
 
-The following checks verify that [`django.contrib.staticfiles`](contrib/staticfiles.html#module-django.contrib.staticfiles "django.contrib.staticfiles: An app for handling static files.") is correctly
+The following checks verify that [`django.contrib.staticfiles`](contrib/staticfiles.md#module-django.contrib.staticfiles "django.contrib.staticfiles: An app for handling static files.") is correctly
 configured:
 
-- **staticfiles.E001**: The [`STATICFILES_DIRS`](settings.html#std-setting-STATICFILES_DIRS) setting is not a tuple
+- **staticfiles.E001**: The [`STATICFILES_DIRS`](settings.md#std-setting-STATICFILES_DIRS) setting is not a tuple
   or list.
-- **staticfiles.E002**: The [`STATICFILES_DIRS`](settings.html#std-setting-STATICFILES_DIRS) setting should not
-  contain the [`STATIC_ROOT`](settings.html#std-setting-STATIC_ROOT) setting.
+- **staticfiles.E002**: The [`STATICFILES_DIRS`](settings.md#std-setting-STATICFILES_DIRS) setting should not
+  contain the [`STATIC_ROOT`](settings.md#std-setting-STATIC_ROOT) setting.
 - **staticfiles.E003**: The prefix `<prefix>` in the
-  [`STATICFILES_DIRS`](settings.html#std-setting-STATICFILES_DIRS) setting must not end with a slash.
+  [`STATICFILES_DIRS`](settings.md#std-setting-STATICFILES_DIRS) setting must not end with a slash.
 - **staticfiles.W004**: The directory `<directory>` in the
-  [`STATICFILES_DIRS`](settings.html#std-setting-STATICFILES_DIRS) does not exist.
-- **staticfiles.E005**: The [`STORAGES`](settings.html#std-setting-STORAGES) setting must define a
+  [`STATICFILES_DIRS`](settings.md#std-setting-STATICFILES_DIRS) does not exist.
+- **staticfiles.E005**: The [`STORAGES`](settings.md#std-setting-STORAGES) setting must define a
   `staticfiles` storage.
 
-### [Table of Contents](../contents.html)
+### [Table of Contents](../contents.md)
 
 - [System check framework](#)
   - [API reference](#api-reference)
@@ -970,11 +970,11 @@ configured:
 
 #### Previous topic
 
-[Applications](applications.html "previous chapter")
+[Applications](applications.md "previous chapter")
 
 #### Next topic
 
-[Built-in class-based views API](class-based-views/index.html "next chapter")
+[Built-in class-based views API](class-based-views/index.md "next chapter")
 
 ### This Page
 
@@ -986,8 +986,8 @@ configured:
 
 Oct 12, 2025
 
-« [previous](applications.html "Applications")
+« [previous](applications.md "Applications")
 |
-[up](index.html "API Reference")
+[up](index.md "API Reference")
 |
-[next](class-based-views/index.html "Built-in class-based views API") »
+[next](class-based-views/index.md "Built-in class-based views API") »

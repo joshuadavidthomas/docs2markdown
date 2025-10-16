@@ -34,13 +34,6 @@ class Format(Enum):
             case self.LLMSTXT:
                 return LlmsTxtConverter
 
-    def get_extension(self):
-        match self:
-            case self.GHFM:
-                return ".md"
-            case self.LLMSTXT:
-                return ".txt"
-
 
 def convert_file(
     html_file: Path, doc_type: DocType, format: Format = Format.GHFM
@@ -63,7 +56,7 @@ def convert_directory(
     for html_file in html_files:
         try:
             relative_path = html_file.relative_to(input_dir)
-            output_file = output_dir / relative_path.with_suffix(format.get_extension())
+            output_file = output_dir / relative_path.with_suffix(".md")
 
             markdown = convert_file(html_file, doc_type, format)
 

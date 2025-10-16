@@ -134,7 +134,7 @@ def test_directory_with_io_error(tmp_path, monkeypatch):
 )
 def test_convert_with_format_option(format, should_contain_html, tmp_path):
     html_file = Path("tests/fixtures/format_test.html")
-    output_file = tmp_path / f"output{format.get_extension()}"
+    output_file = tmp_path / "output.md"
 
     result = runner.invoke(
         app, [str(html_file), str(output_file), "--format", format.value]
@@ -168,5 +168,5 @@ def test_convert_directory_with_format(format, tmp_path):
     )
 
     assert result.exit_code == 0
-    output_files = list(output_dir.glob(f"*{format.get_extension()}"))
+    output_files = list(output_dir.glob("*.md"))
     assert len(output_files) == 1

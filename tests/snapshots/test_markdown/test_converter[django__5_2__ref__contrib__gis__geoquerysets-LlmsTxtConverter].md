@@ -1,36 +1,36 @@
 GIS QuerySet API Reference — Django 5.2.8.dev20251011170327 documentation
 
-# [Django 5.2.8.dev20251011170327 documentation](../../../index.html)
+# [Django 5.2.8.dev20251011170327 documentation](../../../index.md)
 
-[Home](../../../index.html "Home page") |
-[Table of contents](../../../contents.html "Table of contents") |
-[Index](../../../genindex.html "Global index") |
-[Modules](../../../py-modindex.html "Module index")
+[Home](../../../index.md "Home page") |
+[Table of contents](../../../contents.md "Table of contents") |
+[Index](../../../genindex.md "Global index") |
+[Modules](../../../py-modindex.md "Module index")
 
-« [previous](forms-api.html "GeoDjango Forms API")
+« [previous](forms-api.md "GeoDjango Forms API")
 |
-[up](../../index.html "API Reference")
+[up](../../index.md "API Reference")
 |
-[next](functions.html "Geographic Database Functions") »
+[next](functions.md "Geographic Database Functions") »
 
 # GIS QuerySet API Reference[¶](#gis-queryset-api-reference "Link to this heading")
 
 ## Spatial Lookups[¶](#spatial-lookups "Link to this heading")
 
-The spatial lookups in this section are available for [`GeometryField`](model-api.html#django.contrib.gis.db.models.GeometryField "django.contrib.gis.db.models.GeometryField")
-and [`RasterField`](model-api.html#django.contrib.gis.db.models.RasterField "django.contrib.gis.db.models.RasterField").
+The spatial lookups in this section are available for [`GeometryField`](model-api.md#django.contrib.gis.db.models.GeometryField "django.contrib.gis.db.models.GeometryField")
+and [`RasterField`](model-api.md#django.contrib.gis.db.models.RasterField "django.contrib.gis.db.models.RasterField").
 
-For an introduction, see the [spatial lookups introduction](db-api.html#spatial-lookups-intro). For an overview of what lookups are
+For an introduction, see the [spatial lookups introduction](db-api.md#spatial-lookups-intro). For an overview of what lookups are
 compatible with a particular spatial backend, refer to the
-[spatial lookup compatibility table](db-api.html#spatial-lookup-compatibility).
+[spatial lookup compatibility table](db-api.md#spatial-lookup-compatibility).
 
 ### Lookups with rasters[¶](#lookups-with-rasters "Link to this heading")
 
 All examples in the reference below are given for geometry fields and inputs,
 but the lookups can be used the same way with rasters on both sides. Whenever
 a lookup doesn’t support raster input, the input is automatically
-converted to a geometry where necessary using the [ST\_Polygon](https://postgis.net/docs/RT_ST_Polygon.html) function. See also the
-[introduction to raster lookups](db-api.html#spatial-lookup-raster).
+converted to a geometry where necessary using the [ST\_Polygon](https://postgis.net/docs/RT_ST_Polygon.md) function. See also the
+[introduction to raster lookups](db-api.md#spatial-lookup-raster).
 
 The database operators used by the lookups can be divided into three categories:
 
@@ -63,7 +63,7 @@ Spatial lookups with rasters are only supported for PostGIS backends
 
 ### `bbcontains`[¶](#bbcontains "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Contain.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Contain.md),
 MariaDB, MySQL, SpatiaLite, PGRaster (Native)
 
 Tests if the geometry or raster field’s bounding box completely contains the
@@ -84,7 +84,7 @@ Zipcode.objects.filter(poly__bbcontains=geom)
 
 ### `bboverlaps`[¶](#bboverlaps "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/geometry_overlaps.html),
+*Availability*: [PostGIS](https://postgis.net/docs/geometry_overlaps.md),
 MariaDB, MySQL, SpatiaLite, PGRaster (Native)
 
 Tests if the geometry field’s bounding box overlaps the lookup geometry’s
@@ -105,7 +105,7 @@ Zipcode.objects.filter(poly__bboverlaps=geom)
 
 ### `contained`[¶](#contained "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Contained.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Contained.md),
 MariaDB, MySQL, SpatiaLite, PGRaster (Native)
 
 Tests if the geometry field’s bounding box is completely contained by the
@@ -126,7 +126,7 @@ Zipcode.objects.filter(poly__contained=geom)
 
 ### `contains`[¶](#contains "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Contains.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Contains.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field spatially contains the lookup geometry.
@@ -147,7 +147,7 @@ Zipcode.objects.filter(poly__contains=geom)
 
 ### `contains_properly`[¶](#contains-properly "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_ContainsProperly.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_ContainsProperly.md),
 PGRaster (Bilateral)
 
 Returns true if the lookup geometry intersects the interior of the
@@ -165,7 +165,7 @@ Zipcode.objects.filter(poly__contains_properly=geom)
 
 ### `coveredby`[¶](#coveredby "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_CoveredBy.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_CoveredBy.md),
 Oracle, MySQL, PGRaster (Bilateral), SpatiaLite
 
 Tests if no point in the geometry field is outside the lookup geometry.
@@ -190,7 +190,7 @@ MySQL support was added.
 
 ### `covers`[¶](#covers "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Covers.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Covers.md),
 Oracle, MySQL, PGRaster (Bilateral), SpatiaLite
 
 Tests if no point in the lookup geometry is outside the geometry field.
@@ -215,7 +215,7 @@ MySQL support was added.
 
 ### `crosses`[¶](#crosses "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Crosses.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Crosses.md),
 MariaDB, MySQL, SpatiaLite, PGRaster (Conversion)
 
 Tests if the geometry field spatially crosses the lookup geometry.
@@ -235,7 +235,7 @@ Zipcode.objects.filter(poly__crosses=geom)
 
 ### `disjoint`[¶](#disjoint "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Disjoint.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Disjoint.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field is spatially disjoint from the lookup geometry.
@@ -256,7 +256,7 @@ Zipcode.objects.filter(poly__disjoint=geom)
 
 ### `equals`[¶](#equals "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Equals.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Equals.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Conversion)
 
 Tests if the geometry field is spatially equal to the lookup geometry.
@@ -277,7 +277,7 @@ Zipcode.objects.filter(poly__equals=geom)
 
 ### `exact`, `same_as`[¶](#exact-same-as "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Same.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Same.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field is “equal” to the lookup geometry. On Oracle,
@@ -300,7 +300,7 @@ Zipcode.objects.filter(poly=geom)
 
 ### `intersects`[¶](#intersects "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Intersects.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Intersects.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field spatially intersects the lookup geometry.
@@ -321,7 +321,7 @@ Zipcode.objects.filter(poly__intersects=geom)
 
 ### `isempty`[¶](#isempty "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_IsEmpty.html)
+*Availability*: [PostGIS](https://postgis.net/docs/ST_IsEmpty.md)
 
 Tests if the geometry is empty.
 
@@ -333,7 +333,7 @@ Zipcode.objects.filter(poly__isempty=True)
 
 ### `isvalid`[¶](#isvalid "Link to this heading")
 
-*Availability*: MySQL, [PostGIS](https://postgis.net/docs/ST_IsValid.html),
+*Availability*: MySQL, [PostGIS](https://postgis.net/docs/ST_IsValid.md),
 Oracle, SpatiaLite
 
 Tests if the geometry is valid.
@@ -351,7 +351,7 @@ Zipcode.objects.filter(poly__isvalid=True)
 
 ### `overlaps`[¶](#overlaps "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Overlaps.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Overlaps.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field spatially overlaps the lookup geometry.
@@ -366,7 +366,7 @@ Tests if the geometry field spatially overlaps the lookup geometry.
 
 ### `relate`[¶](#relate "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Relate.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Relate.md),
 MariaDB, Oracle, SpatiaLite, PGRaster (Conversion)
 
 Tests if the geometry field is spatially related to the lookup geometry by
@@ -439,7 +439,7 @@ SELECT ... WHERE SDO_RELATE(poly, geom, 'anyinteract')
 
 ### `touches`[¶](#touches "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Touches.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Touches.md),
 Oracle, MariaDB, MySQL, SpatiaLite
 
 Tests if the geometry field spatially touches the lookup geometry.
@@ -460,7 +460,7 @@ Zipcode.objects.filter(poly__touches=geom)
 
 ### `within`[¶](#within "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Within.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Within.md),
 Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field is spatially within the lookup geometry.
@@ -481,7 +481,7 @@ Zipcode.objects.filter(poly__within=geom)
 
 ### `left`[¶](#left "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Left.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Left.md),
 PGRaster (Conversion)
 
 Tests if the geometry field’s bounding box is strictly to the left of the
@@ -501,7 +501,7 @@ SELECT ... WHERE poly << geom
 
 ### `right`[¶](#right "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Right.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Right.md),
 PGRaster (Conversion)
 
 Tests if the geometry field’s bounding box is strictly to the right of the
@@ -521,7 +521,7 @@ SELECT ... WHERE poly >> geom
 
 ### `overlaps_left`[¶](#overlaps-left "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overleft.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overleft.md),
 PGRaster (Bilateral)
 
 Tests if the geometry field’s bounding box overlaps or is to the left of the lookup
@@ -541,7 +541,7 @@ SELECT ... WHERE poly &< geom
 
 ### `overlaps_right`[¶](#overlaps-right "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overright.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overright.md),
 PGRaster (Bilateral)
 
 Tests if the geometry field’s bounding box overlaps or is to the right of the lookup
@@ -561,7 +561,7 @@ SELECT ... WHERE poly &> geom
 
 ### `overlaps_above`[¶](#overlaps-above "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overabove.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overabove.md),
 PGRaster (Conversion)
 
 Tests if the geometry field’s bounding box overlaps or is above the lookup
@@ -581,7 +581,7 @@ SELECT ... WHERE poly |&> geom
 
 ### `overlaps_below`[¶](#overlaps-below "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overbelow.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Overbelow.md),
 PGRaster (Conversion)
 
 Tests if the geometry field’s bounding box overlaps or is below the lookup
@@ -601,7 +601,7 @@ SELECT ... WHERE poly &<| geom
 
 ### `strictly_above`[¶](#strictly-above "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Above.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Above.md),
 PGRaster (Conversion)
 
 Tests if the geometry field’s bounding box is strictly above the lookup
@@ -621,7 +621,7 @@ SELECT ... WHERE poly |>> geom
 
 ### `strictly_below`[¶](#strictly-below "Link to this heading")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Below.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Geometry_Below.md),
 PGRaster (Conversion)
 
 Tests if the geometry field’s bounding box is strictly below the lookup
@@ -644,7 +644,7 @@ SELECT ... WHERE poly <<| geom
 *Availability*: PostGIS, Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Native)
 
 For an overview on performing distance queries, please refer to
-the [distance queries introduction](db-api.html#distance-queries).
+the [distance queries introduction](db-api.md#distance-queries).
 
 Distance lookups take the following form:
 
@@ -657,17 +657,17 @@ Distance lookups take the following form:
 The value passed into a distance lookup is a tuple; the first two
 values are mandatory, and are the geometry to calculate distances to,
 and a distance value (either a number in units of the field, a
-[`Distance`](measure.html#django.contrib.gis.measure.Distance "django.contrib.gis.measure.Distance") object, or a [query
-expression](../../models/expressions.html)). To pass a band index to the lookup, use
+[`Distance`](measure.md#django.contrib.gis.measure.Distance "django.contrib.gis.measure.Distance") object, or a [query
+expression](../../models/expressions.md)). To pass a band index to the lookup, use
 a 3-tuple where the second entry is the band index.
 
 On every distance lookup except [`dwithin`](#std-fieldlookup-dwithin), an optional element,
 `'spheroid'`, may be included to use the more accurate spheroid distance
 calculation functions on fields with a geodetic coordinate system.
 
-On PostgreSQL, the `'spheroid'` option uses [ST\_DistanceSpheroid](https://postgis.net/docs/ST_Distance_Spheroid.html) instead of
-[ST\_DistanceSphere](https://postgis.net/docs/ST_DistanceSphere.html). The
-simpler [ST\_Distance](https://postgis.net/docs/ST_Distance.html) function is
+On PostgreSQL, the `'spheroid'` option uses [ST\_DistanceSpheroid](https://postgis.net/docs/ST_Distance_Spheroid.md) instead of
+[ST\_DistanceSphere](https://postgis.net/docs/ST_DistanceSphere.md). The
+simpler [ST\_Distance](https://postgis.net/docs/ST_Distance.md) function is
 used with projected coordinate systems. Rasters are converted to geometries for
 spheroid based lookups.
 
@@ -751,7 +751,7 @@ Zipcode.objects.filter(poly__distance_lte=(geom, D(m=5)))
 
 Returns models where the distance to the geometry field from the lookup
 geometry are within the given distance from one another. Note that you can only
-provide [`Distance`](measure.html#django.contrib.gis.measure.Distance "django.contrib.gis.measure.Distance") objects if the targeted
+provide [`Distance`](measure.md#django.contrib.gis.measure.Distance "django.contrib.gis.measure.Distance") objects if the targeted
 geometries are in a projected system. For geographic geometries, you should use
 units of the geometry field (e.g. degrees for `WGS84`) .
 
@@ -770,11 +770,11 @@ Zipcode.objects.filter(poly__dwithin=(geom, D(m=5)))
 ### Aggregate Functions[¶](#aggregate-functions "Link to this heading")
 
 Django provides some GIS-specific aggregate functions. For details on how to
-use these aggregate functions, see [the topic guide on aggregation](../../../topics/db/aggregation.html).
+use these aggregate functions, see [the topic guide on aggregation](../../../topics/db/aggregation.md).
 
 | Keyword Argument | Description |
 | --- | --- |
-| `tolerance` | This keyword is for Oracle only. It is for the tolerance value used by the `SDOAGGRTYPE` procedure; the [Oracle documentation](https://docs.oracle.com/en/database/oracle/oracle-database/21/spatl/spatial-concepts.html#GUID-CE10AB14-D5EA-43BA-A647-DAC9EEF41EE6) has more details. |
+| `tolerance` | This keyword is for Oracle only. It is for the tolerance value used by the `SDOAGGRTYPE` procedure; the [Oracle documentation](https://docs.oracle.com/en/database/oracle/oracle-database/21/spatl/spatial-concepts.md#GUID-CE10AB14-D5EA-43BA-A647-DAC9EEF41EE6) has more details. |
 
 Example:
 
@@ -787,7 +787,7 @@ Example:
 
 *class* Collect(*geo\_field*, *filter=None*)[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L61)[¶](#django.contrib.gis.db.models.Collect "Link to this definition")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Collect.html), MySQL,
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Collect.md), MySQL,
 SpatiaLite
 
 Returns a `GEOMETRYCOLLECTION` or a `MULTI` geometry object from the geometry
@@ -804,7 +804,7 @@ MySQL 8.0.24+ support was added.
 
 *class* Extent(*geo\_field*, *filter=None*)[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L66)[¶](#django.contrib.gis.db.models.Extent "Link to this definition")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Extent.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Extent.md),
 Oracle, SpatiaLite
 
 Returns the extent of all `geo_field` in the `QuerySet` as a 4-tuple,
@@ -822,7 +822,7 @@ Example:
 
 *class* Extent3D(*geo\_field*, *filter=None*)[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L77)[¶](#django.contrib.gis.db.models.Extent3D "Link to this definition")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_3DExtent.html)
+*Availability*: [PostGIS](https://postgis.net/docs/ST_3DExtent.md)
 
 Returns the 3D extent of all `geo_field` in the `QuerySet` as a 6-tuple,
 comprising the lower left coordinate and upper right coordinate (each with x, y,
@@ -840,7 +840,7 @@ Example:
 
 *class* MakeLine(*geo\_field*, *filter=None*)[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L88)[¶](#django.contrib.gis.db.models.MakeLine "Link to this definition")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_MakeLine.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_MakeLine.md),
 SpatiaLite
 
 Returns a `LineString` constructed from the point field geometries in the
@@ -858,10 +858,10 @@ LINESTRING (-95.3631510000000020 29.7633739999999989, -96.8016109999999941 32.78
 
 *class* Union(*geo\_field*, *filter=None*)[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L93)[¶](#django.contrib.gis.db.models.Union "Link to this definition")
 
-*Availability*: [PostGIS](https://postgis.net/docs/ST_Union.html),
+*Availability*: [PostGIS](https://postgis.net/docs/ST_Union.md),
 Oracle, SpatiaLite
 
-This method returns a [`GEOSGeometry`](geos.html#django.contrib.gis.geos.GEOSGeometry "django.contrib.gis.geos.GEOSGeometry") object
+This method returns a [`GEOSGeometry`](geos.md#django.contrib.gis.geos.GEOSGeometry "django.contrib.gis.geos.GEOSGeometry") object
 comprising the union of every geometry in the queryset. Please note that use of
 `Union` is processor intensive and may take a significant amount of time on
 large querysets.
@@ -889,16 +889,16 @@ Footnotes
 
 [[2](#id5)]
 
-*See* [SDO\_RELATE documentation](https://docs.oracle.com/en/database/oracle/oracle-database/18/spatl/spatial-operators-reference.html#GUID-97C17C18-F05E-49B4-BE11-E89B972E2A02), from the Oracle Spatial and
+*See* [SDO\_RELATE documentation](https://docs.oracle.com/en/database/oracle/oracle-database/18/spatl/spatial-operators-reference.md#GUID-97C17C18-F05E-49B4-BE11-E89B972E2A02), from the Oracle Spatial and
 Graph Developer’s Guide.
 
 
 [3]
 ([1](#id2),[2](#id3))
 
-For an explanation of this routine, read [Quirks of the “Contains” Spatial Predicate](https://lin-ear-th-inking.blogspot.com/2007/06/subtleties-of-ogc-covers-spatial.html) by Martin Davis (a PostGIS developer).
+For an explanation of this routine, read [Quirks of the “Contains” Spatial Predicate](https://lin-ear-th-inking.blogspot.com/2007/06/subtleties-of-ogc-covers-spatial.md) by Martin Davis (a PostGIS developer).
 
-### [Table of Contents](../../../contents.html)
+### [Table of Contents](../../../contents.md)
 
 - [GIS QuerySet API Reference](#)
   - [Spatial Lookups](#spatial-lookups)
@@ -946,11 +946,11 @@ For an explanation of this routine, read [Quirks of the “Contains” Spatial P
 
 #### Previous topic
 
-[GeoDjango Forms API](forms-api.html "previous chapter")
+[GeoDjango Forms API](forms-api.md "previous chapter")
 
 #### Next topic
 
-[Geographic Database Functions](functions.html "next chapter")
+[Geographic Database Functions](functions.md "next chapter")
 
 ### This Page
 
@@ -962,8 +962,8 @@ For an explanation of this routine, read [Quirks of the “Contains” Spatial P
 
 Oct 12, 2025
 
-« [previous](forms-api.html "GeoDjango Forms API")
+« [previous](forms-api.md "GeoDjango Forms API")
 |
-[up](../../index.html "API Reference")
+[up](../../index.md "API Reference")
 |
-[next](functions.html "Geographic Database Functions") »
+[next](functions.md "Geographic Database Functions") »

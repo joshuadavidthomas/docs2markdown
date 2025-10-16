@@ -9,9 +9,9 @@ who visits the malicious site in their browser. A related type of attack,
 a site with someone else’s credentials, is also covered.
 
 The first defense against CSRF attacks is to ensure that GET requests (and other
-‘safe’ methods, as defined by [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.html#section-9.2.1)) are side effect free.
+‘safe’ methods, as defined by [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1)) are side effect free.
 Requests via ‘unsafe’ methods, such as POST, PUT, and DELETE, can then be
-protected by the steps outlined in [How to use Django’s CSRF protection](../howto/csrf.html#using-csrf).
+protected by the steps outlined in [How to use Django’s CSRF protection](../howto/csrf.md#using-csrf).
 
 ## How it works
 
@@ -32,7 +32,7 @@ The CSRF protection is based on the following things:
    a mask. The mask is generated randomly on every call to `get_token()`, so
    the form field value is different each time.
 
-   This part is done by the [`csrf_token`](templates/builtins.html#std-templatetag-csrf_token) template tag.
+   This part is done by the [`csrf_token`](templates/builtins.md#std-templatetag-csrf_token) template tag.
 3. For all incoming requests that are not using HTTP GET, HEAD, OPTIONS or
    TRACE, a CSRF cookie must be present, and the ‘csrfmiddlewaretoken’ field
    must be present and correct. If it isn’t, the user will get a 403 error.
@@ -44,7 +44,7 @@ The CSRF protection is based on the following things:
 
    This check is done by `CsrfViewMiddleware`.
 4. `CsrfViewMiddleware` verifies the [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin), if provided by the
-   browser, against the current host and the [`CSRF_TRUSTED_ORIGINS`](settings.html#std-setting-CSRF_TRUSTED_ORIGINS)
+   browser, against the current host and the [`CSRF_TRUSTED_ORIGINS`](settings.md#std-setting-CSRF_TRUSTED_ORIGINS)
    setting. This provides protection against cross-subdomain attacks.
 5. In addition, for HTTPS requests, if the `Origin` header isn’t provided,
    `CsrfViewMiddleware` performs strict referer checking. This means that
@@ -59,30 +59,30 @@ The CSRF protection is based on the following things:
    HTTP requests because the presence of the `Referer` header isn’t reliable
    enough under HTTP.)
 
-   If the [`CSRF_COOKIE_DOMAIN`](settings.html#std-setting-CSRF_COOKIE_DOMAIN) setting is set, the referer is compared
+   If the [`CSRF_COOKIE_DOMAIN`](settings.md#std-setting-CSRF_COOKIE_DOMAIN) setting is set, the referer is compared
    against it. You can allow cross-subdomain requests by including a leading
    dot. For example, `CSRF_COOKIE_DOMAIN = '.example.com'` will allow POST
    requests from `www.example.com` and `api.example.com`. If the setting is
    not set, then the referer must match the HTTP `Host` header.
 
    Expanding the accepted referers beyond the current host or cookie domain can
-   be done with the [`CSRF_TRUSTED_ORIGINS`](settings.html#std-setting-CSRF_TRUSTED_ORIGINS) setting.
+   be done with the [`CSRF_TRUSTED_ORIGINS`](settings.md#std-setting-CSRF_TRUSTED_ORIGINS) setting.
 
 This ensures that only forms that have originated from trusted domains can be
 used to POST data back.
 
 It deliberately ignores GET requests (and other requests that are defined as
-‘safe’ by [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.html#section-9.2.1)). These requests ought never to have any
+‘safe’ by [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1)). These requests ought never to have any
 potentially dangerous side effects, and so a CSRF attack with a GET request
-ought to be harmless. [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.html#section-9.2.1) defines POST, PUT, and DELETE
+ought to be harmless. [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1) defines POST, PUT, and DELETE
 as ‘unsafe’, and all other methods are also assumed to be unsafe, for maximum
 protection.
 
 The CSRF protection cannot protect against man-in-the-middle attacks, so use
-[HTTPS](../topics/security.html#security-recommendation-ssl) with
-[HTTP Strict Transport Security](middleware.html#http-strict-transport-security). It also assumes [validation of
-the HOST header](../topics/security.html#host-headers-virtual-hosting) and that there aren’t any
-[cross-site scripting vulnerabilities](../topics/security.html#cross-site-scripting) on your site
+[HTTPS](../topics/security.md#security-recommendation-ssl) with
+[HTTP Strict Transport Security](middleware.md#http-strict-transport-security). It also assumes [validation of
+the HOST header](../topics/security.md#host-headers-virtual-hosting) and that there aren’t any
+[cross-site scripting vulnerabilities](../topics/security.md#cross-site-scripting) on your site
 (because XSS vulnerabilities already let an attacker do anything a CSRF
 vulnerability allows and much worse).
 
@@ -110,7 +110,7 @@ idea, and these vulnerabilities cannot easily be fixed with current browsers.
 
 The examples below assume you are using function-based views. If you
 are working with class-based views, you can refer to [Decorating
-class-based views](../topics/class-based-views/intro.html#id1).
+class-based views](../topics/class-based-views/intro.md#id1).
 
 `csrf_exempt(view)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/views/decorators/csrf.py#L51)
 :   This decorator marks a view as being exempt from the protection ensured by
@@ -128,7 +128,7 @@ class-based views](../topics/class-based-views/intro.html#id1).
 
 `csrf_protect(view)`
 :   Decorator that provides the protection of
-    [`CsrfViewMiddleware`](middleware.html#django.middleware.csrf.CsrfViewMiddleware) to a view.
+    [`CsrfViewMiddleware`](middleware.md#django.middleware.csrf.CsrfViewMiddleware) to a view.
 
     Usage:
 
@@ -145,7 +145,7 @@ class-based views](../topics/class-based-views/intro.html#id1).
     ```
 
 `requires_csrf_token(view)`
-:   Normally the [`csrf_token`](templates/builtins.html#std-templatetag-csrf_token) template tag will not work if
+:   Normally the [`csrf_token`](templates/builtins.md#std-templatetag-csrf_token) template tag will not work if
     `CsrfViewMiddleware.process_view` or an equivalent like `csrf_protect`
     has not run. The view decorator `requires_csrf_token` can be used to
     ensure the template tag does work. This decorator works similarly to
@@ -172,17 +172,17 @@ class-based views](../topics/class-based-views/intro.html#id1).
 
 A number of settings can be used to control Django’s CSRF behavior:
 
-- [`CSRF_COOKIE_AGE`](settings.html#std-setting-CSRF_COOKIE_AGE)
-- [`CSRF_COOKIE_DOMAIN`](settings.html#std-setting-CSRF_COOKIE_DOMAIN)
-- [`CSRF_COOKIE_HTTPONLY`](settings.html#std-setting-CSRF_COOKIE_HTTPONLY)
-- [`CSRF_COOKIE_NAME`](settings.html#std-setting-CSRF_COOKIE_NAME)
-- [`CSRF_COOKIE_PATH`](settings.html#std-setting-CSRF_COOKIE_PATH)
-- [`CSRF_COOKIE_SAMESITE`](settings.html#std-setting-CSRF_COOKIE_SAMESITE)
-- [`CSRF_COOKIE_SECURE`](settings.html#std-setting-CSRF_COOKIE_SECURE)
-- [`CSRF_FAILURE_VIEW`](settings.html#std-setting-CSRF_FAILURE_VIEW)
-- [`CSRF_HEADER_NAME`](settings.html#std-setting-CSRF_HEADER_NAME)
-- [`CSRF_TRUSTED_ORIGINS`](settings.html#std-setting-CSRF_TRUSTED_ORIGINS)
-- [`CSRF_USE_SESSIONS`](settings.html#std-setting-CSRF_USE_SESSIONS)
+- [`CSRF_COOKIE_AGE`](settings.md#std-setting-CSRF_COOKIE_AGE)
+- [`CSRF_COOKIE_DOMAIN`](settings.md#std-setting-CSRF_COOKIE_DOMAIN)
+- [`CSRF_COOKIE_HTTPONLY`](settings.md#std-setting-CSRF_COOKIE_HTTPONLY)
+- [`CSRF_COOKIE_NAME`](settings.md#std-setting-CSRF_COOKIE_NAME)
+- [`CSRF_COOKIE_PATH`](settings.md#std-setting-CSRF_COOKIE_PATH)
+- [`CSRF_COOKIE_SAMESITE`](settings.md#std-setting-CSRF_COOKIE_SAMESITE)
+- [`CSRF_COOKIE_SECURE`](settings.md#std-setting-CSRF_COOKIE_SECURE)
+- [`CSRF_FAILURE_VIEW`](settings.md#std-setting-CSRF_FAILURE_VIEW)
+- [`CSRF_HEADER_NAME`](settings.md#std-setting-CSRF_HEADER_NAME)
+- [`CSRF_TRUSTED_ORIGINS`](settings.md#std-setting-CSRF_TRUSTED_ORIGINS)
+- [`CSRF_USE_SESSIONS`](settings.md#std-setting-CSRF_USE_SESSIONS)
 
 ## Frequently Asked Questions
 
@@ -204,7 +204,7 @@ the protection on sites such as a *pastebin* that allow submissions from
 anonymous users which don’t have a session.
 
 If you wish to store the CSRF token in the user’s session, use the
-[`CSRF_USE_SESSIONS`](settings.html#std-setting-CSRF_USE_SESSIONS) setting.
+[`CSRF_USE_SESSIONS`](settings.md#std-setting-CSRF_USE_SESSIONS) setting.
 
 ### Why might a user encounter a CSRF validation failure after logging in?
 
