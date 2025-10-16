@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 from docs2md.html import BaseHtmlPreprocessor
 from docs2md.html import SphinxHtmlPreprocessor
+from docs2md.html import StarlightHtmlPreprocessor
 from docs2md.html import get_language_from_class
 
 
@@ -15,6 +16,11 @@ def test_base_html_preprocessor(doc_file, snapshot_html):
 @pytest.mark.fixture_tags(["sphinx"])
 def test_sphinx_html_preprocessor(doc_file, snapshot_html):
     assert SphinxHtmlPreprocessor(doc_file.read_text()).process() == snapshot_html
+
+
+@pytest.mark.fixture_tags(["starlight"])
+def test_starlight_html_preprocessing(doc_file, snapshot_html):
+    assert StarlightHtmlPreprocessor(doc_file.read_text()).process() == snapshot_html
 
 
 def test_base_html_preprocessor_content_min_len():
