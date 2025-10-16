@@ -6,6 +6,7 @@ from pathlib import Path
 
 from docs2md.html import BaseHtmlPreprocessor
 from docs2md.html import SphinxHtmlPreprocessor
+from docs2md.html import StarlightHtmlPreprocessor
 from docs2md.markdown import GhfmConverter
 from docs2md.markdown import LlmsTxtConverter
 
@@ -13,11 +14,14 @@ from docs2md.markdown import LlmsTxtConverter
 class DocType(Enum):
     DEFAULT = "default"
     SPHINX = "sphinx"
+    STARLIGHT = "starlight"
 
     def preprocessor(self, html: str) -> BaseHtmlPreprocessor:
         match self:
             case self.SPHINX:
                 cls = SphinxHtmlPreprocessor
+            case self.STARLIGHT:
+                cls = StarlightHtmlPreprocessor
             case _:
                 cls = BaseHtmlPreprocessor
         return cls(html)
