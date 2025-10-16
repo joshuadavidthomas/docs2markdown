@@ -55,7 +55,7 @@ def normalize_whitespace(text: str):
     return text
 
 
-class GhfmConverter(MarkdownConverter):
+class Docs2MdConverter(MarkdownConverter):
     @final
     class Options:
         bs4_options = "lxml"
@@ -69,6 +69,13 @@ class GhfmConverter(MarkdownConverter):
             modified_href = re.sub(r"\.html(#|$)", r".md\1", href)
             el["href"] = modified_href
 
+        return super().convert_a(el, text, **kwargs)
+
+
+class GhfmConverter(Docs2MdConverter):
+    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
+        a = super().convert_a(el, text, **kwargs)
+
         parent_tags = kwargs.get("parent_tags", set())
 
         # Only keep as HTML if inside a dd within a raw dl
@@ -79,7 +86,7 @@ class GhfmConverter(MarkdownConverter):
                     del el["class"]
                 return str(el)
 
-        return super().convert_a(el, text, **kwargs)
+        return a
 
     def convert_code(self, el: Tag, text: str, **kwargs: Any) -> Any:
         parent_tags = kwargs.get("parent_tags", set())
@@ -129,22 +136,7 @@ class GhfmConverter(MarkdownConverter):
         return text
 
 
-class LlmsTxtConverter(MarkdownConverter):
-    @final
-    class Options:
-        bs4_options = "lxml"
-        bullets = "-"
-        code_language_callback = extract_language
-        heading_style = "ATX"
-
-    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
-        href = el.get("href")
-        if href:
-            modified_href = re.sub(r"\.html(#|$)", r".md\1", href)
-            el["href"] = modified_href
-
-        return super().convert_a(el, text, **kwargs)
-
+class LlmsTxtConverter(Docs2MdConverter):
     def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
         lines = text.strip().split("\n")
         if lines and lines[0].startswith("[!") and lines[0].endswith("]"):
