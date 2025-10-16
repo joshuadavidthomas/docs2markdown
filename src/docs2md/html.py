@@ -194,6 +194,7 @@ LANGUAGE_COMMENT_MAP = {
     "cs": CommentStyle.DOUBLE_SLASH,
     "csharp": CommentStyle.DOUBLE_SLASH,
     "go": CommentStyle.DOUBLE_SLASH,
+    "json": CommentStyle.DOUBLE_SLASH,
     "rust": CommentStyle.DOUBLE_SLASH,
     "rs": CommentStyle.DOUBLE_SLASH,
     "swift": CommentStyle.DOUBLE_SLASH,
@@ -550,7 +551,7 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
         if not pre:
             return
         
-        language = pre.get("data-language", "")
+        language = str(pre.get("data-language", ""))
         
         if is_terminal and not language:
             language = "bash"
@@ -562,21 +563,24 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
             pre.clear()
             pre.append(code)
         
-        for div in code.find_all("div", class_=["ec-line", "code"]):
-            div.unwrap()
-        
-        for span in code.find_all("span", class_="indent"):
-            span.unwrap()
-        
-        for span in code.find_all("span"):
-            span.unwrap()
+        ec_lines = list(code.find_all("div", class_="ec-line"))
+        for i, ec_line in enumerate(ec_lines):
+            for span in ec_line.find_all("span", class_="indent"):
+                span.unwrap()
+            for span in ec_line.find_all("span"):
+                span.unwrap()
+            for inner_div in ec_line.find_all("div", class_="code"):
+                inner_div.unwrap()
+            if i < len(ec_lines) - 1:
+                ec_line.insert_after(self.soup.new_string("\n"))
+            ec_line.unwrap()
         
         if title and language and title.lower() not in ["terminal window", ""]:
             comment = get_comment_for_language(language, title)
             if comment:
                 code_text = code.get_text()
                 code.clear()
-                code.string = f"{comment}\n{code_text}"
+                code.string = f"{comment}\n{code_text}".lstrip()
         
         if language:
             code["class"] = f"language-{language}"
