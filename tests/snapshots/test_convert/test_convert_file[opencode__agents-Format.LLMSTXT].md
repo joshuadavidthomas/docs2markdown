@@ -78,6 +78,7 @@ A general-purpose agent for researching complex questions, searching for code, a
      ```txt
      @general help me search for this function
      ```
+
 3. **Navigation between sessions**: When subagents create their own child sessions, you can navigate between the parent session and all child sessions using:
 
    - **Ctrl+Right** (or your configured `session_child_cycle` keybind) to cycle forward through parent → child1 → child2 → … → parent
@@ -98,8 +99,6 @@ You can customize the built-in agents or create your own through configuration. 
 Configure agents in your `opencode.json` config file:
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -149,8 +148,6 @@ You can also define agents using markdown files. Place them in:
 
 *~/.config/opencode/agent/review.md*
 
-
-
 ```markdown
 ---
 description: Reviews code for quality and best practices
@@ -192,8 +189,6 @@ Use the `description` option to provide a brief description of what the agent do
 
 *opencode.json*
 
-
-
 ```json
 {
   "agent": {
@@ -216,8 +211,6 @@ Lower values make responses more focused and deterministic, while higher values 
 
 *opencode.json*
 
-
-
 ```json
 {
   "agent": {
@@ -238,8 +231,6 @@ Temperature values typically range from 0.0 to 1.0:
 - **0.6-1.0**: More creative and varied responses, useful for brainstorming and exploration
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -269,8 +260,6 @@ Set to `true` to disable the agent.
 
 *opencode.json*
 
-
-
 ```json
 {
   "agent": {
@@ -288,8 +277,6 @@ Set to `true` to disable the agent.
 Specify a custom system prompt file for this agent with the `prompt` config. The prompt file should contain instructions specific to the agent’s purpose.
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -311,8 +298,6 @@ Use the `model` config to override the default model for this agent. Useful for 
 
 *opencode.json*
 
-
-
 ```json
 {
   "agent": {
@@ -330,8 +315,6 @@ Use the `model` config to override the default model for this agent. Useful for 
 Control which tools are available in this agent with the `tools` config. You can enable or disable specific tools by setting them to `true` or `false`.
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -354,8 +337,6 @@ Control which tools are available in this agent with the `tools` config. You can
 You can also use wildcards to control multiple tools at once. For example, to disable all tools from an MCP server:
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -386,8 +367,6 @@ You can configure permissions to manage what actions an agent can take. Currentl
 
 *opencode.json*
 
-
-
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
@@ -400,8 +379,6 @@ You can configure permissions to manage what actions an agent can take. Currentl
 You can override these permissions per agent.
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -423,8 +400,6 @@ You can also set permissions in Markdown agents.
 
 *~/.config/opencode/agent/review.md*
 
-
-
 ```markdown
 ---
 description: Code review without edits
@@ -442,8 +417,6 @@ Only analyze code and suggest changes.
 You can set permissions for specific bash commands.
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -464,8 +437,6 @@ This can take a glob pattern.
 
 *opencode.json*
 
-
-
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
@@ -485,8 +456,6 @@ And you can also use the `*` wildcard to manage permissions for all commands.
 Where the specific rule can override the `*` wildcard.
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -514,8 +483,6 @@ Control the agent’s mode with the `mode` config. The `mode` option is used to 
 
 *opencode.json*
 
-
-
 ```json
 {
   "agent": {
@@ -537,8 +504,6 @@ Any other options you specify in your agent configuration will be **passed throu
 For example, with OpenAI’s reasoning models, you can control the reasoning effort:
 
 *opencode.json*
-
-
 
 ```json
 {
@@ -597,8 +562,6 @@ Here are some examples agents you might find useful.
 
 *~/.config/opencode/agent/docs-writer.md*
 
-
-
 ```markdown
 ---
 description: Writes and maintains project documentation
@@ -625,8 +588,6 @@ Focus on:
 ### [Security auditor](#security-auditor)
 
 *~/.config/opencode/agent/security-auditor.md*
-
-
 
 ```markdown
 ---

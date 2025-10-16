@@ -76,6 +76,7 @@ A general-purpose agent for researching complex questions, searching for code, a
      ```txt
      @general help me search for this function
      ```
+
 3. **Navigation between sessions**: When subagents create their own child sessions, you can navigate between the parent session and all child sessions using:
 
    - **Ctrl+Right** (or your configured `session_child_cycle` keybind) to cycle forward through parent → child1 → child2 → … → parent
@@ -97,8 +98,6 @@ Configure agents in your `opencode.json` config file:
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -151,8 +150,6 @@ You can also define agents using markdown files. Place them in:
 <figure>
 <figcaption>~/.config/opencode/agent/review.md</figcaption>
 
-
-
 ```markdown
 ---
 description: Reviews code for quality and best practices
@@ -197,8 +194,6 @@ Use the `description` option to provide a brief description of what the agent do
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "agent": {
@@ -224,8 +219,6 @@ Lower values make responses more focused and deterministic, while higher values 
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "agent": {
@@ -249,8 +242,6 @@ Temperature values typically range from 0.0 to 1.0:
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -283,8 +274,6 @@ Set to `true` to disable the agent.
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "agent": {
@@ -305,8 +294,6 @@ Specify a custom system prompt file for this agent with the `prompt` config. The
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -331,8 +318,6 @@ Use the `model` config to override the default model for this agent. Useful for 
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "agent": {
@@ -353,8 +338,6 @@ Control which tools are available in this agent with the `tools` config. You can
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -380,8 +363,6 @@ You can also use wildcards to control multiple tools at once. For example, to di
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -415,8 +396,6 @@ You can configure permissions to manage what actions an agent can take. Currentl
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
@@ -432,8 +411,6 @@ You can override these permissions per agent.
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -458,8 +435,6 @@ You can also set permissions in Markdown agents.
 <figure>
 <figcaption>~/.config/opencode/agent/review.md</figcaption>
 
-
-
 ```markdown
 ---
 description: Code review without edits
@@ -480,8 +455,6 @@ You can set permissions for specific bash commands.
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -505,8 +478,6 @@ This can take a glob pattern.
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
@@ -528,8 +499,6 @@ And you can also use the `*` wildcard to manage permissions for all commands. Wh
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -560,8 +529,6 @@ Control the agent’s mode with the `mode` config. The `mode` option is used to 
 <figure>
 <figcaption>opencode.json</figcaption>
 
-
-
 ```json
 {
   "agent": {
@@ -586,8 +553,6 @@ For example, with OpenAI’s reasoning models, you can control the reasoning eff
 
 <figure>
 <figcaption>opencode.json</figcaption>
-
-
 
 ```json
 {
@@ -649,8 +614,6 @@ Here are some examples agents you might find useful.
 <figure>
 <figcaption>~/.config/opencode/agent/docs-writer.md</figcaption>
 
-
-
 ```markdown
 ---
 description: Writes and maintains project documentation
@@ -680,8 +643,6 @@ Focus on:
 
 <figure>
 <figcaption>~/.config/opencode/agent/security-auditor.md</figcaption>
-
-
 
 ```markdown
 ---

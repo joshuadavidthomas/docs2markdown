@@ -68,6 +68,16 @@ class Docs2MdConverter(MarkdownConverter):
 
         return super().convert_a(el, text, **kwargs)
 
+    def convert_li(self, el: Tag, text: str, **kwargs: Any) -> str:
+        item = super().convert_li(el, text, **kwargs)
+        has_pre = bool(el.find("pre"))
+        has_figure_with_pre = any(fig.find("pre") for fig in el.find_all("figure"))
+
+        if (has_pre or has_figure_with_pre) and not item.endswith("\n\n"):
+            item = item.rstrip("\n") + "\n\n"
+
+        return item
+
 
 class GhfmConverter(Docs2MdConverter):
     def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
@@ -150,11 +160,10 @@ class GhfmConverter(Docs2MdConverter):
             pre = el.find("pre")
 
             if figcaption and pre:
-                # Process the pre content to get markdown
                 parent_tags = kwargs.get("parent_tags", set()) | {"figure"}
                 pre_markdown = self.process_tag(pre, parent_tags=parent_tags)
 
-                return f"<figure>\n<figcaption>{figcaption.get_text()}</figcaption>\n\n{pre_markdown}</figure>\n\n"
+                return f"<figure>\n<figcaption>{figcaption.get_text()}</figcaption>{pre_markdown}</figure>"
 
         return text
 
@@ -183,10 +192,9 @@ class LlmsTxtConverter(Docs2MdConverter):
             pre = el.find("pre")
 
             if figcaption and pre:
-                # Process the pre content to get markdown
                 parent_tags = kwargs.get("parent_tags", set()) | {"figure"}
                 pre_markdown = self.process_tag(pre, parent_tags=parent_tags)
 
-                return f"*{figcaption.get_text()}*\n\n{pre_markdown}"
+                return f"*{figcaption.get_text()}*{pre_markdown}"
 
         return text

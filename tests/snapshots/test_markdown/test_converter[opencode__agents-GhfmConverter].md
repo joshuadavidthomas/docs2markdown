@@ -201,6 +201,7 @@ A general-purpose agent for researching complex questions, searching for code, a
      ```
      @general help me search for this function
      ```
+
 3. **Navigation between sessions**: When subagents create their own child sessions, you can navigate between the parent session and all child sessions using:
 
    - **Ctrl+Right** (or your configured `session_child_cycle` keybind) to cycle forward through parent → child1 → child2 → … → parent
