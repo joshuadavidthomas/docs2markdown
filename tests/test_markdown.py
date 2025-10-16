@@ -84,3 +84,31 @@ line breaks</td>
 )
 def test_normalize_whitespace(text, expected):
     assert normalize_whitespace(text) == expected
+
+
+def test_llmstxt_converter_no_html():
+    from docs2md.markdown import LlmsTxtConverter
+    
+    html = '<p>Text with <span data-markdownify-raw="">raw span</span></p>'
+    result = LlmsTxtConverter().convert(html)
+    assert "<span" not in result
+    assert "raw span" in result
+
+
+def test_llmstxt_converter_definition_list():
+    from docs2md.markdown import LlmsTxtConverter
+    
+    html = '<dl><dt>Term</dt><dd>Definition text</dd></dl>'
+    result = LlmsTxtConverter().convert(html)
+    assert "Term" in result
+    assert ": Definition text" in result or "Definition text" in result
+    assert "<dl" not in result
+
+
+def test_llmstxt_converter_alerts():
+    from docs2md.markdown import LlmsTxtConverter
+    
+    html = '<blockquote><p>[!NOTE]</p><p>This is a note</p></blockquote>'
+    result = LlmsTxtConverter().convert(html)
+    assert "**Note:**" in result or "**NOTE:**" in result
+    assert "[!NOTE]" not in result
