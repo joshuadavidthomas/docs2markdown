@@ -8,8 +8,12 @@ from bs4 import Tag
 from markdownify import MarkdownConverter
 
 
-def md(html: str):
-    return Docs2MdConverter().convert(html)
+def md(html: str, format=None):
+    if format is None:
+        return Docs2MdConverter().convert(html)
+
+    converter_class = format.get_converter()
+    return converter_class().convert(html)
 
 
 def extract_language(el: Tag):
@@ -140,11 +144,11 @@ class LlmsTxtConverter(MarkdownConverter):
         bullets = "-"
         code_language_callback = extract_language
         heading_style = "ATX"
-    
+
     def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
-        lines = text.strip().split('\n')
-        if lines and lines[0].startswith('[!') and lines[0].endswith(']'):
+        lines = text.strip().split("\n")
+        if lines and lines[0].startswith("[!") and lines[0].endswith("]"):
             alert_type = lines[0][2:-1]
-            remaining_text = '\n'.join(lines[1:]).strip()
+            remaining_text = "\n".join(lines[1:]).strip()
             return f"**{alert_type}:**\n{remaining_text}\n\n"
         return super().convert_blockquote(el, text, **kwargs)
