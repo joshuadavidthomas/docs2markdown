@@ -27,9 +27,6 @@ def extract_language(el: Tag):
     if not classes:
         return ""
 
-    if isinstance(classes, str):
-        classes = [classes]
-
     for class_name in classes:
         if class_name.startswith("language-"):
             return class_name.replace("language-", "")
