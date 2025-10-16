@@ -169,10 +169,9 @@ Zipcode.objects.filter(poly__coveredby=geom)
 | MySQL | `MBRCoveredBy(poly, geom)` |
 | SpatiaLite | `CoveredBy(poly, geom)` |
 
-**NOTE:**
-**Changed in Django 5.2:**
-
-MySQL support was added.
+> **Changed in Django 5.2:**
+>
+> MySQL support was added.
 
 ### `covers`
 
@@ -195,10 +194,9 @@ Zipcode.objects.filter(poly__covers=geom)
 | MySQL | `MBRCovers(poly, geom)` |
 | SpatiaLite | `Covers(poly, geom)` |
 
-**NOTE:**
-**Changed in Django 5.2:**
-
-MySQL support was added.
+> **Changed in Django 5.2:**
+>
+> MySQL support was added.
 
 ### `crosses`
 
@@ -783,10 +781,9 @@ aggregate, except it can be several orders of magnitude faster than performing
 a union because it rolls up geometries into a collection or multi object, not
 caring about dissolving boundaries.
 
-**NOTE:**
-**Changed in Django 5.1:**
-
-MySQL 8.0.24+ support was added.
+> **Changed in Django 5.1:**
+>
+> MySQL 8.0.24+ support was added.
 
 #### `Extent`
 
@@ -854,9 +851,10 @@ comprising the union of every geometry in the queryset. Please note that use of
 `Union` is processor intensive and may take a significant amount of time on
 large querysets.
 
-**NOTE:**
-If the computation time for using this method is too expensive, consider
-using [`Collect`](#django.contrib.gis.db.models.Collect) instead.
+> **NOTE:**
+>
+> If the computation time for using this method is too expensive, consider
+> using [`Collect`](#django.contrib.gis.db.models.Collect) instead.
 
 Example:
 

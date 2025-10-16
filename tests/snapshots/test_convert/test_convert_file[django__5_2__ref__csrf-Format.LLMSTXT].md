@@ -86,15 +86,16 @@ the HOST header](../topics/security.md#host-headers-virtual-hosting) and that th
 (because XSS vulnerabilities already let an attacker do anything a CSRF
 vulnerability allows and much worse).
 
-**NOTE:**
-To avoid disclosing the referrer URL to third-party sites, you might want
-to [disable the referer](https://www.w3.org/TR/referrer-policy/#referrer-policy-delivery) on your site’s `<a>` tags. For example, you
-might use the `<meta name="referrer" content="no-referrer">` tag or
-include the `Referrer-Policy: no-referrer` header. Due to the CSRF
-protection’s strict referer checking on HTTPS requests, those techniques
-cause a CSRF failure on requests with ‘unsafe’ methods. Instead, use
-alternatives like `<a rel="noreferrer" ...>"` for links to third-party
-sites.
+> **NOTE:**
+>
+> To avoid disclosing the referrer URL to third-party sites, you might want
+> to [disable the referer](https://www.w3.org/TR/referrer-policy/#referrer-policy-delivery) on your site’s `<a>` tags. For example, you
+> might use the `<meta name="referrer" content="no-referrer">` tag or
+> include the `Referrer-Policy: no-referrer` header. Due to the CSRF
+> protection’s strict referer checking on HTTPS requests, those techniques
+> cause a CSRF failure on requests with ‘unsafe’ methods. Instead, use
+> alternatives like `<a rel="noreferrer" ...>"` for links to third-party
+> sites.
 
 ## Limitations
 

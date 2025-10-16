@@ -4,23 +4,25 @@ Django gives you two ways of performing raw SQL queries: you can use
 [`Manager.raw()`](#django.db.models.Manager.raw) to [perform raw queries and return model instances](#performing-raw-queries), or
 you can avoid the model layer entirely and [execute custom SQL directly](#executing-custom-sql-directly).
 
-**NOTE:**
-The Django ORM provides many tools to express queries without writing raw
-SQL. For example:
+> **NOTE:**
+>
+> The Django ORM provides many tools to express queries without writing raw
+> SQL. For example:
+>
+> - The [QuerySet API](../../ref/models/querysets.md) is extensive.
+> - You can [`annotate`](../../ref/models/querysets.md#django.db.models.query.QuerySet.annotate) and [aggregate](aggregation.md) using many built-in [database functions](../../ref/models/database-functions.md). Beyond those, you can create
+>   [custom query expressions](../../ref/models/expressions.md).
+>
+> Before using raw SQL, explore [the ORM](index.md). Ask on
+> one of [the support channels](../../faq/help.md) to see if the ORM supports
+> your use case.
 
-- The [QuerySet API](../../ref/models/querysets.md) is extensive.
-- You can [`annotate`](../../ref/models/querysets.md#django.db.models.query.QuerySet.annotate) and [aggregate](aggregation.md) using many built-in [database functions](../../ref/models/database-functions.md). Beyond those, you can create
-  [custom query expressions](../../ref/models/expressions.md).
-
-Before using raw SQL, explore [the ORM](index.md). Ask on
-one of [the support channels](../../faq/help.md) to see if the ORM supports
-your use case.
-
-**WARNING:**
-You should be very careful whenever you write raw SQL. Every time you use
-it, you should properly escape any parameters that the user can control
-by using `params` in order to protect against SQL injection attacks.
-Please read more about [SQL injection protection](../security.md#sql-injection-protection).
+> **WARNING:**
+>
+> You should be very careful whenever you write raw SQL. Every time you use
+> it, you should properly escape any parameters that the user can control
+> by using `params` in order to protect against SQL injection attacks.
+> Please read more about [SQL injection protection](../security.md#sql-injection-protection).
 
 ## Performing raw queries
 
@@ -58,33 +60,36 @@ This example isn’t very exciting – it’s exactly the same as running
 `Person.objects.all()`. However, `raw()` has a bunch of other options that
 make it very powerful.
 
-**NOTE:**
-Where did the name of the `Person` table come from in that example?
+> **NOTE:**
+>
+> Where did the name of the `Person` table come from in that example?
+>
+> By default, Django figures out a database table name by joining the
+> model’s “app label” – the name you used in `manage.py startapp` – to
+> the model’s class name, with an underscore between them. In the example
+> we’ve assumed that the `Person` model lives in an app named `myapp`,
+> so its table would be `myapp_person`.
+>
+> For more details check out the documentation for the
+> [`db_table`](../../ref/models/options.md#django.db.models.Options.db_table) option, which also lets you manually set the
+> database table name.
 
-By default, Django figures out a database table name by joining the
-model’s “app label” – the name you used in `manage.py startapp` – to
-the model’s class name, with an underscore between them. In the example
-we’ve assumed that the `Person` model lives in an app named `myapp`,
-so its table would be `myapp_person`.
+> **WARNING:**
+>
+> No checking is done on the SQL statement that is passed in to `.raw()`.
+> Django expects that the statement will return a set of rows from the
+> database, but does nothing to enforce that. If the query does not
+> return rows, a (possibly cryptic) error will result.
 
-For more details check out the documentation for the
-[`db_table`](../../ref/models/options.md#django.db.models.Options.db_table) option, which also lets you manually set the
-database table name.
-
-**WARNING:**
-No checking is done on the SQL statement that is passed in to `.raw()`.
-Django expects that the statement will return a set of rows from the
-database, but does nothing to enforce that. If the query does not
-return rows, a (possibly cryptic) error will result.
-
-**WARNING:**
-If you are performing queries on MySQL, note that MySQL’s silent type
-coercion may cause unexpected results when mixing types. If you query on a
-string type column, but with an integer value, MySQL will coerce the types
-of all values in the table to an integer before performing the comparison.
-For example, if your table contains the values `'abc'`, `'def'` and you
-query for `WHERE mycolumn=0`, both rows will match. To prevent this,
-perform the correct typecasting before using the value in a query.
+> **WARNING:**
+>
+> If you are performing queries on MySQL, note that MySQL’s silent type
+> coercion may cause unexpected results when mixing types. If you query on a
+> string type column, but with an integer value, MySQL will coerce the types
+> of all values in the table to an integer before performing the comparison.
+> For example, if your table contains the values `'abc'`, `'def'` and you
+> query for `WHERE mycolumn=0`, both rows will match. To prevent this,
+> perform the correct typecasting before using the value in a query.
 
 ### Mapping query fields to model fields
 
@@ -212,35 +217,37 @@ placeholders for a dictionary (where `key` is replaced by a
 dictionary key), regardless of your database engine. Such placeholders will be
 replaced with parameters from the `params` argument.
 
-**NOTE:**
-Dictionary params are not supported with the SQLite backend; with
-this backend, you must pass parameters as a list.
+> **NOTE:**
+>
+> Dictionary params are not supported with the SQLite backend; with
+> this backend, you must pass parameters as a list.
 
-**WARNING:**
-**Do not use string formatting on raw queries or quote placeholders in your
-SQL strings!**
-
-It’s tempting to write the above query as:
-
-```python
->>> query = "SELECT * FROM myapp_person WHERE last_name = %s" % lname
->>> Person.objects.raw(query)
-```
-
-You might also think you should write your query like this (with quotes
-around `%s`):
-
-```python
->>> query = "SELECT * FROM myapp_person WHERE last_name = '%s'"
-```
-
-**Don’t make either of these mistakes.**
-
-As discussed in [SQL injection protection](../security.md#sql-injection-protection), using the `params`
-argument and leaving the placeholders unquoted protects you from [SQL
-injection attacks](https://en.wikipedia.org/wiki/SQL_injection), a common exploit where attackers inject arbitrary
-SQL into your database. If you use string interpolation or quote the
-placeholder, you’re at risk for SQL injection.
+> **WARNING:**
+>
+> **Do not use string formatting on raw queries or quote placeholders in your
+> SQL strings!**
+>
+> It’s tempting to write the above query as:
+>
+> ```python
+> >>> query = "SELECT * FROM myapp_person WHERE last_name = %s" % lname
+> >>> Person.objects.raw(query)
+> ```
+>
+> You might also think you should write your query like this (with quotes
+> around `%s`):
+>
+> ```python
+> >>> query = "SELECT * FROM myapp_person WHERE last_name = '%s'"
+> ```
+>
+> **Don’t make either of these mistakes.**
+>
+> As discussed in [SQL injection protection](../security.md#sql-injection-protection), using the `params`
+> argument and leaving the placeholders unquoted protects you from [SQL
+> injection attacks](https://en.wikipedia.org/wiki/SQL_injection), a common exploit where attackers inject arbitrary
+> SQL into your database. If you use string interpolation or quote the
+> placeholder, you’re at risk for SQL injection.
 
 ## Executing custom SQL directly
 

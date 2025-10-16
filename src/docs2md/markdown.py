@@ -88,6 +88,24 @@ class GhfmConverter(Docs2MdConverter):
 
         return a
 
+    def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
+        alert_type = el.get("data-markdownify-alert-type")
+        title = el.get("data-markdownify-title")
+
+        if alert_type or title:
+            lines = []
+
+            if alert_type:
+                lines.append(f"[!{alert_type}]")
+
+            if title:
+                lines.append(f"**{title}**")
+
+            if lines:
+                text = "\n\n".join(lines) + text
+
+        return super().convert_blockquote(el, text, **kwargs)
+
     def convert_code(self, el: Tag, text: str, **kwargs: Any) -> Any:
         parent_tags = kwargs.get("parent_tags", set())
 
@@ -138,9 +156,12 @@ class GhfmConverter(Docs2MdConverter):
 
 class LlmsTxtConverter(Docs2MdConverter):
     def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
-        lines = text.strip().split("\n")
-        if lines and lines[0].startswith("[!") and lines[0].endswith("]"):
-            alert_type = lines[0][2:-1]
-            remaining_text = "\n".join(lines[1:]).strip()
-            return f"**{alert_type}:**\n{remaining_text}\n\n"
+        title = el.get("data-markdownify-title")
+        alert_type = el.get("data-markdownify-alert-type")
+
+        header_text = title or (f"{alert_type}:" if alert_type else None)
+
+        if header_text:
+            text = f"**{header_text}**" + text
+
         return super().convert_blockquote(el, text, **kwargs)
