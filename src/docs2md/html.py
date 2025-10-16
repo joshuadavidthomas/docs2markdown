@@ -469,3 +469,118 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
                 return
 
         span["data-markdownify-raw"] = ""
+
+
+class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
+    """Preprocessor for Starlight/Astro documentation HTML.
+    
+    Handles Starlight-specific structures:
+    - Expressive code blocks with data-language attributes
+    - Code block titles in figcaptions
+    - <span class="indent"> elements
+    - <starlight-tabs> custom elements
+    """
+    
+    @override
+    def get_generic_chrome_selectors(self) -> list[str]:
+        base_selectors = super().get_generic_chrome_selectors()
+        starlight_selectors = [
+            ".header",
+            ".sidebar",
+            ".right-sidebar",
+            ".mobile-preferences",
+            "starlight-menu-button",
+            "starlight-theme-select",
+            "site-search",
+            ".not-content",
+            ".copy",
+        ]
+        return base_selectors + starlight_selectors
+
+    def process_elements(self, container: Tag) -> None:
+        """Override to handle custom elements before standard processing."""
+        for tabs in container.find_all("starlight-tabs"):
+            self._process_starlight_tabs(tabs)
+        
+        super().process_elements(container)
+
+    def _process_starlight_tabs(self, tabs_element: Tag) -> None:
+        """Convert starlight-tabs to sequential content sections."""
+        tab_labels = []
+        tablist = tabs_element.find("ul", role="tablist")
+        if tablist:
+            for tab in tablist.find_all("a", role="tab"):
+                label = tab.get_text(strip=True)
+                if label:
+                    tab_labels.append(label)
+        
+        panels = tabs_element.find_all("div", role="tabpanel")
+        
+        container = self.soup.new_tag("div")
+        
+        for i, panel in enumerate(panels):
+            if i < len(tab_labels):
+                li = self.soup.new_tag("li")
+                strong = self.soup.new_tag("strong")
+                strong.string = tab_labels[i]
+                li.append(strong)
+                container.append(li)
+            
+            for child in list(panel.children):
+                container.append(child)
+        
+        tabs_element.replace_with(container)
+
+    def process_figure(self, figure: Tag) -> None:
+        """Process Starlight expressive-code figure blocks."""
+        parent = figure.parent
+        if not parent or "expressive-code" not in parent.get("class", []):
+            return
+        
+        is_terminal = "is-terminal" in figure.get("class", [])
+        
+        title = None
+        figcaption = figure.find("figcaption", class_="header")
+        if figcaption:
+            title_span = figcaption.find("span", class_="title")
+            if title_span:
+                title = title_span.get_text(strip=True)
+            figcaption.decompose()
+        
+        pre = figure.find("pre")
+        if not pre:
+            return
+        
+        language = pre.get("data-language", "")
+        
+        if is_terminal and not language:
+            language = "bash"
+        
+        code = pre.find("code")
+        if not code:
+            code = self.soup.new_tag("code")
+            code.extend(list(pre.children))
+            pre.clear()
+            pre.append(code)
+        
+        for div in code.find_all("div", class_=["ec-line", "code"]):
+            div.unwrap()
+        
+        for span in code.find_all("span", class_="indent"):
+            span.unwrap()
+        
+        for span in code.find_all("span"):
+            span.unwrap()
+        
+        if title and language and title.lower() not in ["terminal window", ""]:
+            comment = get_comment_for_language(language, title)
+            if comment:
+                code_text = code.get_text()
+                code.clear()
+                code.string = f"{comment}\n{code_text}"
+        
+        if language:
+            code["class"] = f"language-{language}"
+        
+        figure.replace_with(pre)
+
