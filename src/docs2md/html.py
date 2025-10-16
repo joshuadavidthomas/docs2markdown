@@ -151,6 +151,103 @@ def get_language_from_class(class_name: str) -> str:
     return ""
 
 
+class CommentStyle(Enum):
+    HASH = "#"  # Python, Ruby, Shell, YAML, etc.
+    DOUBLE_SLASH = "//"  # JavaScript, TypeScript, Java, C++, etc.
+    C_STYLE = ("/*", "*/")  # CSS, C, etc.
+    HTML_STYLE = ("<!--", "-->")  # HTML, XML
+    SQL_STYLE = "--"  # SQL
+    LUA_STYLE = "--"  # Lua
+    NONE = None  # Plain text, unknown
+
+
+LANGUAGE_COMMENT_MAP = {
+    # Hash-style comments
+    "python": CommentStyle.HASH,
+    "ruby": CommentStyle.HASH,
+    "bash": CommentStyle.HASH,
+    "shell": CommentStyle.HASH,
+    "sh": CommentStyle.HASH,
+    "yaml": CommentStyle.HASH,
+    "yml": CommentStyle.HASH,
+    "perl": CommentStyle.HASH,
+    "r": CommentStyle.HASH,
+    "make": CommentStyle.HASH,
+    "makefile": CommentStyle.HASH,
+    "dockerfile": CommentStyle.HASH,
+    "toml": CommentStyle.HASH,
+    "ini": CommentStyle.HASH,
+    "conf": CommentStyle.HASH,
+    "properties": CommentStyle.HASH,
+    # Double-slash comments
+    "javascript": CommentStyle.DOUBLE_SLASH,
+    "js": CommentStyle.DOUBLE_SLASH,
+    "typescript": CommentStyle.DOUBLE_SLASH,
+    "ts": CommentStyle.DOUBLE_SLASH,
+    "jsx": CommentStyle.DOUBLE_SLASH,
+    "tsx": CommentStyle.DOUBLE_SLASH,
+    "java": CommentStyle.DOUBLE_SLASH,
+    "c": CommentStyle.DOUBLE_SLASH,
+    "cpp": CommentStyle.DOUBLE_SLASH,
+    "cxx": CommentStyle.DOUBLE_SLASH,
+    "c++": CommentStyle.DOUBLE_SLASH,
+    "cs": CommentStyle.DOUBLE_SLASH,
+    "csharp": CommentStyle.DOUBLE_SLASH,
+    "go": CommentStyle.DOUBLE_SLASH,
+    "rust": CommentStyle.DOUBLE_SLASH,
+    "rs": CommentStyle.DOUBLE_SLASH,
+    "swift": CommentStyle.DOUBLE_SLASH,
+    "kotlin": CommentStyle.DOUBLE_SLASH,
+    "scala": CommentStyle.DOUBLE_SLASH,
+    "php": CommentStyle.DOUBLE_SLASH,
+    "dart": CommentStyle.DOUBLE_SLASH,
+    # C-style comments
+    "css": CommentStyle.C_STYLE,
+    "scss": CommentStyle.C_STYLE,
+    "sass": CommentStyle.C_STYLE,
+    "less": CommentStyle.C_STYLE,
+    # HTML-style comments
+    "html": CommentStyle.HTML_STYLE,
+    "xml": CommentStyle.HTML_STYLE,
+    "svg": CommentStyle.HTML_STYLE,
+    "markdown": CommentStyle.HTML_STYLE,
+    "md": CommentStyle.HTML_STYLE,
+    # SQL comments
+    "sql": CommentStyle.SQL_STYLE,
+    "mysql": CommentStyle.SQL_STYLE,
+    "postgresql": CommentStyle.SQL_STYLE,
+    "sqlite": CommentStyle.SQL_STYLE,
+    # Lua comments
+    "lua": CommentStyle.LUA_STYLE,
+    # Plain text / unknown
+    "text": CommentStyle.NONE,
+    "txt": CommentStyle.NONE,
+    "": CommentStyle.NONE,
+}
+
+
+def get_comment_for_language(language: str, text: str) -> str:
+    """Generate a comment for the given language containing text."""
+    style = LANGUAGE_COMMENT_MAP.get(language.lower(), CommentStyle.NONE)
+
+    if style == CommentStyle.NONE:
+        return ""
+    elif style == CommentStyle.HASH:
+        return f"# {text}"
+    elif style == CommentStyle.DOUBLE_SLASH:
+        return f"// {text}"
+    elif style == CommentStyle.C_STYLE:
+        return f"/* {text} */"
+    elif style == CommentStyle.HTML_STYLE:
+        return f"<!-- {text} -->"
+    elif style == CommentStyle.SQL_STYLE:
+        return f"-- {text}"
+    elif style == CommentStyle.LUA_STYLE:
+        return f"-- {text}"
+
+    return ""
+
+
 class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
     @override
     def get_generic_chrome_selectors(self) -> list[str]:
