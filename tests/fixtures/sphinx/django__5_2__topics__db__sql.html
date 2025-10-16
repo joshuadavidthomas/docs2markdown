@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Performing raw SQL queries &#8212; Django 6.1.dev20251012200946 documentation</title>
+    <title>Performing raw SQL queries &#8212; Django 5.2.8.dev20251011170327 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=34bb78ad" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css?v=bf4d74af" />
-    <script src="../../_static/documentation_options.js?v=a4a50dbd"></script>
+    <script src="../../_static/documentation_options.js?v=6e9101d5"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -18,7 +18,7 @@
 
 
 
-
+ 
 <script src="../../templatebuiltins.js"></script>
 <script>
 (function($) {
@@ -57,7 +57,7 @@
     <div class="document">
   <div id="custom-doc" class="yui-t6">
     <div id="hd">
-      <h1><a href="../../index.html">Django 6.1.dev20251012200946 documentation</a></h1>
+      <h1><a href="../../index.html">Django 5.2.8.dev20251011170327 documentation</a></h1>
       <div id="global-nav">
         <a title="Home page" href="../../index.html">Home</a>  |
         <a title="Table of contents" href="../../contents.html">Table of contents</a>  |
@@ -76,7 +76,7 @@
       <div id="yui-main">
         <div class="yui-b">
           <div class="yui-g" id="topics-db-sql">
-
+            
   <section id="s-performing-raw-sql-queries">
 <span id="performing-raw-sql-queries"></span><h1>Performing raw SQL queries<a class="headerlink" href="#performing-raw-sql-queries" title="Link to this heading">¶</a></h1>
 <p>Django gives you two ways of performing raw SQL queries: you can use
@@ -115,8 +115,7 @@ return model instances:</p>
 <code class="docutils literal notranslate"><span class="pre">django.db.models.query.RawQuerySet</span></code> instance. This <code class="docutils literal notranslate"><span class="pre">RawQuerySet</span></code> instance
 can be iterated over like a normal <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet" title="django.db.models.query.QuerySet"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code></a> to
 provide object instances.</p>
-<p>This is best illustrated with an example. Suppose you have the following
-model:</p>
+<p>This is best illustrated with an example. Suppose you have the following model:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
@@ -155,13 +154,13 @@ return rows, a (possibly cryptic) error will result.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you are performing queries on MySQL, note that MySQL’s silent type
-coercion may cause unexpected results when mixing types. If you query on a
-string type column, but with an integer value, MySQL will coerce the types
-of all values in the table to an integer before performing the comparison.
-For example, if your table contains the values <code class="docutils literal notranslate"><span class="pre">'abc'</span></code>, <code class="docutils literal notranslate"><span class="pre">'def'</span></code> and you
-query for <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">mycolumn=0</span></code>, both rows will match. To prevent this,
-perform the correct typecasting before using the value in a query.</p>
+<p>If you are performing queries on MySQL, note that MySQL’s silent type coercion
+may cause unexpected results when mixing types. If you query on a string
+type column, but with an integer value, MySQL will coerce the types of all values
+in the table to an integer before performing the comparison. For example, if your
+table contains the values <code class="docutils literal notranslate"><span class="pre">'abc'</span></code>, <code class="docutils literal notranslate"><span class="pre">'def'</span></code> and you query for <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">mycolumn=0</span></code>,
+both rows will match. To prevent this, perform the correct typecasting
+before using the value in a query.</p>
 </div>
 <section id="s-mapping-query-fields-to-model-fields">
 <span id="mapping-query-fields-to-model-fields"></span><h3>Mapping query fields to model fields<a class="headerlink" href="#mapping-query-fields-to-model-fields" title="Link to this heading">¶</a></h3>
@@ -324,8 +323,8 @@ resulting rows.</p>
 </div>
 <p>To protect against SQL injection, you must not include quotes around the <code class="docutils literal notranslate"><span class="pre">%s</span></code>
 placeholders in the SQL string.</p>
-<p>Note that if you want to include literal percent signs in the query, you have
-to double them in the case you are passing parameters:</p>
+<p>Note that if you want to include literal percent signs in the query, you have to
+double them in the case you are passing parameters:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT foo FROM bar WHERE baz = &#39;30%&#39;&quot;</span><span class="p">)</span>
 <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT foo FROM bar WHERE baz = &#39;30</span><span class="si">%%</span><span class="s2">&#39; AND id = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
 </pre></div>
@@ -453,10 +452,10 @@ backends, only Oracle supports it.</p>
           </div>
         </div>
       </div>
-
-
+      
+        
           <div class="yui-b" id="sidebar">
-
+            
       <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
@@ -515,8 +514,8 @@ backends, only Oracle supports it.</p>
               <h3>Last update:</h3>
               <p class="topless">Oct 12, 2025</p>
           </div>
-
-
+        
+      
     </div>
 
     <div id="ft">

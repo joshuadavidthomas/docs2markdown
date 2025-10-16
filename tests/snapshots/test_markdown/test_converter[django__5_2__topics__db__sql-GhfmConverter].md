@@ -1,6 +1,6 @@
-Performing raw SQL queries — Django 6.1.dev20251012200946 documentation
+Performing raw SQL queries — Django 5.2.8.dev20251011170327 documentation
 
-# [Django 6.1.dev20251012200946 documentation](../../index.md)
+# [Django 5.2.8.dev20251011170327 documentation](../../index.md)
 
 [Home](../../index.md "Home page") |
 [Table of contents](../../contents.md "Table of contents") |

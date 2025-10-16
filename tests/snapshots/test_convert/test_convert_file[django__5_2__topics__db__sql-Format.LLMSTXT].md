@@ -36,8 +36,7 @@ This method takes a raw SQL query, executes it, and returns a
 can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.md#django.db.models.query.QuerySet) to
 provide object instances.
 
-This is best illustrated with an example. Suppose you have the following
-model:
+This is best illustrated with an example. Suppose you have the following model:
 
 ```python
 class Person(models.Model):
@@ -83,13 +82,13 @@ make it very powerful.
 
 > **WARNING:**
 >
-> If you are performing queries on MySQL, note that MySQL’s silent type
-> coercion may cause unexpected results when mixing types. If you query on a
-> string type column, but with an integer value, MySQL will coerce the types
-> of all values in the table to an integer before performing the comparison.
-> For example, if your table contains the values `'abc'`, `'def'` and you
-> query for `WHERE mycolumn=0`, both rows will match. To prevent this,
-> perform the correct typecasting before using the value in a query.
+> If you are performing queries on MySQL, note that MySQL’s silent type coercion
+> may cause unexpected results when mixing types. If you query on a string
+> type column, but with an integer value, MySQL will coerce the types of all values
+> in the table to an integer before performing the comparison. For example, if your
+> table contains the values `'abc'`, `'def'` and you query for `WHERE mycolumn=0`,
+> both rows will match. To prevent this, perform the correct typecasting
+> before using the value in a query.
 
 ### Mapping query fields to model fields
 
@@ -282,8 +281,8 @@ def my_custom_sql(self):
 To protect against SQL injection, you must not include quotes around the `%s`
 placeholders in the SQL string.
 
-Note that if you want to include literal percent signs in the query, you have
-to double them in the case you are passing parameters:
+Note that if you want to include literal percent signs in the query, you have to
+double them in the case you are passing parameters:
 
 ```python
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")

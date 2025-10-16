@@ -42,8 +42,7 @@ return model instances:</p>
 <code>django.db.models.query.RawQuerySet</code> instance. This <code>RawQuerySet</code> instance
 can be iterated over like a normal <a class="reference internal" href="../../ref/models/querysets.html#django.db.models.query.QuerySet"><code>QuerySet</code></a> to
 provide object instances.</p>
-<p>This is best illustrated with an example. Suppose you have the following
-model:</p>
+<p>This is best illustrated with an example. Suppose you have the following model:</p>
 <pre><code class="language-python">class Person(models.Model):
     first_name = models.CharField(...)
     last_name = models.CharField(...)
@@ -80,13 +79,13 @@ return rows, a (possibly cryptic) error will result.</p>
 </blockquote>
 <blockquote data-markdownify-alert-type="WARNING">
 
-<p>If you are performing queries on MySQL, note that MySQL’s silent type
-coercion may cause unexpected results when mixing types. If you query on a
-string type column, but with an integer value, MySQL will coerce the types
-of all values in the table to an integer before performing the comparison.
-For example, if your table contains the values <code>'abc'</code>, <code>'def'</code> and you
-query for <code>WHERE mycolumn=0</code>, both rows will match. To prevent this,
-perform the correct typecasting before using the value in a query.</p>
+<p>If you are performing queries on MySQL, note that MySQL’s silent type coercion
+may cause unexpected results when mixing types. If you query on a string
+type column, but with an integer value, MySQL will coerce the types of all values
+in the table to an integer before performing the comparison. For example, if your
+table contains the values <code>'abc'</code>, <code>'def'</code> and you query for <code>WHERE mycolumn=0</code>,
+both rows will match. To prevent this, perform the correct typecasting
+before using the value in a query.</p>
 </blockquote>
 <section><span data-markdownify-raw="" id="s-mapping-query-fields-to-model-fields"></span>
 <h3>Mapping query fields to model fields</h3>
@@ -237,8 +236,8 @@ def my_custom_sql(self):
 </code></pre>
 <p>To protect against SQL injection, you must not include quotes around the <code>%s</code>
 placeholders in the SQL string.</p>
-<p>Note that if you want to include literal percent signs in the query, you have
-to double them in the case you are passing parameters:</p>
+<p>Note that if you want to include literal percent signs in the query, you have to
+double them in the case you are passing parameters:</p>
 <pre><code class="language-python">cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%%' AND id = %s", [self.id])
 </code></pre>

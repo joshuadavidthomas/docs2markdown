@@ -1,6 +1,6 @@
-Performing raw SQL queries — Django 6.1.dev20251012200946 documentation
+Performing raw SQL queries — Django 5.2.8.dev20251011170327 documentation
 
-# [Django 6.1.dev20251012200946 documentation](../../index.md)
+# [Django 5.2.8.dev20251011170327 documentation](../../index.md)
 
 [Home](../../index.md "Home page") |
 [Table of contents](../../contents.md "Table of contents") |
@@ -51,8 +51,7 @@ This method takes a raw SQL query, executes it, and returns a
 can be iterated over like a normal [`QuerySet`](../../ref/models/querysets.md#django.db.models.query.QuerySet "django.db.models.query.QuerySet") to
 provide object instances.
 
-This is best illustrated with an example. Suppose you have the following
-model:
+This is best illustrated with an example. Suppose you have the following model:
 
 ```
 class Person(models.Model):
@@ -98,13 +97,13 @@ return rows, a (possibly cryptic) error will result.
 
 Warning
 
-If you are performing queries on MySQL, note that MySQL’s silent type
-coercion may cause unexpected results when mixing types. If you query on a
-string type column, but with an integer value, MySQL will coerce the types
-of all values in the table to an integer before performing the comparison.
-For example, if your table contains the values `'abc'`, `'def'` and you
-query for `WHERE mycolumn=0`, both rows will match. To prevent this,
-perform the correct typecasting before using the value in a query.
+If you are performing queries on MySQL, note that MySQL’s silent type coercion
+may cause unexpected results when mixing types. If you query on a string
+type column, but with an integer value, MySQL will coerce the types of all values
+in the table to an integer before performing the comparison. For example, if your
+table contains the values `'abc'`, `'def'` and you query for `WHERE mycolumn=0`,
+both rows will match. To prevent this, perform the correct typecasting
+before using the value in a query.
 
 ### Mapping query fields to model fields[¶](#mapping-query-fields-to-model-fields "Link to this heading")
 
@@ -297,8 +296,8 @@ def my_custom_sql(self):
 To protect against SQL injection, you must not include quotes around the `%s`
 placeholders in the SQL string.
 
-Note that if you want to include literal percent signs in the query, you have
-to double them in the case you are passing parameters:
+Note that if you want to include literal percent signs in the query, you have to
+double them in the case you are passing parameters:
 
 ```
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")
