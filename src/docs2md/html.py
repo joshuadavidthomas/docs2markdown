@@ -492,7 +492,6 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
             "starlight-menu-button",
             "starlight-theme-select",
             "site-search",
-            ".not-content",
             ".copy",
         ]
         return base_selectors + starlight_selectors

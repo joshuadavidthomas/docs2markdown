@@ -72,6 +72,10 @@ A general-purpose agent for researching complex questions, searching for code, a
 
    - **Automatically** by primary agents for specialized tasks based on their descriptions.
    - Manually by **@ mentioning** a subagent in your message. For example.
+
+     ```txt
+     @general help me search for this function
+     ```
 3. **Navigation between sessions**: When subagents create their own child sessions, you can navigate between the parent session and all child sessions using:
 
    - **Ctrl+Right** (or your configured `session_child_cycle` keybind) to cycle forward through parent → child1 → child2 → … → parent
@@ -91,6 +95,10 @@ You can customize the built-in agents or create your own through configuration. 
 
 Configure agents in your `opencode.json` config file:
 
+```json
+{  "$schema": "https://opencode.ai/config.json",  "agent": {    "build": {      "mode": "primary",      "model": "anthropic/claude-sonnet-4-20250514",      "prompt": "{file:./prompts/build.txt}",      "tools": {        "write": true,        "edit": true,        "bash": true      }    },    "plan": {      "mode": "primary",      "model": "anthropic/claude-haiku-4-20250514",      "tools": {        "write": false,        "edit": false,        "bash": false      }    },    "code-reviewer": {      "description": "Reviews code for best practices and potential issues",      "mode": "subagent",      "model": "anthropic/claude-sonnet-4-20250514",      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",      "tools": {        "write": false,        "edit": false      }    }  }}
+```
+
 ---
 
 ### [Markdown](#markdown)
@@ -99,6 +107,13 @@ You can also define agents using markdown files. Place them in:
 
 - Global: `~/.config/opencode/agent/`
 - Per-project: `.opencode/agent/`
+
+```markdown
+---description: Reviews code for quality and best practicesmode: subagentmodel: anthropic/claude-sonnet-4-20250514temperature: 0.1tools:  write: false  edit: false  bash: false---
+You are in code review mode. Focus on:
+- Code quality and best practices- Potential bugs and edge cases- Performance implications- Security considerations
+Provide constructive feedback without making direct changes.
+```
 
 The markdown file name becomes the agent name. For example, `review.md` creates a `review` agent.
 
@@ -114,6 +129,10 @@ Let’s look at these configuration options in detail.
 
 Use the `description` option to provide a brief description of what the agent does and when to use it.
 
+```json
+{  "agent": {    "review": {      "description": "Reviews code for best practices and potential issues"    }  }}
+```
+
 This is a **required** config option.
 
 ---
@@ -124,11 +143,19 @@ Control the randomness and creativity of the LLM’s responses with the `tempera
 
 Lower values make responses more focused and deterministic, while higher values increase creativity and variability.
 
+```json
+{  "agent": {    "plan": {      "temperature": 0.1    },    "creative": {      "temperature": 0.8    }  }}
+```
+
 Temperature values typically range from 0.0 to 1.0:
 
 - **0.0-0.2**: Very focused and deterministic responses, ideal for code analysis and planning
 - **0.3-0.5**: Balanced responses with some creativity, good for general development tasks
 - **0.6-1.0**: More creative and varied responses, useful for brainstorming and exploration
+
+```json
+{  "agent": {    "analyze": {      "temperature": 0.1,      "prompt": "{file:./prompts/analysis.txt}"    },    "build": {      "temperature": 0.3    },    "brainstorm": {      "temperature": 0.7,      "prompt": "{file:./prompts/creative.txt}"    }  }}
+```
 
 If no temperature is specified, OpenCode uses model-specific defaults; typically 0 for most models, 0.55 for Qwen models.
 
@@ -138,11 +165,19 @@ If no temperature is specified, OpenCode uses model-specific defaults; typically
 
 Set to `true` to disable the agent.
 
+```json
+{  "agent": {    "review": {      "disable": true    }  }}
+```
+
 ---
 
 ### [Prompt](#prompt)
 
 Specify a custom system prompt file for this agent with the `prompt` config. The prompt file should contain instructions specific to the agent’s purpose.
+
+```json
+{  "agent": {    "review": {      "prompt": "{file:./prompts/code-review.txt}"    }  }}
+```
 
 This path is relative to where the config file is located. So this works for both the global OpenCode config and the project specific config.
 
@@ -152,13 +187,25 @@ This path is relative to where the config file is located. So this works for bot
 
 Use the `model` config to override the default model for this agent. Useful for using different models optimized for different tasks. For example, a faster model for planning, a more capable model for implementation.
 
+```json
+{  "agent": {    "plan": {      "model": "anthropic/claude-haiku-4-20250514"    }  }}
+```
+
 ---
 
 ### [Tools](#tools)
 
 Control which tools are available in this agent with the `tools` config. You can enable or disable specific tools by setting them to `true` or `false`.
 
+```json
+{  "$schema": "https://opencode.ai/config.json",  "tools": {    "write": true,    "bash": true  },  "agent": {    "plan": {      "tools": {        "write": false,        "bash": false      }    }  }}
+```
+
 You can also use wildcards to control multiple tools at once. For example, to disable all tools from an MCP server:
+
+```json
+{  "$schema": "https://opencode.ai/config.json",  "agent": {    "readonly": {      "tools": {        "mymcp_*": false,        "write": false,        "edit": false      }    }  }}
+```
 
 [Learn more about tools](/docs/tools).
 
@@ -172,15 +219,40 @@ You can configure permissions to manage what actions an agent can take. Currentl
 - `"allow"` — Allow all operations without approval
 - `"deny"` — Disable the tool
 
+```json
+{  "$schema": "https://opencode.ai/config.json",  "permission": {    "edit": "deny"  }}
+```
+
 You can override these permissions per agent.
+
+```json
+{  "$schema": "https://opencode.ai/config.json",  "permission": {    "edit": "deny"  },  "agent": {    "build": {      "permission": {        "edit": "ask"      }    }  }}
+```
 
 You can also set permissions in Markdown agents.
 
+```markdown
+---description: Code review without editsmode: subagentpermission:  edit: deny  bash: ask  webfetch: deny---
+Only analyze code and suggest changes.
+```
+
 You can set permissions for specific bash commands.
+
+```json
+{  "$schema": "https://opencode.ai/config.json",  "agent": {    "build": {      "permission": {        "bash": {          "git push": "ask"        }      }    }  }}
+```
 
 This can take a glob pattern.
 
+```json
+{  "$schema": "https://opencode.ai/config.json",  "agent": {    "build": {      "permission": {        "bash": {          "git *": "ask"        }      }    }  }}
+```
+
 And you can also use the `*` wildcard to manage permissions for all commands. Where the specific rule can override the `*` wildcard.
+
+```json
+{  "$schema": "https://opencode.ai/config.json",  "agent": {    "build": {      "permission": {        "bash": {          "git status": "allow",          "*": "ask"        }      }    }  }}
+```
 
 [Learn more about permissions](/docs/permissions).
 
@@ -189,6 +261,10 @@ And you can also use the `*` wildcard to manage permissions for all commands. Wh
 ### [Mode](#mode)
 
 Control the agent’s mode with the `mode` config. The `mode` option is used to determine how the agent can be used.
+
+```json
+{  "agent": {    "review": {      "mode": "subagent"    }  }}
+```
 
 The `mode` option can be set to `primary`, `subagent`, or `all`. If no `mode` is specified, it defaults to `all`.
 
@@ -200,6 +276,10 @@ Any other options you specify in your agent configuration will be **passed throu
 
 For example, with OpenAI’s reasoning models, you can control the reasoning effort:
 
+```json
+{  "agent": {    "deep-thinker": {      "description": "Agent that uses high reasoning effort for complex problems",      "model": "openai/gpt-5",      "reasoningEffort": "high",      "textVerbosity": "low"    }  }}
+```
+
 These additional options are model and provider-specific. Check your provider’s documentation for available parameters.
 
 ---
@@ -207,6 +287,10 @@ These additional options are model and provider-specific. Check your provider’
 ## [Create agents](#create-agents)
 
 You can create new agents using the following command:
+
+```bash
+opencode agent create
+```
 
 This interactive command will:
 
@@ -238,6 +322,20 @@ Here are some examples agents you might find useful.
 
 ### [Documentation agent](#documentation-agent)
 
+```markdown
+---description: Writes and maintains project documentationmode: subagenttools:  bash: false---
+You are a technical writer. Create clear, comprehensive documentation.
+Focus on:
+- Clear explanations- Proper structure- Code examples- User-friendly language
+```
+
 ---
 
 ### [Security auditor](#security-auditor)
+
+```markdown
+---description: Performs security audits and identifies vulnerabilitiesmode: subagenttools:  write: false  edit: false---
+You are a security expert. Focus on identifying potential security issues.
+Look for:
+- Input validation vulnerabilities- Authentication and authorization flaws- Data exposure risks- Dependency vulnerabilities- Configuration security issues
+```
