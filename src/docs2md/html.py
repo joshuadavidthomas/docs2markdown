@@ -292,9 +292,7 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
         blockquote = self.soup.new_tag("blockquote")
 
-        marker = self.soup.new_tag("p")
-        marker.string = f"[!{alert_type.name}]"
-        blockquote.append(marker)
+        blockquote["data-markdownify-alert-type"] = alert_type.name
 
         blockquote.extend(list(div.children))
 
@@ -308,19 +306,11 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
         blockquote = self.soup.new_tag("blockquote")
 
-        marker = self.soup.new_tag("p")
-        marker.string = f"[!{alert_type.name}]"
-        blockquote.append(marker)
-
+        blockquote["data-markdownify-alert-type"] = alert_type.name
         if title:
-            title_p = self.soup.new_tag("p")
-            strong = self.soup.new_tag("strong")
-            strong.string = title
-            title_p.append(strong)
-            blockquote.append(title_p)
+            blockquote["data-markdownify-title"] = title
 
         blockquote.extend(list(div.children))
-
         div.replace_with(blockquote)
 
     def _process_code_block(self, div: Tag, highlight_class: str) -> None:

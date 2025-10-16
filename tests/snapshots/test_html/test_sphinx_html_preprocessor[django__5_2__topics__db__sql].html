@@ -11,7 +11,7 @@
 <p>Django gives you two ways of performing raw SQL queries: you can use
 <a class="reference internal" href="#django.db.models.Manager.raw"><code>Manager.raw()</code></a> to <a class="reference internal" href="#performing-raw-queries">perform raw queries and return model instances</a>, or
 you can avoid the model layer entirely and <a class="reference internal" href="#executing-custom-sql-directly">execute custom SQL directly</a>.</p>
-<blockquote><p>[!NOTE]</p>
+<blockquote data-markdownify-alert-type="NOTE">
 
 <p>The Django ORM provides many tools to express queries without writing raw
 SQL. For example:</p>
@@ -24,7 +24,7 @@ SQL. For example:</p>
 one of <a class="reference internal" href="../../faq/help.html">the support channels</a> to see if the ORM supports
 your use case.</p>
 </blockquote>
-<blockquote><p>[!WARNING]</p>
+<blockquote data-markdownify-alert-type="WARNING">
 
 <p>You should be very careful whenever you write raw SQL. Every time you use
 it, you should properly escape any parameters that the user can control
@@ -59,7 +59,7 @@ Jane Jones
 <p>This example isn’t very exciting – it’s exactly the same as running
 <code>Person.objects.all()</code>. However, <code>raw()</code> has a bunch of other options that
 make it very powerful.</p>
-<blockquote><p>[!NOTE]</p>
+<blockquote data-markdownify-alert-type="NOTE">
 
 <p>Where did the name of the <code>Person</code> table come from in that example?</p>
 <p>By default, Django figures out a database table name by joining the
@@ -71,14 +71,14 @@ so its table would be <code>myapp_person</code>.</p>
 <a class="reference internal" href="../../ref/models/options.html#django.db.models.Options.db_table"><code>db_table</code></a> option, which also lets you manually set the
 database table name.</p>
 </blockquote>
-<blockquote><p>[!WARNING]</p>
+<blockquote data-markdownify-alert-type="WARNING">
 
 <p>No checking is done on the SQL statement that is passed in to <code>.raw()</code>.
 Django expects that the statement will return a set of rows from the
 database, but does nothing to enforce that. If the query does not
 return rows, a (possibly cryptic) error will result.</p>
 </blockquote>
-<blockquote><p>[!WARNING]</p>
+<blockquote data-markdownify-alert-type="WARNING">
 
 <p>If you are performing queries on MySQL, note that MySQL’s silent type
 coercion may cause unexpected results when mixing types. If you query on a
@@ -185,12 +185,12 @@ placeholders in the query string for a list, or <code>%(key)s</code>
 placeholders for a dictionary (where <code>key</code> is replaced by a
 dictionary key), regardless of your database engine. Such placeholders will be
 replaced with parameters from the <code>params</code> argument.</p>
-<blockquote><p>[!NOTE]</p>
+<blockquote data-markdownify-alert-type="NOTE">
 
 <p>Dictionary params are not supported with the SQLite backend; with
 this backend, you must pass parameters as a list.</p>
 </blockquote>
-<blockquote><p>[!WARNING]</p>
+<blockquote data-markdownify-alert-type="WARNING">
 
 <p><strong>Do not use string formatting on raw queries or quote placeholders in your
 SQL strings!</strong></p>

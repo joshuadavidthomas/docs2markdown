@@ -2,17 +2,21 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from typer.testing import CliRunner
 
 from docs2md.cli import app
+from docs2md.convert import Format
 
 runner = CliRunner()
 
 
-def test_single_file_to_stdout(tmp_path):
-    html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
+TEST_FIXTURE_DIR = Path("tests/fixtures/sphinx/")
+TEST_FIXTURE_FILE = TEST_FIXTURE_DIR / "django__5_2__ref__checks.html"
 
-    result = runner.invoke(app, [str(html_file)])
+
+def test_single_file_to_stdout(tmp_path):
+    result = runner.invoke(app, [str(TEST_FIXTURE_FILE)])
 
     assert result.exit_code == 0
     assert "# System check framework" in result.stdout
@@ -20,10 +24,9 @@ def test_single_file_to_stdout(tmp_path):
 
 
 def test_single_file_to_file(tmp_path):
-    html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
     output_file = tmp_path / "output.md"
 
-    result = runner.invoke(app, [str(html_file), str(output_file)])
+    result = runner.invoke(app, [str(TEST_FIXTURE_FILE), str(output_file)])
 
     assert result.exit_code == 0
     assert output_file.exists()
@@ -31,7 +34,7 @@ def test_single_file_to_file(tmp_path):
 
 
 def test_directory_to_default_dist(tmp_path, monkeypatch):
-    html_dir = Path("tests/fixtures/sphinx/").absolute()
+    html_dir = TEST_FIXTURE_DIR.absolute()
 
     monkeypatch.chdir(tmp_path)
 
@@ -45,10 +48,9 @@ def test_directory_to_default_dist(tmp_path, monkeypatch):
 
 
 def test_directory_to_custom_output(tmp_path):
-    html_dir = Path("tests/fixtures/sphinx/")
     output_dir = tmp_path / "custom-output"
 
-    result = runner.invoke(app, [str(html_dir), str(output_dir)])
+    result = runner.invoke(app, [str(TEST_FIXTURE_DIR), str(output_dir)])
 
     assert result.exit_code == 0
     assert output_dir.exists()
@@ -56,19 +58,18 @@ def test_directory_to_custom_output(tmp_path):
 
 
 def test_sphinx_type_flag(tmp_path):
-    html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
     output_file = tmp_path / "output.md"
 
-    result = runner.invoke(app, [str(html_file), str(output_file), "--type", "sphinx"])
+    result = runner.invoke(
+        app, [str(TEST_FIXTURE_FILE), str(output_file), "--type", "sphinx"]
+    )
 
     assert result.exit_code == 0
     assert output_file.exists()
 
 
-def test_invalid_type(tmp_path):
-    html_file = Path("tests/fixtures/sphinx/django__5_2__ref__checks.html")
-
-    result = runner.invoke(app, [str(html_file), "--type", "invalid"])
+def test_invalid_type():
+    result = runner.invoke(app, [str(TEST_FIXTURE_FILE), "--type", "invalid"])
 
     assert result.exit_code == 2
     assert "Invalid value" in result.output
@@ -122,3 +123,50 @@ def test_directory_with_io_error(tmp_path, monkeypatch):
     result = runner.invoke(app, [str(html_dir)])
 
     assert result.exit_code == 1
+
+
+@pytest.mark.parametrize(
+    "format,should_contain_html",
+    [
+        (Format.GHFM, True),
+        (Format.LLMSTXT, False),
+    ],
+)
+def test_convert_with_format_option(format, should_contain_html, tmp_path):
+    html_file = Path("tests/fixtures/format_test.html")
+    output_file = tmp_path / "output.md"
+
+    result = runner.invoke(
+        app, [str(html_file), str(output_file), "--format", format.value]
+    )
+
+    assert result.exit_code == 0
+    assert output_file.exists()
+
+    content = output_file.read_text()
+    if should_contain_html:
+        assert "<dl>" in content
+        assert "<span" in content
+    else:
+        assert "<dl>" not in content
+        assert "<span" not in content
+
+
+@pytest.mark.parametrize(
+    "format",
+    [Format.GHFM, Format.LLMSTXT],
+)
+def test_convert_directory_with_format(format, tmp_path):
+    input_dir = tmp_path / "input"
+    input_dir.mkdir()
+    (input_dir / "test.html").write_text("<p>Test content</p>")
+
+    output_dir = tmp_path / "output"
+
+    result = runner.invoke(
+        app, [str(input_dir), str(output_dir), "--format", format.value]
+    )
+
+    assert result.exit_code == 0
+    output_files = list(output_dir.glob("*.md"))
+    assert len(output_files) == 1

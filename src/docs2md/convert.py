@@ -6,7 +6,8 @@ from pathlib import Path
 
 from docs2md.html import BaseHtmlPreprocessor
 from docs2md.html import SphinxHtmlPreprocessor
-from docs2md.markdown import md
+from docs2md.markdown import GhfmConverter
+from docs2md.markdown import LlmsTxtConverter
 
 
 class DocType(Enum):
@@ -22,14 +23,30 @@ class DocType(Enum):
         return cls(html)
 
 
-def convert_file(html_file: Path, doc_type: DocType) -> str:
+class Format(Enum):
+    GHFM = "ghfm"
+    LLMSTXT = "llmstxt"
+
+    def get_converter(self):
+        match self:
+            case self.GHFM:
+                return GhfmConverter
+            case self.LLMSTXT:
+                return LlmsTxtConverter
+
+
+def convert_file(
+    html_file: Path, doc_type: DocType, format: Format = Format.GHFM
+) -> str:
     html = html_file.read_text()
     preprocessed = doc_type.preprocessor(html).process()
-    return md(preprocessed)
+    converter_class = format.get_converter()
+    converter = converter_class()
+    return converter.convert(preprocessed)
 
 
 def convert_directory(
-    input_dir: Path, output_dir: Path, doc_type: DocType
+    input_dir: Path, output_dir: Path, doc_type: DocType, format: Format = Format.GHFM
 ) -> Generator[tuple[Path, Path | Exception], None, None]:
     """Yields (input_file, output_file_or_exception) for each HTML file."""
     html_files = list(input_dir.rglob("*.html"))
@@ -41,7 +58,7 @@ def convert_directory(
             relative_path = html_file.relative_to(input_dir)
             output_file = output_dir / relative_path.with_suffix(".md")
 
-            markdown = convert_file(html_file, doc_type)
+            markdown = convert_file(html_file, doc_type, format)
 
             output_file.parent.mkdir(parents=True, exist_ok=True)
             output_file.write_text(markdown)

@@ -8,10 +8,6 @@ from bs4 import Tag
 from markdownify import MarkdownConverter
 
 
-def md(html: str):
-    return Docs2MdConverter().convert(html)
-
-
 def extract_language(el: Tag):
     """Extract language from code element's class attribute.
 
@@ -30,9 +26,6 @@ def extract_language(el: Tag):
     classes = code.get("class", "")
     if not classes:
         return ""
-
-    if isinstance(classes, str):
-        classes = [classes]
 
     for class_name in classes:
         if class_name.startswith("language-"):
@@ -73,6 +66,13 @@ class Docs2MdConverter(MarkdownConverter):
             modified_href = re.sub(r"\.html(#|$)", r".md\1", href)
             el["href"] = modified_href
 
+        return super().convert_a(el, text, **kwargs)
+
+
+class GhfmConverter(Docs2MdConverter):
+    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
+        a = super().convert_a(el, text, **kwargs)
+
         parent_tags = kwargs.get("parent_tags", set())
 
         # Only keep as HTML if inside a dd within a raw dl
@@ -83,7 +83,25 @@ class Docs2MdConverter(MarkdownConverter):
                     del el["class"]
                 return str(el)
 
-        return super().convert_a(el, text, **kwargs)
+        return a
+
+    def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
+        alert_type = el.get("data-markdownify-alert-type")
+        title = el.get("data-markdownify-title")
+
+        if alert_type or title:
+            lines = []
+
+            if alert_type:
+                lines.append(f"[!{alert_type}]")
+
+            if title:
+                lines.append(f"**{title}**")
+
+            if lines:
+                text = "\n\n".join(lines) + text
+
+        return super().convert_blockquote(el, text, **kwargs)
 
     def convert_code(self, el: Tag, text: str, **kwargs: Any) -> Any:
         parent_tags = kwargs.get("parent_tags", set())
@@ -131,3 +149,16 @@ class Docs2MdConverter(MarkdownConverter):
             del el["data-markdownify-raw"]
             return str(el)
         return text
+
+
+class LlmsTxtConverter(Docs2MdConverter):
+    def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
+        title = el.get("data-markdownify-title")
+        alert_type = el.get("data-markdownify-alert-type")
+
+        header_text = title or (f"{alert_type}:" if alert_type else None)
+
+        if header_text:
+            text = f"**{header_text}**" + text
+
+        return super().convert_blockquote(el, text, **kwargs)

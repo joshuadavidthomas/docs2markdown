@@ -8,6 +8,7 @@ from rich.console import Console
 from rich.progress import Progress
 
 from docs2md.convert import DocType
+from docs2md.convert import Format
 from docs2md.convert import convert_directory
 from docs2md.convert import convert_file
 
@@ -44,23 +45,30 @@ def convert(
             help="Documentation type",
         ),
     ] = DocType.DEFAULT,
+    format: Annotated[
+        Format,
+        typer.Option(
+            "--format",
+            help="Output format: ghfm (GitHub-flavored Markdown) or llmstxt (LLM-friendly text)",
+        ),
+    ] = Format.GHFM,
 ) -> None:
-    """Convert HTML documentation to GitHub-flavored Markdown.
+    """Convert HTML documentation to Markdown.
 
     ## Examples
 
     ```bash
-    # Single file to stdout
+    # Single file to stdout (default GitHub-flavored)
     docs2md docs/index.html
 
-    # Single file to specific output
-    docs2md docs/index.html output.md
+    # Single file with LLM-friendly format
+    docs2md docs/index.html output.txt --format llmstxt
 
     # Directory with default output location
     docs2md docs/_build/html
 
-    # Directory with custom output
-    docs2md docs/_build/html markdown/
+    # Directory with custom output and format
+    docs2md docs/_build/html markdown/ --format llmstxt
 
     # Sphinx documentation
     docs2md docs/_build/html --type sphinx
@@ -68,14 +76,16 @@ def convert(
     """
 
     if input.is_file():
-        markdown = convert_file(input, doc_type)
+        markdown = convert_file(input, doc_type, format)
 
         if output is None:
             console.print(markdown)
         else:
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_text(markdown)
-            console.print(f"[green]✓[/green] Converted {input} → {output}")
+            console.print(
+                f"[green]✓[/green] Converted {input} → {output} (format: {format.value})"
+            )
     else:
         output_dir = output or Path("./dist")
 
@@ -95,7 +105,9 @@ def convert(
         with Progress(console=console) as progress:
             task = progress.add_task("[cyan]Converting files...", total=len(html_files))
 
-            for input_file, result in convert_directory(input, output_dir, doc_type):
+            for input_file, result in convert_directory(
+                input, output_dir, doc_type, format
+            ):
                 if isinstance(result, Exception):
                     failures.append((input_file, result))
                 else:
@@ -108,5 +120,7 @@ def convert(
                 console.print(f"  [red]✗[/red] {file}: {error}")
             raise typer.Exit(1)
 
-        console.print(f"\n[green]✓[/green] Converted {len(successes)} files")
+        console.print(
+            f"\n[green]✓[/green] Converted {len(successes)} files (format: {format.value})"
+        )
         console.print(f"Output written to: {output_dir}")
