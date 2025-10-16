@@ -144,15 +144,19 @@ class GhfmConverter(Docs2MdConverter):
         text = normalize_whitespace(text)
         return super().convert_p(el, text, **kwargs)
 
-    def convert_pre(self, el: Tag, text: str, **kwargs: Any) -> str:
-        code = el.find("code")
-        title = code.get("data-markdownify-title") if code else None
+    def convert_figure(self, el: Tag, text: str, **kwargs: Any) -> str:
+        if el.has_attr("data-markdownify-raw"):
+            figcaption = el.find("figcaption")
+            pre = el.find("pre")
 
-        if title:
-            # Wrap in figure with figcaption for titled code blocks
-            return f"<figure>\n<figcaption>{title}</figcaption>\n\n{super().convert_pre(el, text, **kwargs)}\n</figure>\n\n"
+            if figcaption and pre:
+                # Process the pre content to get markdown
+                parent_tags = kwargs.get("parent_tags", set()) | {"figure"}
+                pre_markdown = self.process_tag(pre, parent_tags=parent_tags)
 
-        return super().convert_pre(el, text, **kwargs)
+                return f"<figure>\n<figcaption>{figcaption.get_text()}</figcaption>\n\n{pre_markdown}</figure>\n\n"
+
+        return text
 
     def convert_span(self, el: Tag, text: str, **kwargs: Any) -> str:
         if el.has_attr("data-markdownify-raw"):
@@ -173,12 +177,16 @@ class LlmsTxtConverter(Docs2MdConverter):
 
         return super().convert_blockquote(el, text, **kwargs)
 
-    def convert_pre(self, el: Tag, text: str, **kwargs: Any) -> str:
-        code = el.find("code")
-        title = code.get("data-markdownify-title") if code else None
+    def convert_figure(self, el: Tag, text: str, **kwargs: Any) -> str:
+        if el.has_attr("data-markdownify-raw"):
+            figcaption = el.find("figcaption")
+            pre = el.find("pre")
 
-        if title:
-            # Put italicized title above code block for LLM consumption
-            return f"*{title}*\n\n{super().convert_pre(el, text, **kwargs)}"
+            if figcaption and pre:
+                # Process the pre content to get markdown
+                parent_tags = kwargs.get("parent_tags", set()) | {"figure"}
+                pre_markdown = self.process_tag(pre, parent_tags=parent_tags)
 
-        return super().convert_pre(el, text, **kwargs)
+                return f"*{figcaption.get_text()}*\n\n{pre_markdown}"
+
+        return text

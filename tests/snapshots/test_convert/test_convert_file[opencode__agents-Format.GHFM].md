@@ -137,7 +137,6 @@ Configure agents in your `opencode.json` config file:
 }
 ```
 
-
 </figure>
 
 ---
@@ -179,7 +178,6 @@ You are in code review mode. Focus on:
 Provide constructive feedback without making direct changes.
 ```
 
-
 </figure>
 
 The markdown file name becomes the agent name. For example, `review.md` creates a `review` agent.
@@ -211,7 +209,6 @@ Use the `description` option to provide a brief description of what the agent do
 }
 ```
 
-
 </figure>
 
 This is a **required** config option.
@@ -241,7 +238,6 @@ Lower values make responses more focused and deterministic, while higher values 
   }
 }
 ```
-
 
 </figure>
 
@@ -274,7 +270,6 @@ Temperature values typically range from 0.0 to 1.0:
 }
 ```
 
-
 </figure>
 
 If no temperature is specified, OpenCode uses model-specific defaults; typically 0 for most models, 0.55 for Qwen models.
@@ -300,7 +295,6 @@ Set to `true` to disable the agent.
 }
 ```
 
-
 </figure>
 
 ---
@@ -323,7 +317,6 @@ Specify a custom system prompt file for this agent with the `prompt` config. The
   }
 }
 ```
-
 
 </figure>
 
@@ -349,7 +342,6 @@ Use the `model` config to override the default model for this agent. Useful for 
   }
 }
 ```
-
 
 </figure>
 
@@ -382,7 +374,6 @@ Control which tools are available in this agent with the `tools` config. You can
 }
 ```
 
-
 </figure>
 
 You can also use wildcards to control multiple tools at once. For example, to disable all tools from an MCP server:
@@ -406,7 +397,6 @@ You can also use wildcards to control multiple tools at once. For example, to di
   }
 }
 ```
-
 
 </figure>
 
@@ -436,7 +426,6 @@ You can configure permissions to manage what actions an agent can take. Currentl
 }
 ```
 
-
 </figure>
 
 You can override these permissions per agent.
@@ -462,7 +451,6 @@ You can override these permissions per agent.
 }
 ```
 
-
 </figure>
 
 You can also set permissions in Markdown agents.
@@ -485,7 +473,6 @@ permission:
 
 Only analyze code and suggest changes.
 ```
-
 
 </figure>
 
@@ -511,7 +498,6 @@ You can set permissions for specific bash commands.
 }
 ```
 
-
 </figure>
 
 This can take a glob pattern.
@@ -535,7 +521,6 @@ This can take a glob pattern.
   }
 }
 ```
-
 
 </figure>
 
@@ -562,7 +547,6 @@ And you can also use the `*` wildcard to manage permissions for all commands. Wh
 }
 ```
 
-
 </figure>
 
 [Learn more about permissions](/docs/permissions).
@@ -587,7 +571,6 @@ Control the agent’s mode with the `mode` config. The `mode` option is used to 
   }
 }
 ```
-
 
 </figure>
 
@@ -618,7 +601,6 @@ For example, with OpenAI’s reasoning models, you can control the reasoning eff
   }
 }
 ```
-
 
 </figure>
 
@@ -690,7 +672,6 @@ Focus on:
 - User-friendly language
 ```
 
-
 </figure>
 
 ---
@@ -724,6 +705,5 @@ Look for:
 - Dependency vulnerabilities
 - Configuration security issues
 ```
-
 
 </figure>

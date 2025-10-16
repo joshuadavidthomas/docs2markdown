@@ -540,19 +540,15 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
 
     def process_figure(self, figure: Tag) -> None:
         """Process Starlight expressive-code figure blocks."""
+        # Skip if already processed
+        if figure.has_attr("data-markdownify-raw"):
+            return
+            
         parent = figure.parent
         if not parent or "expressive-code" not in parent.get("class", []):
             return
 
         is_terminal = "is-terminal" in figure.get("class", [])
-
-        title = None
-        figcaption = figure.find("figcaption", class_="header")
-        if figcaption:
-            title_span = figcaption.find("span", class_="title")
-            if title_span:
-                title = title_span.get_text(strip=True)
-            figcaption.decompose()
 
         pre = figure.find("pre")
         if not pre:
@@ -582,10 +578,32 @@ class StarlightHtmlPreprocessor(BaseHtmlPreprocessor):
                 ec_line.insert_after(self.soup.new_string("\n"))
             ec_line.unwrap()
 
-        if title and title.lower() not in ["terminal window", ""]:
-            code["data-markdownify-title"] = title
-
         if language:
             code["class"] = f"language-{language}"
 
-        figure.replace_with(pre)
+        # Mark figure to preserve HTML structure but allow content conversion
+        figure["data-markdownify-raw"] = ""
+        
+        # Remove not-content class so figure doesn't get filtered out
+        if "not-content" in figure.get("class", []):
+            classes = [c for c in figure.get("class", []) if c != "not-content"]
+            if classes:
+                figure["class"] = classes
+            else:
+                del figure["class"]
+
+        # Simplify figcaption - just keep the title text
+        figcaption = figure.find("figcaption")
+        if figcaption:
+            title_span = figcaption.find("span", class_="title")
+            if title_span:
+                title_text = title_span.get_text(strip=True)
+                if title_text and title_text.lower() not in ["terminal window", ""]:
+                    # Replace all contents with just the title text
+                    for child in list(figcaption.children):
+                        child.extract()
+                    figcaption.string = title_text
+                else:
+                    figcaption.decompose()
+            else:
+                figcaption.decompose()
