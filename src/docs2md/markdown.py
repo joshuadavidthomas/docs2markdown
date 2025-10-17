@@ -9,16 +9,6 @@ from markdownify import MarkdownConverter
 
 
 def extract_language(el: Tag):
-    """Extract language from code element's class attribute.
-
-    Looks for <code class="language-{lang}"> pattern within <pre> blocks.
-
-    Args:
-        el: The <pre> element being converted
-
-    Returns:
-        Language string or empty string if no language found
-    """
     code = el.find("code")
     if not code:
         return ""
@@ -32,24 +22,6 @@ def extract_language(el: Tag):
             return class_name.replace("language-", "")
 
     return ""
-
-
-def normalize_whitespace(text: str):
-    """Normalize whitespace in converted text.
-
-    Replaces sequences of whitespace (spaces, tabs, newlines) with single spaces.
-    This removes hard line breaks from HTML source formatting while preserving
-    semantic structure (paragraph breaks, list items, etc.).
-
-    Args:
-        text: Text content to normalize
-
-    Returns:
-        Normalized text with single spaces, or original if text is None/empty
-    """
-    if text:
-        return re.sub(r"\s+", " ", text.strip())
-    return text
 
 
 class Docs2MdConverter(MarkdownConverter):
@@ -141,7 +113,7 @@ class GhfmConverter(Docs2MdConverter):
         return super().convert_dl(el, text, **kwargs)
 
     def convert_p(self, el: Tag, text: str, **kwargs: Any) -> Any:
-        text = normalize_whitespace(text)
+        text = re.sub(r"\s+", " ", text.strip())
         return super().convert_p(el, text, **kwargs)
 
     def convert_span(self, el: Tag, text: str, **kwargs: Any) -> str:

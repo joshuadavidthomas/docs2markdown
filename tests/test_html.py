@@ -17,12 +17,6 @@ def test_sphinx_html_preprocessor(doc_file, snapshot_html):
     assert SphinxHtmlPreprocessor(doc_file.read_text()).process() == snapshot_html
 
 
-def test_base_html_preprocessor_content_min_len():
-    html = "<html><body><article>Short</article><main>This is long enough content</main></body></html>"
-    result = BaseHtmlPreprocessor(html, content_min_len=10).process()
-    assert "This is long enough content" in result
-
-
 @pytest.mark.parametrize(
     "class_name,expected",
     [
@@ -38,7 +32,7 @@ def test_get_language_from_class(class_name, expected):
 
 @pytest.fixture
 def soup():
-    """Dummy BeautifulSoup `soup` for unit testing specific processor methods"""
+    # Dummy BeautifulSoup `soup` for unit testing specific processor methods
     return BeautifulSoup("<html></html>", "lxml")
 
 

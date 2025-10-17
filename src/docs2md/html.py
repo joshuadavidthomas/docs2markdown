@@ -6,13 +6,6 @@ from bs4 import BeautifulSoup
 from bs4 import Tag
 from typing_extensions import override
 
-DEFAULT_CONTENT_SELECTORS = [
-    "article#docs-content",
-    "div[role='main']",
-    "main article",
-    "article",
-    "main",
-]
 DEFAULT_CONTENT_MIN_LEN = 100
 
 
@@ -22,14 +15,19 @@ class BaseHtmlPreprocessor:
         html: str,
         *,
         content_selectors: list[str] | None = None,
-        content_min_len: int | None = None,
     ) -> None:
         self.soup: BeautifulSoup = BeautifulSoup(html, "lxml")
-        self.content_selectors: list[str] = (
-            content_selectors or DEFAULT_CONTENT_SELECTORS
-        )
-        self.content_min_len: int = content_min_len or DEFAULT_CONTENT_MIN_LEN
+        self.content_selectors: list[str] = self.get_content_selectors()
         self.generic_chrome_selectors: list[str] = self.get_generic_chrome_selectors()
+
+    def get_content_selectors(self) -> list[str]:
+        return [
+            "article#docs-content",
+            "div[role='main']",
+            "main article",
+            "article",
+            "main",
+        ]
 
     def get_generic_chrome_selectors(self) -> list[str]:
         return [
@@ -56,7 +54,7 @@ class BaseHtmlPreprocessor:
 
         for selector in self.content_selectors:
             node = self.soup.select_one(selector)
-            if node and len(node.get_text(strip=True)) > self.content_min_len:
+            if node and len(node.get_text(strip=True)) > DEFAULT_CONTENT_MIN_LEN:
                 content = node
                 break
 
@@ -314,19 +312,6 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         div.replace_with(blockquote)
 
     def _process_code_block(self, div: Tag, highlight_class: str) -> None:
-        """Sphinx code block to standard HTML code block
-
-        Transforms:
-            <div class="highlight-{lang}">
-                <div class="highlight">
-                    <pre>code</pre>
-                </div>
-            </div>
-
-        To:
-            <pre><code class="language-{lang}">code</code></pre>
-        """
-
         pre = div.find("pre")
         if not pre:
             return
