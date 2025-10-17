@@ -3,9 +3,9 @@ from __future__ import annotations
 import pytest
 from bs4 import BeautifulSoup
 
-from docs2md.html import BaseHtmlPreprocessor
-from docs2md.html import SphinxHtmlPreprocessor
-from docs2md.html import get_language_from_class
+from docs2markdown.html import BaseHtmlPreprocessor
+from docs2markdown.html import SphinxHtmlPreprocessor
+from docs2markdown.html import get_language_from_class
 
 
 def test_base_html_preprocessor(doc_file, snapshot_html):

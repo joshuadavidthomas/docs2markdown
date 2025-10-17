@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pytest
 
-from docs2md.convert import DocType
-from docs2md.convert import Format
-from docs2md.convert import convert_directory
-from docs2md.convert import convert_file
+from docs2markdown.convert import DocType
+from docs2markdown.convert import Format
+from docs2markdown.convert import convert_directory
+from docs2markdown.convert import convert_file
 
 
 @pytest.mark.parametrize(

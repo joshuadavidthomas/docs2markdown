@@ -7,6 +7,10 @@ default:
     @just --list --list-submodules
 
 [private]
+cog:
+    uv run --with cogapp cog -r CONTRIBUTING.md README.md pyproject.toml
+
+[private]
 nox SESSION *ARGS:
     uv run nox --session "{{ SESSION }}" -- "{{ ARGS }}"
 

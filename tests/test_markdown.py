@@ -3,9 +3,9 @@ from __future__ import annotations
 import pytest
 from bs4 import BeautifulSoup
 
-from docs2md.markdown import GhfmConverter
-from docs2md.markdown import LlmsTxtConverter
-from docs2md.markdown import extract_language
+from docs2markdown.markdown import GhfmConverter
+from docs2markdown.markdown import LlmsTxtConverter
+from docs2markdown.markdown import extract_language
 
 
 @pytest.mark.parametrize(

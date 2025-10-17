@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .cli import app
+from docs2markdown.cli import app
 
 if __name__ == "__main__":
     app()

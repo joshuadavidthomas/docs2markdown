@@ -7,15 +7,15 @@ import typer
 from rich.console import Console
 from rich.progress import Progress
 
-from docs2md.convert import DocType
-from docs2md.convert import Format
-from docs2md.convert import convert_directory
-from docs2md.convert import convert_file
+from docs2markdown.convert import DocType
+from docs2markdown.convert import Format
+from docs2markdown.convert import convert_directory
+from docs2markdown.convert import convert_file
 
 console = Console()
 
 app = typer.Typer(
-    help="Convert HTML documentation to GitHub-flavored Markdown",
+    help="Convert HTML documentation to Markdown",
     no_args_is_help=True,
     rich_markup_mode="markdown",
 )
@@ -59,19 +59,19 @@ def convert(
 
     ```bash
     # Single file to stdout (default GitHub-flavored)
-    docs2md docs/index.html
+    docs2markdown docs/index.html
 
     # Single file with LLM-friendly format
-    docs2md docs/index.html output.txt --format llmstxt
+    docs2markdown docs/index.html output.txt --format llmstxt
 
     # Directory with default output location
-    docs2md docs/_build/html
+    docs2markdown docs/_build/html
 
     # Directory with custom output and format
-    docs2md docs/_build/html markdown/ --format llmstxt
+    docs2markdown docs/_build/html markdown/ --format llmstxt
 
     # Sphinx documentation
-    docs2md docs/_build/html --type sphinx
+    docs2markdown docs/_build/html --type sphinx
     ```
     """
 

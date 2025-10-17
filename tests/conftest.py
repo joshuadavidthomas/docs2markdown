@@ -40,7 +40,7 @@ def pytest_generate_tests(metafunc):
     metafunc.parametrize("doc_file", doc_files, ids=ids)
 
 
-class Docs2MdSnapshotExtension(SingleFileSnapshotExtension):
+class Docs2MarkdownSnapshotExtension(SingleFileSnapshotExtension):
     _write_mode = WriteMode.TEXT
 
     @classmethod
@@ -61,11 +61,11 @@ class Docs2MdSnapshotExtension(SingleFileSnapshotExtension):
         return str(data).rstrip() + "\n"
 
 
-class HtmlSnapshotExtension(Docs2MdSnapshotExtension):
+class HtmlSnapshotExtension(Docs2MarkdownSnapshotExtension):
     file_extension = "html"
 
 
-class MarkdownSnapshotExtension(Docs2MdSnapshotExtension):
+class MarkdownSnapshotExtension(Docs2MarkdownSnapshotExtension):
     file_extension = "md"
 
 

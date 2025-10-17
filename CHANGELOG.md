@@ -13,9 +13,9 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 ### Removed - for now removed features
 ### Fixed - for any bug fixes
 ### Security - in case of vulnerabilities
-[${version}]: https://github.com/joshuadavidthomas/docs2md/releases/tag/v${version}
+[${version}]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v${version}
 -->
 
 ## [Unreleased]
 
-[unreleased]: https://github.com/joshuadavidthomas/docs2md/tree/main
+[unreleased]: https://github.com/joshuadavidthomas/docs2markdown/tree/main

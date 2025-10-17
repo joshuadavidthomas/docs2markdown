@@ -4,11 +4,11 @@ from collections.abc import Generator
 from enum import Enum
 from pathlib import Path
 
-from docs2md.html import BaseHtmlPreprocessor
-from docs2md.html import SphinxHtmlPreprocessor
-from docs2md.markdown import Docs2MdConverter
-from docs2md.markdown import GhfmConverter
-from docs2md.markdown import LlmsTxtConverter
+from docs2markdown.html import BaseHtmlPreprocessor
+from docs2markdown.html import SphinxHtmlPreprocessor
+from docs2markdown.markdown import Docs2MarkdownConverter
+from docs2markdown.markdown import GhfmConverter
+from docs2markdown.markdown import LlmsTxtConverter
 
 
 class DocType(Enum):
@@ -27,7 +27,7 @@ class Format(Enum):
     GHFM = "ghfm"
     LLMSTXT = "llmstxt"
 
-    def get_converter(self) -> type[Docs2MdConverter]:
+    def get_converter(self) -> type[Docs2MarkdownConverter]:
         match self:
             case self.GHFM:
                 return GhfmConverter

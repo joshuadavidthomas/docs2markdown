@@ -24,7 +24,7 @@ def extract_language(el: Tag):
     return ""
 
 
-class Docs2MdConverter(MarkdownConverter):
+class Docs2MarkdownConverter(MarkdownConverter):
     @final
     class Options:
         bs4_options = "lxml"
@@ -41,7 +41,7 @@ class Docs2MdConverter(MarkdownConverter):
         return super().convert_a(el, text, **kwargs)
 
 
-class GhfmConverter(Docs2MdConverter):
+class GhfmConverter(Docs2MarkdownConverter):
     def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
         a = super().convert_a(el, text, **kwargs)
 
@@ -123,7 +123,7 @@ class GhfmConverter(Docs2MdConverter):
         return text
 
 
-class LlmsTxtConverter(Docs2MdConverter):
+class LlmsTxtConverter(Docs2MarkdownConverter):
     def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
         title = el.get("data-markdownify-title")
         alert_type = el.get("data-markdownify-alert-type")

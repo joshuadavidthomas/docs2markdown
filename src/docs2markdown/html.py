@@ -10,12 +10,7 @@ DEFAULT_CONTENT_MIN_LEN = 100
 
 
 class BaseHtmlPreprocessor:
-    def __init__(
-        self,
-        html: str,
-        *,
-        content_selectors: list[str] | None = None,
-    ) -> None:
+    def __init__(self, html: str) -> None:
         self.soup: BeautifulSoup = BeautifulSoup(html, "lxml")
         self.content_selectors: list[str] = self.get_content_selectors()
         self.generic_chrome_selectors: list[str] = self.get_generic_chrome_selectors()
@@ -73,7 +68,8 @@ class BaseHtmlPreprocessor:
             if element.parent is None:
                 continue
 
-            method_name = f"process_{element.name}"
+            element_name = element.name.replace("-", "_")
+            method_name = f"process_{element_name}"
             if hasattr(self, method_name):
                 method = getattr(self, method_name)
                 method(element)

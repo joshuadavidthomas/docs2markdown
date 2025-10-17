@@ -20,6 +20,30 @@ types = [
 authors = [
   { name = "Josh Thomas", email = "josh@joshthomas.dev" }
 ]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  # [[[cog
+  # import subprocess
+  # import cog
+  #
+  # from noxfile import PY_VERSIONS
+  #
+  # for version in PY_VERSIONS:
+  #     cog.outl(f'  "Programming Language :: Python :: {version}",')
+  # ]]] -->
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  # [[[end]]]
+  "Programming Language :: Python :: Implementation :: CPython"
+]
 dependencies = [
   "beautifulsoup4[lxml]>=4.14.2",
   "markdownify>=1.2.0",
@@ -27,19 +51,28 @@ dependencies = [
   "rich>=14.2.0",
   "typer>=0.19.2",
 ]
-description = "Convert HTML documentation to GitHub-flavored Markdown"
-name = "docs2md"
+description = "Convert HTML documentation to Markdown"
+license = { file = "LICENSE" }
+name = "docs2markdown"
 readme = "README.md"
+# [[[cog
+# import cog
+#
+# from noxfile import PY_DEFAULT
+#
+# cog.outl(f'requires-python = ">={PY_DEFAULT}"')
+# ]]] -->
 requires-python = ">=3.10"
+# [[[end]]]
 version = "0.1.0"
 
 [project.scripts]
-docs2md = "docs2md.cli:app"
+docs2markdown = "docs2markdown.cli:app"
 
 [project.urls]
-Documentation = "https://github.com/joshuadavidthomas/docs2md#README"
-Issues = "https://github.com/joshuadavidthomas/docs2md/issues"
-Source = "https://github.com/joshuadavidthomas/docs2md"
+Documentation = "https://github.com/joshuadavidthomas/docs2markdown#README"
+Issues = "https://github.com/joshuadavidthomas/docs2markdown/issues"
+Source = "https://github.com/joshuadavidthomas/docs2markdown"
 
 [tool.bumpver]
 commit = true
@@ -75,9 +108,9 @@ fail_under = 100
 [tool.coverage.run]
 omit = [
   "tests/*",
-  "src/docs2md/__main__.py"
+  "src/docs2markdown/__main__.py"
 ]
-source = ["src/docs2md"]
+source = ["src/docs2markdown"]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -104,9 +137,7 @@ module = [
 
 [tool.pytest.ini_options]
 addopts = "-n auto --dist loadfile --doctest-modules"
-markers = [
-    "fixture_tags",
-]
+markers = ["fixture_tags"]
 norecursedirs = ".* bin build dist *.egg htmlcov logs node_modules templates venv"
 python_files = "tests.py test_*.py *_tests.py"
 pythonpath = ["src", "."]
@@ -164,7 +195,7 @@ unfixable = []
 
 [tool.ruff.lint.isort]
 force-single-line = true
-known-first-party = ["docs2md"]
+known-first-party = ["docs2markdown"]
 required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]

@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from docs2md.cli import app
-from docs2md.convert import Format
+from docs2markdown.cli import app
+from docs2markdown.convert import Format
 
 runner = CliRunner()
 
@@ -86,18 +86,18 @@ def test_empty_directory(tmp_path):
 
 
 def test_directory_with_file_processing_error(tmp_path, monkeypatch):
-    html_dir = tmp_path / "html"
-    html_dir.mkdir()
-
-    bad_html = html_dir / "bad.html"
-    bad_html.write_text("<html><body>Test</body></html>")
-
-    from docs2md import convert
+    from docs2markdown import convert
 
     def mock_convert_file(html_file, doc_type):
         raise ValueError("Simulated processing error")
 
     monkeypatch.setattr(convert, "convert_file", mock_convert_file)
+
+    html_dir = tmp_path / "html"
+    html_dir.mkdir()
+
+    bad_html = html_dir / "bad.html"
+    bad_html.write_text("<html><body>Test</body></html>")
 
     result = runner.invoke(app, [str(html_dir)])
 
