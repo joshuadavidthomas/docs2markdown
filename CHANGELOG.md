@@ -18,4 +18,20 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Initial release of `docs2markdown`
+- Support for converting HTML documentation to Markdown with multiple output formats:
+    - GitHub-flavored Markdown (GHFM) for standard Markdown rendering
+    - LLM-friendly text (llmstxt) optimized for AI model consumption
+- Support for multiple documentation types:
+  - Default mode for generic HTML documentation
+  - Sphinx-generated documentation with specialized preprocessing
+- Single file processing or batch processing of directories
+- CLI tool and Python library API
+
+### New Contributors
+
+- Josh Thomas <josh@joshthomas.dev> (maintainer)
+
 [unreleased]: https://github.com/joshuadavidthomas/docs2markdown/tree/main
