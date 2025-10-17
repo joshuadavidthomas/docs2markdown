@@ -18,6 +18,8 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.1.0]
+
 ### Added
 
 - Initial release of `docs2markdown`
@@ -34,4 +36,5 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/docs2markdown/tree/main
+[unreleased]: https://github.com/joshuadavidthomas/docs2markdown/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.1.0
