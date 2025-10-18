@@ -5,7 +5,7 @@
 
 Convert HTML documentation to Markdown with support for multiple output formats and documentation types.
 
-`docs2markdown` transforms HTML documentation into clean, readable Markdown. Whether you're working with Sphinx-generated documentation, generic HTML docs, or need AI-friendly text output, `docs2markdown` handles the conversion while preserving structure and formatting. It works as both a CLI tool for quick conversions and a Python library for integration into your projects.
+`docs2markdown` transforms HTML documentation into clean, readable Markdown. It works as both a CLI tool for quick conversions and a Python library for integration into your projects.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ For quick one-off usage without installation, use `uvx`:
 uvx docs2markdown docs/index.html
 ```
 
-To install as a persistent CLI tool:
+To install as a CLI tool:
 
 ```bash
 uv tool install docs2markdown
@@ -56,7 +56,7 @@ docs2markdown docs/index.html
 
 This reads `docs/index.html`, converts it to GitHub-flavored Markdown, and prints the result. You can redirect this to a file or pipe it to other commands.
 
-For batch conversions, point `docs2markdown` at a directory and it will recursively find all HTML files and convert them:
+For batch conversions, point `docs2markdown` at a directory to recursively find and convert all HTML files:
 
 ```bash
 docs2markdown docs/_build/html
@@ -68,23 +68,19 @@ By default, this creates a `./dist` directory with the converted Markdown files,
 
 ### Output Formats
 
-`docs2markdown` supports two output formats to suit different use cases.
+`docs2markdown` supports two output formats for different applications.
 
-**GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders beautifully on GitHub, GitLab, and other platforms. This format includes support for tables, code blocks with syntax highlighting, task lists, and other GitHub-specific extensions. Use this when you want documentation that's readable by humans and renders nicely on documentation sites, README files, and general-purpose documentation.
+**GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders well on GitHub, GitLab, and other platforms. It supports tables, syntax-highlighted code blocks, task lists, and other GitHub-specific extensions. Use this for human-readable documentation that displays well on documentation sites, README files, and general-purpose documentation.
 
-**LLM-friendly text (llmstxt)** is optimized for consumption by AI models. This format strips away unnecessary formatting and structures content in a way that's easier for language models to parse and understand. The output uses consistent patterns for structure and organizes content to maximize comprehension by AI systems. This is particularly useful when feeding documentation to AI assistants, building RAG (Retrieval-Augmented Generation) systems, creating training data for models, or preparing documentation for AI-powered analysis tools.
+**LLM-friendly text (llmstxt)** is optimized for AI models. This format strips unnecessary formatting and structures content for language models to parse and understand. This is useful for feeding documentation to AI assistants, building RAG (Retrieval-Augmented Generation) systems, creating training data, or preparing documentation for AI analysis tools.
 
 ### Documentation Types
 
-Different documentation generators produce HTML with different structures and conventions. `docs2markdown` can apply specialized preprocessing based on the documentation type to produce cleaner output.
+Different documentation generators produce HTML with different structures and conventions. `docs2markdown` can applies preprocessing based on the documentation type to produce more cleaner output.
 
-**Default** mode works with generic HTML documentation. It applies basic preprocessing to clean up common HTML patterns and prepare the content for Markdown conversion. Use this for manually-written HTML, MkDocs output, and other generic documentation formats.
+**Default** mode works with generic HTML documentation. It applies basic preprocessing to clean up common HTML patterns and prepare the content for Markdown conversion. Use this for manually-written HTML, MkDocs output, and other generic formats.
 
-**Sphinx** mode is specifically designed for Sphinx-generated documentation. Sphinx adds specific CSS classes, navigation elements, headerlinks (the ¶ symbols), code-block wrappers, and other structural markup that need specialized handling. This mode knows how to identify and remove these Sphinx-specific elements before conversion, producing cleaner Markdown output without the navigation artifacts and structural markup that Sphinx adds.
-
-### Batch Processing
-
-`docs2markdown` can convert entire directories of HTML files while preserving the directory structure. When converting a directory, it recursively finds all HTML files and converts them to Markdown, maintaining the same folder hierarchy in the output directory. For example, if you have `docs/api/functions.html`, it will be written to `output/api/functions.md`.
+**Sphinx** mode is specifically designed for Sphinx-generated documentation. Sphinx adds specific CSS classes, navigation elements, headerlinks (the ¶ symbols), code-block wrappers, and other structural markup that need specialized handling. This mode identifies and removes these Sphinx-specific elements before conversion, producing cleaner Markdown output without the navigation artifacts and structural markup.
 
 ## Usage
 
@@ -118,11 +114,11 @@ See the [Features](#features) section above for details on output formats and do
 
 ### Library
 
-While `docs2markdown` works great as a CLI tool, you can also use it as a Python library in your own projects. This is useful when you need to integrate HTML-to-Markdown conversion into a larger workflow, build custom processing pipelines, or programmatically convert documentation as part of your build process.
+While `docs2markdown` works great as a CLI tool, you can also use it as a Python library in your own projects.
 
 #### `convert_file`
 
-The `convert_file` function takes a path to an HTML file and returns the converted Markdown as a string. This gives you full control over what to do with the output - write it to a file, process it further, or use it directly in your application.
+The `convert_file` function takes an HTML file patn and returns the converted Markdown as a string. This gives you full control over what to do with the output.
 
 **`convert_file(html_file: Path, doc_type: DocType = DocType.DEFAULT, format: Format = Format.GHFM) -> str`**
 
@@ -162,12 +158,12 @@ markdown = convert_file(
 
 #### `convert_directory`
 
-The `convert_directory` function recursively finds all HTML files in a directory and converts them to Markdown. It yields `(input_file, result)` tuples as it processes files, making it easy to track progress, handle errors, and provide feedback during long-running conversions. The function preserves the directory structure - if you have `docs/api/functions.html`, it will be written to `output/api/functions.md`.
+The `convert_directory` function recursively finds all HTML files in a directory and converts them to Markdown. It yields `(input_file, result)` tuples as it processes files. The function preserves the directory structure - if you have `docs/api/functions.html`, it will be written to `output/api/functions.md`.
 
 **`convert_directory(input_dir: Path, output_dir: Path, doc_type: DocType = DocType.DEFAULT, format: Format = Format.GHFM) -> Generator[tuple[Path, Path | Exception], None, None]`**
 
 Parameters:
-- `input_dir`: Directory containing HTML files to convert
+- `input_dir`: Directory with HTML files to convert
 - `output_dir`: Directory where Markdown files will be written
 - `doc_type`: Documentation type for preprocessing (default: `DocType.DEFAULT`)
 - `format`: Output format (default: `Format.GHFM`)
