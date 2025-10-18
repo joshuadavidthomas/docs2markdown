@@ -170,3 +170,107 @@ def test_convert_directory_with_format(format, tmp_path):
     assert result.exit_code == 0
     output_files = list(output_dir.glob("*.md"))
     assert len(output_files) == 1
+
+
+def test_cli_chunking_single_file(tmp_path):
+    output_dir = tmp_path / "output"
+
+    result = runner.invoke(
+        app,
+        [
+            str(TEST_FIXTURE_FILE),
+            str(output_dir),
+            "--chunk-strategy",
+            "heading",
+            "--max-tokens",
+            "1000",
+        ],
+    )
+
+    assert result.exit_code == 0
+
+    chunk_files = list(output_dir.glob("chunk_*.md"))
+    assert len(chunk_files) > 0
+
+    first = chunk_files[0].read_text()
+    assert first.startswith("---")
+    assert "id:" in first
+
+
+@pytest.mark.parametrize("chunk_output", ["jsonl", "manifest", "markdown"])
+def test_cli_chunk_output_formats(chunk_output, tmp_path):
+    if chunk_output == "jsonl":
+        output = tmp_path / "chunks.jsonl"
+    elif chunk_output == "manifest":
+        output = tmp_path / "manifest.json"
+    else:
+        output = tmp_path / "chunks"
+
+    result = runner.invoke(
+        app,
+        [
+            str(TEST_FIXTURE_FILE),
+            str(output),
+            "--chunk-strategy",
+            "heading",
+            "--chunk-output",
+            chunk_output,
+        ],
+    )
+
+    assert result.exit_code == 0
+    assert output.exists()
+
+    if chunk_output == "jsonl":
+        import json
+
+        for line in output.read_text().strip().split("\n"):
+            json.loads(line)
+
+    elif chunk_output == "manifest":
+        import json
+
+        manifest = json.loads(output.read_text())
+        assert "chunks" in manifest
+
+
+def test_cli_emit_manifest(tmp_path):
+    output_dir = tmp_path / "output"
+
+    result = runner.invoke(
+        app,
+        [
+            str(TEST_FIXTURE_FILE),
+            str(output_dir),
+            "--chunk-strategy",
+            "heading",
+            "--emit-manifest",
+        ],
+    )
+
+    assert result.exit_code == 0
+    assert (output_dir / "manifest.json").exists()
+
+
+def test_cli_chunk_directory(tmp_path):
+    output_dir = tmp_path / "output"
+
+    result = runner.invoke(
+        app,
+        [
+            str(TEST_FIXTURE_DIR),
+            str(output_dir),
+            "--chunk-strategy",
+            "heading",
+            "--chunk-output",
+            "jsonl",
+        ],
+    )
+
+    assert result.exit_code == 0
+
+    jsonl = output_dir / "chunks.jsonl"
+    assert jsonl.exists()
+
+    lines = jsonl.read_text().strip().split("\n")
+    assert len(lines) > 1

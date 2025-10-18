@@ -1,0 +1,1026 @@
+{
+  "chunks": [
+    {
+      "char_count": 430,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference"
+      ],
+      "id": "43eaf033d38d46ca",
+      "level": 1,
+      "links_out": [],
+      "order": 0,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 7
+    },
+    {
+      "char_count": 924,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups"
+      ],
+      "id": "84ef7f6360f6c653",
+      "level": 2,
+      "links_out": [
+        {
+          "href": "model-api.md#django.contrib.gis.db.models.GeometryField",
+          "text": "`GeometryField`"
+        },
+        {
+          "href": "model-api.md#django.contrib.gis.db.models.RasterField",
+          "text": "`RasterField`"
+        },
+        {
+          "href": "db-api.md#spatial-lookups-intro",
+          "text": "spatial lookups introduction"
+        },
+        {
+          "href": "db-api.md#spatial-lookup-compatibility",
+          "text": "spatial lookup compatibility table"
+        }
+      ],
+      "order": 1,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 123
+    },
+    {
+      "char_count": 2876,
+      "code_languages": [],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "Lookups with rasters"
+      ],
+      "id": "868077d232ccb027",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/RT_ST_Polygon.md",
+          "text": "ST\\_Polygon"
+        },
+        {
+          "href": "db-api.md#spatial-lookup-raster",
+          "text": "introduction to raster lookups"
+        }
+      ],
+      "order": 2,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 518
+    },
+    {
+      "char_count": 1319,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`bbcontains`"
+      ],
+      "id": "5327e7e0ab9a43dd",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Contain.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 3,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 128
+    },
+    {
+      "char_count": 1295,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`bboverlaps`"
+      ],
+      "id": "26a0687ecb5e5b34",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/geometry_overlaps.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 4,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 122
+    },
+    {
+      "char_count": 1310,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`contained`"
+      ],
+      "id": "57b6fc9ac468464d",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Contained.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 5,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 126
+    },
+    {
+      "char_count": 1326,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`contains`"
+      ],
+      "id": "f53b88062ee19045",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Contains.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 6,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 130
+    },
+    {
+      "char_count": 1216,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`contains_properly`"
+      ],
+      "id": "a104af7cf80d48fe",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_ContainsProperly.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 7,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 102
+    },
+    {
+      "char_count": 1364,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`coveredby`"
+      ],
+      "id": "b1ae865bf20deba5",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_CoveredBy.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 8,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 139
+    },
+    {
+      "char_count": 1342,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`covers`"
+      ],
+      "id": "616b1a4cb0bcd39c",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Covers.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 9,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 134
+    },
+    {
+      "char_count": 1269,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`crosses`"
+      ],
+      "id": "3ccf9f0e97a8bdf3",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Crosses.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 10,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 116
+    },
+    {
+      "char_count": 1355,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`disjoint`"
+      ],
+      "id": "913cad65f3c07003",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Disjoint.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 11,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 137
+    },
+    {
+      "char_count": 1311,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`equals`"
+      ],
+      "id": "995a6fe3ea9c651a",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Equals.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 12,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 126
+    },
+    {
+      "char_count": 1421,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`exact`, `same_as`"
+      ],
+      "id": "05bb79cc9913c3a2",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Same.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 13,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 153
+    },
+    {
+      "char_count": 1132,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`intersects`"
+      ],
+      "id": "78a2031014f5e17f",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Intersects.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 14,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 136
+    },
+    {
+      "char_count": 967,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`isempty`"
+      ],
+      "id": "9a04a307b396fa46",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_IsEmpty.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 15,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 45
+    },
+    {
+      "char_count": 967,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`isvalid`"
+      ],
+      "id": "42b58b295e429c1e",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_IsValid.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 16,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 95
+    },
+    {
+      "char_count": 1235,
+      "code_languages": [],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`overlaps`"
+      ],
+      "id": "48d538c4149711a4",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Overlaps.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 17,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 112
+    },
+    {
+      "char_count": 1338,
+      "code_languages": [],
+      "headings": [
+        "GIS QuerySet API Reference",
+        "Spatial Lookups",
+        "`relate`"
+      ],
+      "id": "9a02bbaad0e3510e",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Relate.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 18,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 217
+    },
+    {
+      "char_count": 866,
+      "code_languages": [],
+      "headings": [
+        "A tuple lookup parameter is used to specify the geometry and"
+      ],
+      "id": "50f8a7293bde608d",
+      "level": 1,
+      "links_out": [],
+      "order": 19,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 15
+    },
+    {
+      "char_count": 1123,
+      "code_languages": [
+        "python",
+        "sql",
+        "text"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains')."
+      ],
+      "id": "9bbbadce1e6e0b30",
+      "level": 1,
+      "links_out": [],
+      "order": 20,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 164
+    },
+    {
+      "char_count": 1376,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Oracle"
+      ],
+      "id": "c96bae74e616c5f4",
+      "level": 4,
+      "links_out": [],
+      "order": 21,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 142
+    },
+    {
+      "char_count": 1292,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`touches`"
+      ],
+      "id": "c3efe13d4e6226bd",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Touches.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 22,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 121
+    },
+    {
+      "char_count": 1252,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`within`"
+      ],
+      "id": "dc1dc258686d766e",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Within.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 23,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 126
+    },
+    {
+      "char_count": 1090,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`left`"
+      ],
+      "id": "d783a45159055bcb",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Left.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 24,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 85
+    },
+    {
+      "char_count": 1055,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`right`"
+      ],
+      "id": "97c1082f76730851",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Right.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 25,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 86
+    },
+    {
+      "char_count": 1083,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`overlaps_left`"
+      ],
+      "id": "eedfda1999afc573",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Overleft.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 26,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 91
+    },
+    {
+      "char_count": 1099,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`overlaps_right`"
+      ],
+      "id": "713df1ecdefe4baa",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Overright.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 27,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 92
+    },
+    {
+      "char_count": 1095,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`overlaps_above`"
+      ],
+      "id": "823d65ea7656f659",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Overabove.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 28,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 90
+    },
+    {
+      "char_count": 1080,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`overlaps_below`"
+      ],
+      "id": "8baba08326699ea3",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Overbelow.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 29,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 90
+    },
+    {
+      "char_count": 1073,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`strictly_above`"
+      ],
+      "id": "61296e06366a1cf1",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Above.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 30,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 88
+    },
+    {
+      "char_count": 1112,
+      "code_languages": [
+        "python",
+        "sql"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "`strictly_below`"
+      ],
+      "id": "8ec5aab5820df0ee",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Geometry_Below.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 31,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 88
+    },
+    {
+      "char_count": 2337,
+      "code_languages": [
+        "python",
+        "text"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups"
+      ],
+      "id": "fca8207ab2da491c",
+      "level": 2,
+      "links_out": [
+        {
+          "href": "db-api.md#distance-queries",
+          "text": "distance queries introduction"
+        },
+        {
+          "href": "measure.md#django.contrib.gis.measure.Distance",
+          "text": "`Distance`"
+        },
+        {
+          "href": "../../models/expressions.md",
+          "text": "query\nexpression"
+        },
+        {
+          "href": "#std-fieldlookup-dwithin",
+          "text": "`dwithin`"
+        },
+        {
+          "href": "https://postgis.net/docs/ST_Distance_Spheroid.md",
+          "text": "ST\\_DistanceSpheroid"
+        },
+        {
+          "href": "https://postgis.net/docs/ST_DistanceSphere.md",
+          "text": "ST\\_DistanceSphere"
+        },
+        {
+          "href": "https://postgis.net/docs/ST_Distance.md",
+          "text": "ST\\_Distance"
+        }
+      ],
+      "order": 32,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 394
+    },
+    {
+      "char_count": 1324,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "`distance_gt`"
+      ],
+      "id": "2e1bb2f2629c49b7",
+      "level": 3,
+      "links_out": [],
+      "order": 33,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 129
+    },
+    {
+      "char_count": 1344,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "`distance_gte`"
+      ],
+      "id": "1fd6529382f4ffa7",
+      "level": 3,
+      "links_out": [],
+      "order": 34,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 134
+    },
+    {
+      "char_count": 1323,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "`distance_lt`"
+      ],
+      "id": "84c6174a5b91ac4d",
+      "level": 3,
+      "links_out": [],
+      "order": 35,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 129
+    },
+    {
+      "char_count": 1339,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "`distance_lte`"
+      ],
+      "id": "db698bbeb3ca5ec4",
+      "level": 3,
+      "links_out": [],
+      "order": 36,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 133
+    },
+    {
+      "char_count": 1463,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "`dwithin`"
+      ],
+      "id": "c3ab28f36912e989",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "measure.md#django.contrib.gis.measure.Distance",
+          "text": "`Distance`"
+        }
+      ],
+      "order": 37,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 164
+    },
+    {
+      "char_count": 1505,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "Aggregate Functions"
+      ],
+      "id": "603513b8c491be09",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "../../../topics/db/aggregation.md",
+          "text": "the topic guide on aggregation"
+        },
+        {
+          "href": "https://docs.oracle.com/en/database/oracle/oracle-database/21/spatl/spatial-concepts.md#GUID-CE10AB14-D5EA-43BA-A647-DAC9EEF41EE6",
+          "text": "Oracle documentation"
+        }
+      ],
+      "order": 38,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 175
+    },
+    {
+      "char_count": 1496,
+      "code_languages": [],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "Aggregate Functions",
+        "`Collect`"
+      ],
+      "id": "eadff1bc27f4c52f",
+      "level": 4,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Collect.md",
+          "text": "PostGIS"
+        },
+        {
+          "href": "#django.contrib.gis.db.models.Union",
+          "text": "`Union`"
+        }
+      ],
+      "order": 39,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 172
+    },
+    {
+      "char_count": 1407,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "Aggregate Functions",
+        "`Extent`"
+      ],
+      "id": "8c1e904b41c11320",
+      "level": 4,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Extent.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 40,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 150
+    },
+    {
+      "char_count": 1438,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "Aggregate Functions",
+        "`Extent3D`"
+      ],
+      "id": "dc2a0d0ea8e4e18b",
+      "level": 4,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_3DExtent.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 41,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 158
+    },
+    {
+      "char_count": 1425,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "Aggregate Functions",
+        "`MakeLine`"
+      ],
+      "id": "03fa01665a6b482e",
+      "level": 4,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_MakeLine.md",
+          "text": "PostGIS"
+        }
+      ],
+      "order": 42,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 155
+    },
+    {
+      "char_count": 1298,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "the intersection pattern (the pattern here is for 'contains').",
+        "Distance Lookups",
+        "Aggregate Functions",
+        "`Union`"
+      ],
+      "id": "a4094ff147a20d2c",
+      "level": 4,
+      "links_out": [
+        {
+          "href": "https://postgis.net/docs/ST_Union.md",
+          "text": "PostGIS"
+        },
+        {
+          "href": "geos.md#django.contrib.gis.geos.GEOSGeometry",
+          "text": "`GEOSGeometry`"
+        },
+        {
+          "href": "#django.contrib.gis.db.models.Collect",
+          "text": "`Collect`"
+        }
+      ],
+      "order": 43,
+      "source_file_id": "django__5_2__ref__contrib__gis__geoquerysets.html",
+      "tokens": 224
+    }
+  ],
+  "files": {
+    "django__5_2__ref__contrib__gis__geoquerysets.html": [
+      "43eaf033d38d46ca",
+      "84ef7f6360f6c653",
+      "868077d232ccb027",
+      "5327e7e0ab9a43dd",
+      "26a0687ecb5e5b34",
+      "57b6fc9ac468464d",
+      "f53b88062ee19045",
+      "a104af7cf80d48fe",
+      "b1ae865bf20deba5",
+      "616b1a4cb0bcd39c",
+      "3ccf9f0e97a8bdf3",
+      "913cad65f3c07003",
+      "995a6fe3ea9c651a",
+      "05bb79cc9913c3a2",
+      "78a2031014f5e17f",
+      "9a04a307b396fa46",
+      "42b58b295e429c1e",
+      "48d538c4149711a4",
+      "9a02bbaad0e3510e",
+      "50f8a7293bde608d",
+      "9bbbadce1e6e0b30",
+      "c96bae74e616c5f4",
+      "c3efe13d4e6226bd",
+      "dc1dc258686d766e",
+      "d783a45159055bcb",
+      "97c1082f76730851",
+      "eedfda1999afc573",
+      "713df1ecdefe4baa",
+      "823d65ea7656f659",
+      "8baba08326699ea3",
+      "61296e06366a1cf1",
+      "8ec5aab5820df0ee",
+      "fca8207ab2da491c",
+      "2e1bb2f2629c49b7",
+      "1fd6529382f4ffa7",
+      "84c6174a5b91ac4d",
+      "db698bbeb3ca5ec4",
+      "c3ab28f36912e989",
+      "603513b8c491be09",
+      "eadff1bc27f4c52f",
+      "8c1e904b41c11320",
+      "dc2a0d0ea8e4e18b",
+      "03fa01665a6b482e",
+      "a4094ff147a20d2c"
+    ]
+  },
+  "total_chunks": 44,
+  "version": "1.0"
+}

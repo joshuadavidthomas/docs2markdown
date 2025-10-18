@@ -1,0 +1,185 @@
+{
+  "chunks": [
+    {
+      "char_count": 1423,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection"
+      ],
+      "id": "b9c3c5a865c070a7",
+      "level": 1,
+      "links_out": [
+        {
+          "href": "https://owasp.org/www-community/attacks/csrf#overview",
+          "text": "Cross Site Request Forgeries"
+        },
+        {
+          "href": "https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1",
+          "text": "**RFC 9110 Section 9.2.1**"
+        },
+        {
+          "href": "../howto/csrf.md#using-csrf",
+          "text": "How to use Django\u2019s CSRF protection"
+        }
+      ],
+      "order": 0,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 255
+    },
+    {
+      "char_count": 4565,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection",
+        "How it works"
+      ],
+      "id": "37f3689fed868c93",
+      "level": 2,
+      "links_out": [],
+      "order": 1,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 940
+    },
+    {
+      "char_count": 1950,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection",
+        "How it works"
+      ],
+      "id": "783af9e1b4547aa6",
+      "level": 2,
+      "links_out": [],
+      "order": 2,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 286
+    },
+    {
+      "char_count": 1373,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection",
+        "Limitations"
+      ],
+      "id": "16bc78486e6c2cb1",
+      "level": 2,
+      "links_out": [],
+      "order": 3,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 142
+    },
+    {
+      "char_count": 2657,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection",
+        "Utilities"
+      ],
+      "id": "7ec2ef6fe3869c1d",
+      "level": 2,
+      "links_out": [
+        {
+          "href": "../topics/class-based-views/intro.md#id1",
+          "text": "Decorating\nclass-based views"
+        },
+        {
+          "href": "middleware.md#django.middleware.csrf.CsrfViewMiddleware",
+          "text": "`CsrfViewMiddleware`"
+        },
+        {
+          "href": "templates/builtins.md#std-templatetag-csrf_token",
+          "text": "`csrf_token`"
+        }
+      ],
+      "order": 4,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 463
+    },
+    {
+      "char_count": 1634,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection",
+        "Settings"
+      ],
+      "id": "8e555ca8d4d7b958",
+      "level": 2,
+      "links_out": [
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_AGE",
+          "text": "`CSRF_COOKIE_AGE`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_DOMAIN",
+          "text": "`CSRF_COOKIE_DOMAIN`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_HTTPONLY",
+          "text": "`CSRF_COOKIE_HTTPONLY`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_NAME",
+          "text": "`CSRF_COOKIE_NAME`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_PATH",
+          "text": "`CSRF_COOKIE_PATH`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_SAMESITE",
+          "text": "`CSRF_COOKIE_SAMESITE`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_COOKIE_SECURE",
+          "text": "`CSRF_COOKIE_SECURE`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_FAILURE_VIEW",
+          "text": "`CSRF_FAILURE_VIEW`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_HEADER_NAME",
+          "text": "`CSRF_HEADER_NAME`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_TRUSTED_ORIGINS",
+          "text": "`CSRF_TRUSTED_ORIGINS`"
+        },
+        {
+          "href": "settings.md#std-setting-CSRF_USE_SESSIONS",
+          "text": "`CSRF_USE_SESSIONS`"
+        }
+      ],
+      "order": 5,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 207
+    },
+    {
+      "char_count": 1841,
+      "code_languages": [],
+      "headings": [
+        "Cross Site Request Forgery protection",
+        "Frequently Asked Questions"
+      ],
+      "id": "161a29a9b2d08568",
+      "level": 2,
+      "links_out": [],
+      "order": 6,
+      "source_file_id": "django__5_2__ref__csrf.html",
+      "tokens": 359
+    }
+  ],
+  "files": {
+    "django__5_2__ref__csrf.html": [
+      "b9c3c5a865c070a7",
+      "37f3689fed868c93",
+      "783af9e1b4547aa6",
+      "16bc78486e6c2cb1",
+      "7ec2ef6fe3869c1d",
+      "8e555ca8d4d7b958",
+      "161a29a9b2d08568"
+    ]
+  },
+  "total_chunks": 7,
+  "version": "1.0"
+}

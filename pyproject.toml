@@ -74,6 +74,11 @@ Documentation = "https://github.com/joshuadavidthomas/docs2markdown#README"
 Issues = "https://github.com/joshuadavidthomas/docs2markdown/issues"
 Source = "https://github.com/joshuadavidthomas/docs2markdown"
 
+[project.optional-dependencies]
+token = [
+    "tiktoken>=0.12.0",
+]
+
 [tool.bumpver]
 commit = true
 commit_message = ":bookmark: bump version {old_version} -> {new_version}"
