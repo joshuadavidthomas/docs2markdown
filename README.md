@@ -70,7 +70,7 @@ By default, this creates a `./dist` directory with the converted Markdown files,
 
 `docs2markdown` supports two output formats for different applications.
 
-**GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders well on GitHub, GitLab, and other platforms. It supports tables, syntax-highlighted code blocks, task lists, and other GitHub-specific extensions. Use this for human-readable documentation that displays well on documentation sites, README files, and general-purpose documentation.
+**GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders well on GitHub, GitLab, and other platforms. It supports tables, syntax-highlighted code blocks, task lists, and other GitHub-specific extensions.
 
 **LLM-friendly text (llmstxt)** is optimized for AI models. This format strips unnecessary formatting and structures content for language models to parse and understand. This is useful for feeding documentation to AI assistants, building RAG (Retrieval-Augmented Generation) systems, creating training data, or preparing documentation for AI analysis tools.
 
