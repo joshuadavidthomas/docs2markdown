@@ -76,7 +76,7 @@ By default, this creates a `./dist` directory with the converted Markdown files,
 
 ### Documentation Types
 
-Different documentation generators produce HTML with different structures and conventions. `docs2markdown` can applies preprocessing based on the documentation type to produce cleaner output.
+Different documentation generators produce HTML with different structures and conventions. `docs2markdown` applies preprocessing based on the documentation type to produce cleaner output.
 
 **Default** mode works with generic HTML documentation. It applies basic preprocessing to clean up common HTML patterns and prepare the content for Markdown conversion. Use this for manually-written HTML, MkDocs output, and other generic formats.
 
