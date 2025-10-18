@@ -80,7 +80,7 @@ Different documentation generators produce HTML with different structures and co
 
 **Default** mode works with generic HTML documentation. It applies basic preprocessing to clean up common HTML patterns and prepare the content for Markdown conversion.
 
-**Sphinx** mode is specifically designed for Sphinx-generated documentation. Sphinx adds specific CSS classes, navigation elements, headerlinks (the ¶ symbols), code-block wrappers, and other structural markup that need specialized handling. This mode identifies and removes these Sphinx-specific elements before conversion, producing cleaner Markdown output without the navigation artifacts and structural markup.
+**Sphinx** mode is specifically designed for Sphinx-generated documentation. Sphinx adds specific CSS classes, navigation elements, headerlinks (the ¶ symbols), code-block wrappers, and other structural markup that need specialized handling. This mode identifies and removes these Sphinx-specific elements before conversion, producing cleaner Markdown output.
 
 ## Usage
 
