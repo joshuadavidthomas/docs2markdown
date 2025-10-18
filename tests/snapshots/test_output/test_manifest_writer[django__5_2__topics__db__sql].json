@@ -1,0 +1,271 @@
+{
+  "chunks": [
+    {
+      "char_count": 1712,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries"
+      ],
+      "id": "77f58af7e5191921",
+      "level": 1,
+      "links_out": [
+        {
+          "href": "#django.db.models.Manager.raw",
+          "text": "`Manager.raw()`"
+        },
+        {
+          "href": "#performing-raw-queries",
+          "text": "perform raw queries and return model instances"
+        },
+        {
+          "href": "#executing-custom-sql-directly",
+          "text": "execute custom SQL directly"
+        },
+        {
+          "href": "../../ref/models/querysets.md",
+          "text": "QuerySet API"
+        },
+        {
+          "href": "../../ref/models/querysets.md#django.db.models.query.QuerySet.annotate",
+          "text": "`annotate`"
+        },
+        {
+          "href": "aggregation.md",
+          "text": "aggregate"
+        },
+        {
+          "href": "../../ref/models/database-functions.md",
+          "text": "database functions"
+        },
+        {
+          "href": "../../ref/models/expressions.md",
+          "text": "custom query expressions"
+        },
+        {
+          "href": "index.md",
+          "text": "the ORM"
+        },
+        {
+          "href": "../../faq/help.md",
+          "text": "the support channels"
+        },
+        {
+          "href": "../security.md#sql-injection-protection",
+          "text": "SQL injection protection"
+        }
+      ],
+      "order": 0,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 327
+    },
+    {
+      "char_count": 3266,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Performing raw queries"
+      ],
+      "id": "8d7f7f6f6c5f63d2",
+      "level": 2,
+      "links_out": [
+        {
+          "href": "../../ref/models/querysets.md#django.db.models.query.QuerySet",
+          "text": "`QuerySet`"
+        },
+        {
+          "href": "../../ref/models/options.md#django.db.models.Options.db_table",
+          "text": "`db_table`"
+        }
+      ],
+      "order": 1,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 615
+    },
+    {
+      "char_count": 2195,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Performing raw queries",
+        "Mapping query fields to model fields"
+      ],
+      "id": "962757cebb2d0b2b",
+      "level": 3,
+      "links_out": [],
+      "order": 2,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 347
+    },
+    {
+      "char_count": 1280,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Performing raw queries",
+        "Index lookups"
+      ],
+      "id": "f1377087a6bdb3dc",
+      "level": 3,
+      "links_out": [],
+      "order": 3,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 119
+    },
+    {
+      "char_count": 2104,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Performing raw queries",
+        "Deferring model fields"
+      ],
+      "id": "25d2749aef20e17f",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "../../ref/models/querysets.md#django.db.models.query.QuerySet.defer",
+          "text": "`defer()`"
+        },
+        {
+          "href": "../../ref/exceptions.md#django.core.exceptions.FieldDoesNotExist",
+          "text": "`FieldDoesNotExist`"
+        }
+      ],
+      "order": 4,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 325
+    },
+    {
+      "char_count": 1448,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Performing raw queries",
+        "Adding annotations"
+      ],
+      "id": "3a0331a217928775",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://www.postgresql.org/docs/current/functions-datetime.md",
+          "text": "PostgreSQL\u2019s age() function"
+        },
+        {
+          "href": "../../ref/models/expressions.md#func-expressions",
+          "text": "Func() expression"
+        }
+      ],
+      "order": 5,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 161
+    },
+    {
+      "char_count": 2421,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Performing raw queries",
+        "Passing parameters into `raw()`"
+      ],
+      "id": "7c429ce3c772a3bf",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "../security.md#sql-injection-protection",
+          "text": "SQL injection protection"
+        },
+        {
+          "href": "https://en.wikipedia.org/wiki/SQL_injection",
+          "text": "SQL\n> injection attacks"
+        }
+      ],
+      "order": 6,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 404
+    },
+    {
+      "char_count": 4556,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Executing custom SQL directly"
+      ],
+      "id": "554e3294b42caedd",
+      "level": 2,
+      "links_out": [
+        {
+          "href": "#django.db.models.Manager.raw",
+          "text": "`Manager.raw()`"
+        },
+        {
+          "href": "multi-db.md",
+          "text": "more than one database"
+        },
+        {
+          "href": "https://docs.python.org/3/library/collections.md#collections.namedtuple",
+          "text": "`collections.namedtuple()`"
+        }
+      ],
+      "order": 7,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 938
+    },
+    {
+      "char_count": 2089,
+      "code_languages": [
+        "python"
+      ],
+      "headings": [
+        "Performing raw SQL queries",
+        "Executing custom SQL directly",
+        "Connections and cursors"
+      ],
+      "id": "2789cc5c43f520ae",
+      "level": 3,
+      "links_out": [
+        {
+          "href": "https://peps.python.org/pep-0249/",
+          "text": "**PEP 249**"
+        },
+        {
+          "href": "transactions.md",
+          "text": "transaction handling"
+        }
+      ],
+      "order": 8,
+      "source_file_id": "django__5_2__topics__db__sql.html",
+      "tokens": 421
+    }
+  ],
+  "files": {
+    "django__5_2__topics__db__sql.html": [
+      "77f58af7e5191921",
+      "8d7f7f6f6c5f63d2",
+      "962757cebb2d0b2b",
+      "f1377087a6bdb3dc",
+      "25d2749aef20e17f",
+      "3a0331a217928775",
+      "7c429ce3c772a3bf",
+      "554e3294b42caedd",
+      "2789cc5c43f520ae"
+    ]
+  },
+  "total_chunks": 9,
+  "version": "1.0"
+}

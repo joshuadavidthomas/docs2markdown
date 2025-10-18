@@ -15,7 +15,7 @@ nox SESSION *ARGS:
     uv run nox --session "{{ SESSION }}" -- "{{ ARGS }}"
 
 bootstrap:
-    uv sync --locked
+    uv sync --locked --all-extras
 
 bumpver *ARGS:
     uvx bumpver {{ ARGS }}

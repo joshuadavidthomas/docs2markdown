@@ -149,11 +149,7 @@ html_file = Path("docs/index.html")
 markdown = convert_file(html_file)
 
 # Or specify format and documentation type
-markdown = convert_file(
-    html_file,
-    doc_type=DocType.SPHINX,
-    format=Format.LLMSTXT
-)
+markdown = convert_file(html_file, doc_type=DocType.SPHINX, format=Format.LLMSTXT)
 ```
 
 #### `convert_directory`
@@ -184,7 +180,7 @@ for input_file, result in convert_directory(
     Path("docs/_build/html"),
     Path("markdown/"),
     doc_type=DocType.SPHINX,
-    format=Format.LLMSTXT
+    format=Format.LLMSTXT,
 ):
     if isinstance(result, Exception):
         print(f"Error converting {input_file}: {result}")

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -69,12 +70,46 @@ class MarkdownSnapshotExtension(Docs2MarkdownSnapshotExtension):
     file_extension = "md"
 
 
+class JsonSnapshotExtension(Docs2MarkdownSnapshotExtension):
+    file_extension = "json"
+
+    @override
+    def serialize(
+        self,
+        data: SerializableData,
+        *,
+        exclude: PropertyFilter | None = None,
+        include: PropertyFilter | None = None,
+        matcher: PropertyMatcher | None = None,
+    ) -> SerializedData:
+        content = json.loads(data)
+        return json.dumps(content, indent=2, sort_keys=True) + "\n"
+
+
+class JsonlSnapshotExtension(Docs2MarkdownSnapshotExtension):
+    file_extension = "jsonl"
+
+    @override
+    def serialize(
+        self,
+        data: SerializableData,
+        *,
+        exclude: PropertyFilter | None = None,
+        include: PropertyFilter | None = None,
+        matcher: PropertyMatcher | None = None,
+    ) -> SerializedData:
+        return data.rstrip() + "\n"
+
+
 class SnapshotWithGoal:
     def __init__(self, snapshot_ext: AbstractSyrupyExtension):
         self.snapshot = snapshot_ext
 
     def __eq__(self, other):
         result = self.snapshot.__eq__(other)
+
+        print(f"{result=}")
+        print("heloooooooooooooooooooooooooo")
 
         snapshot_location = self.snapshot.extension_class.get_location(
             test_location=self.snapshot.test_location, index=0
@@ -94,11 +129,19 @@ class SnapshotWithGoal:
 
 @pytest.fixture
 def snapshot_html(snapshot):
-    extension = snapshot.use_extension(HtmlSnapshotExtension)
-    return SnapshotWithGoal(extension)
+    return SnapshotWithGoal(snapshot.use_extension(HtmlSnapshotExtension))
 
 
 @pytest.fixture
 def snapshot_md(snapshot):
-    extention = snapshot.use_extension(MarkdownSnapshotExtension)
-    return SnapshotWithGoal(extention)
+    return SnapshotWithGoal(snapshot.use_extension(MarkdownSnapshotExtension))
+
+
+@pytest.fixture
+def snapshot_json(snapshot):
+    return SnapshotWithGoal(snapshot.use_extension(JsonSnapshotExtension))
+
+
+@pytest.fixture
+def snapshot_jsonl(snapshot):
+    return SnapshotWithGoal(snapshot.use_extension(JsonlSnapshotExtension))
