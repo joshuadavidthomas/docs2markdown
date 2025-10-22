@@ -14,9 +14,24 @@ PY311 = "3.11"
 PY312 = "3.12"
 PY313 = "3.13"
 PY314 = "3.14"
-PY_VERSIONS = [PY310, PY311, PY312, PY313, PY314]
-PY_DEFAULT = PY_VERSIONS[0]
-PY_LATEST = PY_VERSIONS[-1]
+PY_GIL_VERSIONS = [PY310, PY311, PY312, PY313, PY314]
+
+PY313T = "3.13t"
+PY314T = "3.14t"
+PY_NOGIL_VERSIONS = [PY313T, PY314T]
+
+PY_VERSIONS = PY_GIL_VERSIONS + PY_NOGIL_VERSIONS
+PY_DEFAULT = PY_GIL_VERSIONS[0]
+PY_DEFAULT_NOGIL = PY_NOGIL_VERSIONS[0]
+PY_LATEST = PY_GIL_VERSIONS[-1]
+PY_LATEST_NOGIL = PY_NOGIL_VERSIONS[-1]
+
+
+def display_version(version: str) -> str:
+    nogil_base_versions = [v.replace("t", "") for v in PY_NOGIL_VERSIONS]
+    if version in nogil_base_versions:
+        return f"{version}*"
+    return version
 
 
 @nox.session

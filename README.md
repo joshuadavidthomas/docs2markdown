@@ -10,15 +10,32 @@ Convert HTML documentation to Markdown with support for multiple output formats 
 ## Requirements
 
 <!-- [[[cog
-import subprocess
 import cog
 
-from noxfile import PY_VERSIONS
+from noxfile import PY_DEFAULT_NOGIL
+from noxfile import PY_GIL_VERSIONS
+from noxfile import PY_NOGIL_VERSIONS
+from noxfile import display_version
 
-cog.outl(f"- Python {', '.join(PY_VERSIONS)}")
+version_strs = [display_version(v) for v in PY_GIL_VERSIONS]
+cog.outl(f"- Python {', '.join(version_strs)}")
+if PY_NOGIL_VERSIONS:
+    cog.outl("")
+    cog.outl(f"*\\* Versions with free-threading support (e.g., {PY_DEFAULT_NOGIL})*")
 ]]] -->
-- Python 3.10, 3.11, 3.12, 3.13, 3.14
+- Python 3.10, 3.11, 3.12, 3.13*, 3.14*
+
+*\* Versions with free-threading support (e.g., 3.13t)*
 <!-- [[[end]]] -->
+
+`docs2markdown` uses BeautifulSoup4 with the `lxml` parser. If prebuilt wheels aren't available for your Python version or platform, you'll need:
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install libxml2-dev libxslt-dev
+```
+
+For other platforms, see the [`lxml` installation documentation](https://lxml.de/installation.html#requirements).
 
 ## Installation
 
