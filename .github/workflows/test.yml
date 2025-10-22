@@ -55,6 +55,7 @@ jobs:
         uses: astral-sh/setup-uv@2ddd2b9cb38ad8efd50337e8ab201519a34c9f24
         with:
           enable-cache: true
+          cache-python: true
 
       - name: Install system dependencies for lxml (free-threading builds)
         if: ${{ contains(matrix.python-version, 't') }}
