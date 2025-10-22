@@ -67,30 +67,13 @@ jobs:
         env:
           UV_PYTHON_INSTALL_DIR: .uv-python
 
-      - name: Restore apt cache
-        if: contains(matrix.python-version, 't')
-        uses: actions/cache/restore@v4
-        with:
-          path: apt-archives
-          key: apt-${{ runner.os }}-libxml2-libxslt
-
       - name: Install system dependencies for lxml (free-threading builds)
-        if: contains(matrix.python-version, 't')
+        if: ${{ contains(matrix.python-version, 't') }}
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          mkdir -p apt-archives
-          sudo cp -a apt-archives /var/cache/apt/archives
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libxml2-dev libxslt-dev
-          cp -a /var/cache/apt/archives/*.deb apt-archives
-
-      - name: Save apt cache
-        if: contains(matrix.python-version, 't')
-        uses: actions/cache/save@v4
-        with:
-          path: apt-archives
-          key: apt-${{ runner.os }}-libxml2-libxslt
 
       - name: Run tests
         env:
