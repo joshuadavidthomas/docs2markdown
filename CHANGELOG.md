@@ -22,6 +22,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Added `convert_html()` function for converting raw HTML strings directly
 - Exported public API (`convert_file`, `convert_html`, `convert_directory`, `DocType`, `Format`) from `docs2markdown` module for cleaner imports
+- Added support for Python 3.13t and 3.14t (free-threading builds)
 
 ## [0.1.1]
 
