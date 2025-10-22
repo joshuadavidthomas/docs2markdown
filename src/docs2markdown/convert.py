@@ -35,11 +35,7 @@ class Format(Enum):
                 return LlmsTxtConverter
 
 
-def convert_file(
-    html_file: Path, doc_type: DocType, format: Format = Format.GHFM
-) -> str:
-    html = html_file.read_text()
-
+def convert_html(html: str, doc_type: DocType, format: Format = Format.GHFM) -> str:
     preprocessor_class = doc_type.get_preprocessor()
     preprocessed = preprocessor_class(html).process()
 
@@ -47,6 +43,13 @@ def convert_file(
     converter = converter_class()
 
     return converter.convert(preprocessed)
+
+
+def convert_file(
+    html_file: Path, doc_type: DocType, format: Format = Format.GHFM
+) -> str:
+    html = html_file.read_text()
+    return convert_html(html, doc_type, format)
 
 
 def convert_directory(
