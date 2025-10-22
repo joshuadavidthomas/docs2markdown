@@ -28,6 +28,15 @@ if PY_NOGIL_VERSIONS:
 *\* Versions with free-threading support (e.g., 3.13t)*
 <!-- [[[end]]] -->
 
+`docs2markdown` uses BeautifulSoup4 with the `lxml` parser. If prebuilt wheels aren't available for your Python version or platform, you'll need:
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install libxml2-dev libxslt-dev
+```
+
+For other platforms, see the [`lxml` installation documentation](https://lxml.de/installation.html).
+
 ## Installation
 
 For quick one-off usage without installation, use `uvx`:
