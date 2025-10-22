@@ -10,15 +10,32 @@ Convert HTML documentation to Markdown with support for multiple output formats 
 ## Requirements
 
 <!-- [[[cog
-import subprocess
 import cog
 
-from noxfile import PY_VERSIONS
+from noxfile import PY_DEFAULT_NOGIL
+from noxfile import PY_GIL_VERSIONS
+from noxfile import PY_NOGIL_VERSIONS
+from noxfile import display_version
 
-cog.outl(f"- Python {', '.join(PY_VERSIONS)}")
+version_strs = [display_version(v) for v in PY_GIL_VERSIONS]
+cog.outl(f"- Python {', '.join(version_strs)}")
+if PY_NOGIL_VERSIONS:
+    cog.outl("")
+    cog.outl(f"*\\* Versions with free-threading support (e.g., {PY_DEFAULT_NOGIL})*")
 ]]] -->
-- Python 3.10, 3.11, 3.12, 3.13, 3.14
+- Python 3.10, 3.11, 3.12, 3.13*, 3.14*
+
+*\* Versions with free-threading support (e.g., 3.13t)*
 <!-- [[[end]]] -->
+
+`docs2markdown` uses BeautifulSoup4 with the `lxml` parser. If prebuilt wheels aren't available for your Python version or platform, you'll need:
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install libxml2-dev libxslt-dev
+```
+
+For other platforms, see the [`lxml` installation documentation](https://lxml.de/installation.html#requirements).
 
 ## Installation
 
@@ -118,7 +135,7 @@ While `docs2markdown` works great as a CLI tool, you can also use it as a Python
 
 #### `convert_file`
 
-The `convert_file` function takes an HTML file patn and returns the converted Markdown as a string. This gives you full control over what to do with the output.
+The `convert_file` function takes an HTML file path and returns the converted Markdown as a string. This gives you full control over what to do with the output.
 
 **`convert_file(html_file: Path, doc_type: DocType = DocType.DEFAULT, format: Format = Format.GHFM) -> str`**
 
@@ -138,9 +155,9 @@ Returns: Converted Markdown as a string
 ```python
 from pathlib import Path
 
-from docs2markdown.convert import convert_file
-from docs2markdown.convert import DocType
-from docs2markdown.convert import Format
+from docs2markdown import convert_file
+from docs2markdown import DocType
+from docs2markdown import Format
 
 
 html_file = Path("docs/index.html")
@@ -151,6 +168,44 @@ markdown = convert_file(html_file)
 # Or specify format and documentation type
 markdown = convert_file(
     html_file,
+    doc_type=DocType.SPHINX,
+    format=Format.LLMSTXT
+)
+```
+
+#### `convert_html`
+
+The `convert_html` function takes a raw HTML string and returns the converted Markdown as a string. This is useful when you already have HTML in memory from an API response, web scraping, or other sources.
+
+**`convert_html(html: str, doc_type: DocType = DocType.DEFAULT, format: Format = Format.GHFM) -> str`**
+
+Parameters:
+- `html`: HTML string to convert
+- `doc_type`: Documentation type for preprocessing (default: `DocType.DEFAULT`)
+  - `DocType.DEFAULT` - Generic HTML documentation
+  - `DocType.SPHINX` - Sphinx-generated documentation
+- `format`: Output format (default: `Format.GHFM`)
+  - `Format.GHFM` - GitHub-flavored Markdown
+  - `Format.LLMSTXT` - LLM-friendly text format
+
+Returns: Converted Markdown as a string
+
+##### Examples
+
+```python
+from docs2markdown import convert_html
+from docs2markdown import DocType
+from docs2markdown import Format
+
+
+# Convert HTML from an API response
+html_content = "<h1>API Documentation</h1><p>Content here</p>"
+markdown = convert_html(html_content)
+
+# Convert with specific format and type
+html_from_scraper = get_documentation_html()
+markdown = convert_html(
+    html_from_scraper,
     doc_type=DocType.SPHINX,
     format=Format.LLMSTXT
 )
@@ -175,9 +230,9 @@ Yields: `(input_file, result)` tuples where `result` is either the output file p
 ```python
 from pathlib import Path
 
-from docs2markdown.convert import convert_directory
-from docs2markdown.convert import DocType
-from docs2markdown.convert import Format
+from docs2markdown import convert_directory
+from docs2markdown import DocType
+from docs2markdown import Format
 
 
 for input_file, result in convert_directory(
