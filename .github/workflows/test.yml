@@ -51,34 +51,50 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@2ddd2b9cb38ad8efd50337e8ab201519a34c9f24
+      - name: Cache nox environments and Python installations
+        uses: actions/cache@v4
         with:
-          cache-python: true
+          path: |
+            .nox
+            .uv-python
+          key: nox-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('uv.lock', 'noxfile.py') }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@eb1897b8dc4b5d5bfe39a428a8f2304605e0983c
+        with:
           enable-cache: true
-          ignore-nothing-to-cache: true
+        env:
+          UV_PYTHON_INSTALL_DIR: .uv-python
+
+      - name: Restore apt cache
+        if: contains(matrix.python-version, 't')
+        uses: actions/cache/restore@v4
+        with:
+          path: apt-archives
+          key: apt-${{ runner.os }}-libxml2-libxslt
 
       - name: Install system dependencies for lxml (free-threading builds)
-        if: ${{ contains(matrix.python-version, 't') }}
+        if: contains(matrix.python-version, 't')
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          mkdir -p apt-archives
+          sudo cp -a apt-archives /var/cache/apt/archives
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            libxml2-dev \
-            libxslt-dev
+          sudo apt-get install -y libxml2-dev libxslt-dev
+          cp -a /var/cache/apt/archives/*.deb apt-archives
 
-      - name: Cache nox environments
-        uses: actions/cache@v4
+      - name: Save apt cache
+        if: contains(matrix.python-version, 't')
+        uses: actions/cache/save@v4
         with:
-          path: .nox
-          key: nox-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('uv.lock', 'noxfile. py') }}
-          restore-keys: |
-            nox-${{ runner.os }}-${{ matrix.python-version }}-
+          path: apt-archives
+          key: apt-${{ runner.os }}-libxml2-libxslt
 
       - name: Run tests
         env:
           PYTHON_VERSION: ${{ matrix.python-version }}
+          UV_PYTHON_INSTALL_DIR: .uv-python
         run: |
           uv run nox --session "tests(python='${PYTHON_VERSION}')"
 
