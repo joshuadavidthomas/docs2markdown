@@ -9,6 +9,7 @@ from docs2markdown.convert import DocType
 from docs2markdown.convert import Format
 from docs2markdown.convert import convert_directory
 from docs2markdown.convert import convert_file
+from docs2markdown.convert import convert_html
 
 
 @pytest.mark.parametrize(
@@ -18,6 +19,17 @@ from docs2markdown.convert import convert_file
 def test_convert_file(format, doc_file, snapshot_md):
     doc_type = DocType.SPHINX if "sphinx" in str(doc_file.parent) else DocType.DEFAULT
     output = convert_file(doc_file, doc_type=doc_type, format=format)
+    assert output == snapshot_md
+
+
+@pytest.mark.parametrize(
+    "format",
+    [Format.GHFM, Format.LLMSTXT],
+)
+def test_convert_html(format, doc_file, snapshot_md):
+    doc_type = DocType.SPHINX if "sphinx" in str(doc_file.parent) else DocType.DEFAULT
+    html = doc_file.read_text()
+    output = convert_html(html, doc_type=doc_type, format=format)
     assert output == snapshot_md
 
 
