@@ -15,6 +15,8 @@ env:
   PYTHONUNBUFFERED: "1"
   FORCE_COLOR: "1"
 
+permissions: {}
+
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
@@ -80,7 +82,7 @@ jobs:
           mkdir -p apt-archives
           sudo cp -a apt-archives /var/cache/apt/archives
           sudo apt-get update
-          sudo apt-get install -y libxml2-dev libxslt-dev
+          sudo apt-get install -y --no-install-recommends libxml2-dev libxslt-dev
           cp -a /var/cache/apt/archives/*.deb apt-archives
 
       - name: Save apt cache
