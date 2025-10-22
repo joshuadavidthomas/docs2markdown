@@ -15,8 +15,6 @@ env:
   PYTHONUNBUFFERED: "1"
   FORCE_COLOR: "1"
 
-permissions: {}
-
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
