@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
   workflow_call:
+  workflow_dispatch:
 
 concurrency:
   group: test-${{ github.head_ref }}
@@ -51,24 +52,33 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Cache nox environments and Python installations
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nox
+            .uv-python
+          key: nox-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('uv.lock', 'noxfile.py') }}
+
       - name: Install uv
-        uses: astral-sh/setup-uv@2ddd2b9cb38ad8efd50337e8ab201519a34c9f24
+        uses: astral-sh/setup-uv@eb1897b8dc4b5d5bfe39a428a8f2304605e0983c
         with:
           enable-cache: true
+        env:
+          UV_PYTHON_INSTALL_DIR: .uv-python
 
       - name: Install system dependencies for lxml (free-threading builds)
-        if: contains(matrix.python-version, 't')
+        if: ${{ contains(matrix.python-version, 't') }}
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            libxml2-dev \
-            libxslt-dev
+          sudo apt-get install -y --no-install-recommends libxml2-dev libxslt-dev
 
       - name: Run tests
         env:
           PYTHON_VERSION: ${{ matrix.python-version }}
+          UV_PYTHON_INSTALL_DIR: .uv-python
         run: |
           uv run nox --session "tests(python='${PYTHON_VERSION}')"
 
