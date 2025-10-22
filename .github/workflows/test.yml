@@ -56,13 +56,6 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Cache apt packages
-        if: ${{ contains(matrix.python-version, 't') }}
-        uses: actions/cache@v4
-        with:
-          path: /var/cache/apt/archives
-          key: apt-${{ runner.os }}-libxml2-libxslt
-
       - name: Install system dependencies for lxml (free-threading builds)
         if: ${{ contains(matrix.python-version, 't') }}
         env:
