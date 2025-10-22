@@ -18,6 +18,11 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Added `convert_html()` function for converting raw HTML strings directly
+- Exported public API (`convert_file`, `convert_html`, `convert_directory`, `DocType`, `Format`) from `docs2markdown` module for cleaner imports
+
 ## [0.1.1]
 
 ### Added
