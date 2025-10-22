@@ -35,7 +35,7 @@ if PY_NOGIL_VERSIONS:
 sudo apt-get install libxml2-dev libxslt-dev
 ```
 
-For other platforms, see the [`lxml` installation documentation](https://lxml.de/installation.html).
+For other platforms, see the [`lxml` installation documentation](https://lxml.de/installation.html#requirements).
 
 ## Installation
 
