@@ -208,21 +208,9 @@ class ObsidianConverter(Docs2MarkdownConverter):
         title = el.get("data-markdownify-title")
 
         if alert_type:
-            callout_map = {
-                "NOTE": "note",
-                "TIP": "tip",
-                "IMPORTANT": "important",
-                "WARNING": "warning",
-                "CAUTION": "warning",
-            }
-
-            callout_type = callout_map.get(str(alert_type), "note")
-
+            callout_header = f"[!{str(alert_type).lower()}]"
             if title:
-                callout_header = f"[!{callout_type}] {title}"
-            else:
-                callout_header = f"[!{callout_type}]"
-
+                callout_header += f" {title}"
             text = callout_header + text
 
         return super().convert_blockquote(el, text, **kwargs)
