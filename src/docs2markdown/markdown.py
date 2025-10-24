@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from typing import Any
 from typing import final
+from urllib.parse import ParseResult
 from urllib.parse import urlparse
 
 from bs4 import Tag
@@ -182,11 +183,15 @@ class ObsidianConverter(Docs2MarkdownConverter):
         if not href or not isinstance(href, str):
             return text
 
-        parsed = urlparse(href)
-        is_internal = not parsed.scheme and not parsed.netloc and not href.startswith("#")
+        parsed_href = urlparse(href)
 
-        if is_internal:
-            return self._format_wikilink(href, text)
+        # if not an internal href, format as obsidian-style wikilink
+        if (
+            not parsed_href.scheme
+            and not parsed_href.netloc
+            and not href.startswith("#")
+        ):
+            return self._format_wikilink(parsed_href, text)
 
         return super().convert_a(el, text, **kwargs)
 
@@ -224,14 +229,12 @@ class ObsidianConverter(Docs2MarkdownConverter):
 
         return super().convert_blockquote(el, text, **kwargs)
 
-    def _format_wikilink(self, href: str, text: str) -> str:
-        parsed = urlparse(href)
-        
-        path = parsed.path or ""
+    def _format_wikilink(self, parsed_href: ParseResult, text: str) -> str:
+        path = parsed_href.path or ""
         page = path.split("/")[-1] if path else ""
         page = re.sub(r"\.(html|md)$", "", page)
-        
-        anchor = parsed.fragment or None
+
+        anchor = parsed_href.fragment or None
 
         target = f"{page}#{anchor}" if anchor else page
 
