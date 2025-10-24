@@ -172,3 +172,103 @@ class CommonMarkConverter(LlmsTxtConverter):
 
         process_tag(el, 0)
         return "\n".join(result) + "\n\n"
+
+
+class ObsidianConverter(Docs2MarkdownConverter):
+    """
+    Obsidian Markdown converter with wikilinks, embeds, and callouts.
+    Designed for use with Obsidian vaults.
+    """
+
+    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
+        href = el.get("href")
+
+        if not href or not isinstance(href, str):
+            return text
+
+        if self._is_internal_link(href):
+            return self._format_wikilink(href, text)
+
+        return super().convert_a(el, text, **kwargs)
+
+    def convert_img(self, el: Tag, text: str, **kwargs: Any) -> str:
+        src = el.get("src", "")
+        alt = el.get("alt", "")
+
+        if alt:
+            return f"![[{src}|{alt}]]"
+        return f"![[{src}]]"
+
+    def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
+        alert_type = el.get("data-markdownify-alert-type")
+        title = el.get("data-markdownify-title")
+
+        if alert_type:
+            callout_map = {
+                "NOTE": "note",
+                "TIP": "tip",
+                "IMPORTANT": "important",
+                "WARNING": "warning",
+                "CAUTION": "warning",
+            }
+
+            callout_type = callout_map.get(str(alert_type), "note")
+
+            lines = []
+            if title:
+                lines.append(f"[!{callout_type}] {title}")
+            else:
+                lines.append(f"[!{callout_type}]")
+
+            lines.append(text)
+            text = "\n\n".join(lines)
+
+        return super().convert_blockquote(el, text, **kwargs)
+
+    @staticmethod
+    def _is_internal_link(href: str) -> bool:
+        if href.startswith("#"):
+            return False
+        if href.startswith(("http://", "https://", "mailto:", "ftp://", "//")):
+            return False
+        return True
+
+    @staticmethod
+    def _clean_path_for_wikilink(href: str) -> tuple[str, str | None]:
+        if "#" in href:
+            href_part, anchor = href.split("#", 1)
+        else:
+            href_part, anchor = href, None
+
+        page = href_part.split("/")[-1]
+        page = re.sub(r"\.(html|md)$", "", page)
+
+        return (page, anchor)
+
+    def _format_wikilink(self, href: str, text: str) -> str:
+        page, anchor = self._clean_path_for_wikilink(href)
+
+        target = f"{page}#{anchor}" if anchor else page
+
+        if self._should_include_display_text(page, text, anchor):
+            return f"[[{target}|{text}]]"
+        else:
+            return f"[[{target}]]"
+
+    @staticmethod
+    def _should_include_display_text(
+        page_name: str, link_text: str, anchor: str | None
+    ) -> bool:
+        if not link_text:
+            return False
+
+        expected = f"{page_name}#{anchor}" if anchor else page_name
+
+        text_normalized = link_text.lower().strip()
+        expected_normalized = expected.lower().strip()
+        page_normalized = page_name.lower().strip()
+
+        return (
+            text_normalized != page_normalized
+            and text_normalized != expected_normalized
+        )

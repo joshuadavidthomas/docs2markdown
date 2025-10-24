@@ -3,7 +3,7 @@
 [![PyPI - docs2markdown](https://img.shields.io/pypi/v/docs2markdown?label=docs2markdown)](https://pypi.org/project/docs2markdown/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/docs2markdown)
 
-Convert HTML documentation to Markdown with support for multiple output formats and documentation types.
+Convert HTML documentation to Markdown with support for multiple output formats including GitHub-flavored, CommonMark, Obsidian, and LLM-friendly formats.
 
 `docs2markdown` transforms HTML documentation into clean, readable Markdown. It works as both a CLI tool for quick conversions and a Python library for integration into your projects.
 
@@ -85,11 +85,13 @@ By default, this creates a `./dist` directory with the converted Markdown files,
 
 ### Output Formats
 
-`docs2markdown` supports three output formats for different applications.
+`docs2markdown` supports four output formats for different applications.
 
 **GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders well on GitHub, GitLab, and other platforms. It supports tables, syntax-highlighted code blocks, task lists, GitHub alerts, and other GitHub-specific extensions.
 
 **CommonMark (commonmark)** is the strict baseline Markdown specification. This format ensures maximum compatibility across different Markdown parsers and platforms by maintaining strict CommonMark compliance. Tables are rendered as HTML since they're not part of the CommonMark spec (HTML is explicitly allowed per section 6.6). Use this when you need portable, standards-compliant Markdown that will work everywhere.
+
+**Obsidian (obsidian)** produces Obsidian-flavored Markdown optimized for personal knowledge management in Obsidian vaults. This format uses wikilinks (`[[page]]`) for internal references, embed syntax (`![[image.png]]`) for images, and lowercase callouts (`[!note]`, `[!warning]`) for admonitions. Links are automatically normalized by extracting just the filename from paths, making them work seamlessly with Obsidian's link resolution. Use this when converting documentation for import into an Obsidian vault or other PKM tools that support wikilink syntax.
 
 **LLM-friendly text (llmstxt)** is optimized for AI models. This format strips unnecessary formatting and structures content for language models to parse and understand. This is useful for feeding documentation to AI assistants, building RAG (Retrieval-Augmented Generation) systems, creating training data, or preparing documentation for AI analysis tools.
 
@@ -124,7 +126,7 @@ docs2markdown docs/index.html output.md
 docs2markdown docs/_build/html
 
 # Directory to custom output with options
-docs2markdown docs/_build/html markdown/ --type sphinx --format llmstxt
+docs2markdown docs/_build/html markdown/ --type sphinx --format obsidian
 ```
 
 Run `docs2markdown --help` to see all available options.
@@ -149,6 +151,7 @@ Parameters:
 - `format`: Output format (default: `Format.GHFM`)
   - `Format.GHFM` - GitHub-flavored Markdown
   - `Format.COMMONMARK` - CommonMark (strict baseline)
+  - `Format.OBSIDIAN` - Obsidian with wikilinks and embeds
   - `Format.LLMSTXT` - LLM-friendly text format
 
 Returns: Converted Markdown as a string
@@ -186,6 +189,7 @@ Parameters:
 - `format`: Output format (default: `Format.GHFM`)
   - `Format.GHFM` - GitHub-flavored Markdown
   - `Format.COMMONMARK` - CommonMark (strict baseline)
+  - `Format.OBSIDIAN` - Obsidian with wikilinks and embeds
   - `Format.LLMSTXT` - LLM-friendly text format
 
 Returns: Converted Markdown as a string
@@ -207,6 +211,11 @@ html_from_scraper = get_documentation_html()
 markdown = convert_html(
     html_from_scraper, doc_type=DocType.SPHINX, format=Format.LLMSTXT
 )
+
+# Convert Sphinx docs to Obsidian format for a knowledge base
+sphinx_html = Path("docs/_build/html/index.html").read_text()
+obsidian_md = convert_html(sphinx_html, doc_type=DocType.SPHINX, format=Format.OBSIDIAN)
+Path("vault/Django Docs/index.md").write_text(obsidian_md)
 ```
 
 #### `convert_directory`
