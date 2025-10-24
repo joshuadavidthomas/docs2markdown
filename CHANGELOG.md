@@ -22,6 +22,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Added CommonMark output format (`Format.COMMONMARK`) for strict CommonMark specification compliance with HTML tables
 
+### Fixed
+
+- Fixed Django console-block pattern conversion to properly interleave platform-specific labels with their corresponding code blocks, preserving Font Awesome icon content
+
 ## [0.2.0]
 
 ### Added
