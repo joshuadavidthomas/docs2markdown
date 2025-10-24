@@ -88,8 +88,6 @@ vulnerability allows and much worse).
 
 > [!note]
 >
->
->
 > To avoid disclosing the referrer URL to third-party sites, you might want
 > to [disable the referer](https://www.w3.org/TR/referrer-policy/#referrer-policy-delivery) on your site’s `<a>` tags. For example, you
 > might use the `<meta name="referrer" content="no-referrer">` tag or

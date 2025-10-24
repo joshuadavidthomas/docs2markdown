@@ -171,8 +171,6 @@ Zipcode.objects.filter(poly__coveredby=geom)
 
 > [!note] Changed in Django 5.2:
 >
->
->
 > MySQL support was added.
 
 ### `covers`
@@ -197,8 +195,6 @@ Zipcode.objects.filter(poly__covers=geom)
 | SpatiaLite | `Covers(poly, geom)` |
 
 > [!note] Changed in Django 5.2:
->
->
 >
 > MySQL support was added.
 
@@ -787,8 +783,6 @@ caring about dissolving boundaries.
 
 > [!note] Changed in Django 5.1:
 >
->
->
 > MySQL 8.0.24+ support was added.
 
 #### `Extent`
@@ -858,8 +852,6 @@ comprising the union of every geometry in the queryset. Please note that use of
 large querysets.
 
 > [!note]
->
->
 >
 > If the computation time for using this method is too expensive, consider
 > using [`Collect`](#django.contrib.gis.db.models.Collect) instead.

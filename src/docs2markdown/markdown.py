@@ -218,14 +218,12 @@ class ObsidianConverter(Docs2MarkdownConverter):
 
             callout_type = callout_map.get(str(alert_type), "note")
 
-            lines = []
             if title:
-                lines.append(f"[!{callout_type}] {title}")
+                callout_header = f"[!{callout_type}] {title}"
             else:
-                lines.append(f"[!{callout_type}]")
+                callout_header = f"[!{callout_type}]"
 
-            lines.append(text)
-            text = "\n\n".join(lines)
+            text = callout_header + text
 
         return super().convert_blockquote(el, text, **kwargs)
 

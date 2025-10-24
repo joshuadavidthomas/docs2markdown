@@ -6,8 +6,6 @@ you can avoid the model layer entirely and [execute custom SQL directly](#execut
 
 > [!note]
 >
->
->
 > The Django ORM provides many tools to express queries without writing raw
 > SQL. For example:
 >
@@ -20,8 +18,6 @@ you can avoid the model layer entirely and [execute custom SQL directly](#execut
 > your use case.
 
 > [!warning]
->
->
 >
 > You should be very careful whenever you write raw SQL. Every time you use
 > it, you should properly escape any parameters that the user can control
@@ -65,8 +61,6 @@ make it very powerful.
 
 > [!note]
 >
->
->
 > Where did the name of the `Person` table come from in that example?
 >
 > By default, Django figures out a database table name by joining the
@@ -81,16 +75,12 @@ make it very powerful.
 
 > [!warning]
 >
->
->
 > No checking is done on the SQL statement that is passed in to `.raw()`.
 > Django expects that the statement will return a set of rows from the
 > database, but does nothing to enforce that. If the query does not
 > return rows, a (possibly cryptic) error will result.
 
 > [!warning]
->
->
 >
 > If you are performing queries on MySQL, note that MySQL’s silent type coercion
 > may cause unexpected results when mixing types. If you query on a string
@@ -228,14 +218,10 @@ replaced with parameters from the `params` argument.
 
 > [!note]
 >
->
->
 > Dictionary params are not supported with the SQLite backend; with
 > this backend, you must pass parameters as a list.
 
 > [!warning]
->
->
 >
 > **Do not use string formatting on raw queries or quote placeholders in your
 > SQL strings!**

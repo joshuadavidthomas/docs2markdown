@@ -7,6 +7,4 @@ Regular paragraph with `inline code`.
 
 > [!note]
 >
->
->
 > This is a note alert
