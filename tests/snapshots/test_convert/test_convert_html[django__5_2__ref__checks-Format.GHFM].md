@@ -117,7 +117,7 @@ Some checks may be registered with multiple tags.
 
 The following checks verify your setup for [Asynchronous support](../topics/async.md):
 
-- **async.E001**: You should not set the <span class="target" id="index-0"></span>[`DJANGO_ALLOW_ASYNC_UNSAFE`](../topics/async.md#envvar-DJANGO_ALLOW_ASYNC_UNSAFE) environment variable in deployment. This disables [async safety protection](../topics/async.md#async-safety).
+- **async.E001**: You should not set the [`DJANGO_ALLOW_ASYNC_UNSAFE`](../topics/async.md#envvar-DJANGO_ALLOW_ASYNC_UNSAFE) environment variable in deployment. This disables [async safety protection](../topics/async.md#async-safety).
 
 <span id="s-backwards-compatibility"></span>
 

@@ -74,6 +74,10 @@ class BaseHtmlPreprocessor:
                 method = getattr(self, method_name)
                 method(element)
 
+        for element in container.find_all(True):
+            if element.name != "code" and element.has_attr("class"):
+                del element["class"]
+
 
 class Admonition(Enum):
     CAUTION = "caution"
@@ -336,6 +340,12 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
     def process_span(self, span: Tag) -> None:
         if not span.has_attr("id"):
             span.unwrap()
+            return
+
+        if not span.get_text(strip=True) and str(span.get("id", "")).startswith(
+            "index-"
+        ):
+            span.decompose()
             return
 
         next_heading = span.find_next_sibling(["h1", "h2", "h3", "h4", "h5", "h6"])

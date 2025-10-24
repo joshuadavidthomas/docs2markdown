@@ -49,7 +49,7 @@ def convert(
         Format,
         typer.Option(
             "--format",
-            help="Output format: ghfm (GitHub-flavored Markdown) or llmstxt (LLM-friendly text)",
+            help="Output format: ghfm (GitHub-flavored), commonmark (strict CommonMark), or llmstxt (LLM-friendly)",
         ),
     ] = Format.GHFM,
 ) -> None:

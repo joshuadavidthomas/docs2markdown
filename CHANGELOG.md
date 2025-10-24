@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Added CommonMark output format (`Format.COMMONMARK`) for strict CommonMark specification compliance with HTML tables
+
 ## [0.2.0]
 
 ### Added

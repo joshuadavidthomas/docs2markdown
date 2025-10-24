@@ -14,7 +14,7 @@ from docs2markdown.convert import convert_html
 
 @pytest.mark.parametrize(
     "format",
-    [Format.GHFM, Format.LLMSTXT],
+    [Format.GHFM, Format.LLMSTXT, Format.COMMONMARK],
 )
 def test_convert_file(format, doc_file, snapshot_md):
     doc_type = DocType.SPHINX if "sphinx" in str(doc_file.parent) else DocType.DEFAULT
@@ -24,7 +24,7 @@ def test_convert_file(format, doc_file, snapshot_md):
 
 @pytest.mark.parametrize(
     "format",
-    [Format.GHFM, Format.LLMSTXT],
+    [Format.GHFM, Format.LLMSTXT, Format.COMMONMARK],
 )
 def test_convert_html(format, doc_file, snapshot_md):
     doc_type = DocType.SPHINX if "sphinx" in str(doc_file.parent) else DocType.DEFAULT
@@ -35,7 +35,7 @@ def test_convert_html(format, doc_file, snapshot_md):
 
 @pytest.mark.parametrize(
     "format",
-    [Format.GHFM, Format.LLMSTXT],
+    [Format.GHFM, Format.LLMSTXT, Format.COMMONMARK],
 )
 def test_convert_directory(format):
     with tempfile.TemporaryDirectory() as tmpdir:

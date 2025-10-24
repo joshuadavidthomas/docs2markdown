@@ -305,7 +305,7 @@ Here is an example of the difference between the three:
 
 ### Connections and cursors
 
-`connection` and `cursor` mostly implement the standard Python DB-API described in <span class="target" id="index-0"></span>[**PEP 249**](https://peps.python.org/pep-0249/) — except when it comes to [transaction handling](transactions.md).
+`connection` and `cursor` mostly implement the standard Python DB-API described in [**PEP 249**](https://peps.python.org/pep-0249/) — except when it comes to [transaction handling](transactions.md).
 
 If you’re not familiar with the Python DB-API, note that the SQL statement in `cursor.execute()` uses placeholders, `"%s"`, rather than adding parameters directly within the SQL. If you use this technique, the underlying database library will automatically escape your parameters as necessary.
 
