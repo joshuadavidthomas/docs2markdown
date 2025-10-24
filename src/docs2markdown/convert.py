@@ -6,6 +6,7 @@ from pathlib import Path
 
 from docs2markdown.html import BaseHtmlPreprocessor
 from docs2markdown.html import SphinxHtmlPreprocessor
+from docs2markdown.markdown import CommonMarkConverter
 from docs2markdown.markdown import Docs2MarkdownConverter
 from docs2markdown.markdown import GhfmConverter
 from docs2markdown.markdown import LlmsTxtConverter
@@ -24,11 +25,14 @@ class DocType(Enum):
 
 
 class Format(Enum):
+    COMMONMARK = "commonmark"
     GHFM = "ghfm"
     LLMSTXT = "llmstxt"
 
     def get_converter(self) -> type[Docs2MarkdownConverter]:
         match self:
+            case self.COMMONMARK:
+                return CommonMarkConverter
             case self.GHFM:
                 return GhfmConverter
             case self.LLMSTXT:

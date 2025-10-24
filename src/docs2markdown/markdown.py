@@ -134,3 +134,17 @@ class LlmsTxtConverter(Docs2MarkdownConverter):
             text = f"**{header_text}**" + text
 
         return super().convert_blockquote(el, text, **kwargs)
+
+
+class CommonMarkConverter(LlmsTxtConverter):
+    """
+    Strict CommonMark compliant converter with semantic markers.
+
+    Extends LLMSTXT to maintain semantic markers (like **NOTE:**) while
+    ensuring CommonMark compliance by outputting tables as HTML.
+    Tables are not part of the CommonMark spec, so they are rendered
+    as raw HTML which CommonMark explicitly allows.
+    """
+
+    def convert_table(self, el: Tag, text: str, **kwargs: Any) -> str:
+        return str(el) + "\n\n"

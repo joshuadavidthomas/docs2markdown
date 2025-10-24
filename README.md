@@ -85,9 +85,11 @@ By default, this creates a `./dist` directory with the converted Markdown files,
 
 ### Output Formats
 
-`docs2markdown` supports two output formats for different applications.
+`docs2markdown` supports three output formats for different applications.
 
-**GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders well on GitHub, GitLab, and other platforms. It supports tables, syntax-highlighted code blocks, task lists, and other GitHub-specific extensions.
+**GitHub-flavored Markdown (ghfm)** is the default format. It produces standard Markdown that renders well on GitHub, GitLab, and other platforms. It supports tables, syntax-highlighted code blocks, task lists, GitHub alerts, and other GitHub-specific extensions.
+
+**CommonMark (commonmark)** is the strict baseline Markdown specification. This format ensures maximum compatibility across different Markdown parsers and platforms by maintaining strict CommonMark compliance. Tables are rendered as HTML since they're not part of the CommonMark spec (HTML is explicitly allowed per section 6.6). Use this when you need portable, standards-compliant Markdown that will work everywhere.
 
 **LLM-friendly text (llmstxt)** is optimized for AI models. This format strips unnecessary formatting and structures content for language models to parse and understand. This is useful for feeding documentation to AI assistants, building RAG (Retrieval-Augmented Generation) systems, creating training data, or preparing documentation for AI analysis tools.
 
@@ -146,6 +148,7 @@ Parameters:
   - `DocType.SPHINX` - Sphinx-generated documentation
 - `format`: Output format (default: `Format.GHFM`)
   - `Format.GHFM` - GitHub-flavored Markdown
+  - `Format.COMMONMARK` - CommonMark (strict baseline)
   - `Format.LLMSTXT` - LLM-friendly text format
 
 Returns: Converted Markdown as a string
@@ -166,11 +169,7 @@ html_file = Path("docs/index.html")
 markdown = convert_file(html_file)
 
 # Or specify format and documentation type
-markdown = convert_file(
-    html_file,
-    doc_type=DocType.SPHINX,
-    format=Format.LLMSTXT
-)
+markdown = convert_file(html_file, doc_type=DocType.SPHINX, format=Format.LLMSTXT)
 ```
 
 #### `convert_html`
@@ -186,6 +185,7 @@ Parameters:
   - `DocType.SPHINX` - Sphinx-generated documentation
 - `format`: Output format (default: `Format.GHFM`)
   - `Format.GHFM` - GitHub-flavored Markdown
+  - `Format.COMMONMARK` - CommonMark (strict baseline)
   - `Format.LLMSTXT` - LLM-friendly text format
 
 Returns: Converted Markdown as a string
@@ -205,9 +205,7 @@ markdown = convert_html(html_content)
 # Convert with specific format and type
 html_from_scraper = get_documentation_html()
 markdown = convert_html(
-    html_from_scraper,
-    doc_type=DocType.SPHINX,
-    format=Format.LLMSTXT
+    html_from_scraper, doc_type=DocType.SPHINX, format=Format.LLMSTXT
 )
 ```
 
@@ -239,7 +237,7 @@ for input_file, result in convert_directory(
     Path("docs/_build/html"),
     Path("markdown/"),
     doc_type=DocType.SPHINX,
-    format=Format.LLMSTXT
+    format=Format.LLMSTXT,
 ):
     if isinstance(result, Exception):
         print(f"Error converting {input_file}: {result}")
