@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from enum import Enum
 
 from bs4 import BeautifulSoup
@@ -322,20 +323,52 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
         pairs = []
         for label in labels:
             for_attr = label.get("for", "")
-            if "unix" in for_attr:
-                section = div.find("section", class_="c-content-unix")
-            elif "win" in for_attr:
-                section = div.find("section", class_="c-content-win")
-            else:
-                section = None
+            if not for_attr:
+                continue
 
-            if section:
-                pairs.append((label, section))
+            best_match = None
+            best_score = 0
+
+            for section in sections:
+                section_classes = section.get("class", [])
+                if not isinstance(section_classes, list):
+                    section_classes = [section_classes] if section_classes else []
+
+                common_tokens = self._find_common_meaningful_tokens(
+                    for_attr, section_classes
+                )
+                score = len(common_tokens)
+
+                if score > best_score:
+                    best_score = score
+                    best_match = section
+
+            if best_match and best_score > 0:
+                pairs.append((label, best_match))
 
         div.clear()
         for label, section in pairs:
             div.append(label)
             div.append(section)
+
+    def _find_common_meaningful_tokens(
+        self, for_attr: str, section_classes: list[str]
+    ) -> set[str]:
+        for_tokens = set(re.split(r"[-_\s]", for_attr.lower()))
+
+        section_tokens = set()
+        for cls in section_classes:
+            section_tokens.update(re.split(r"[-_\s]", cls.lower()))
+
+        common = for_tokens & section_tokens
+
+        meaningful = {
+            t
+            for t in common
+            if len(t) > 1 and not t.isdigit() and t not in {"c", "tab", "content"}
+        }
+
+        return meaningful
 
     def _process_code_block(self, div: Tag, highlight_class: str) -> None:
         pre = div.find("pre")
