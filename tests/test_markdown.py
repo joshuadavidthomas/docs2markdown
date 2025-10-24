@@ -83,7 +83,9 @@ def test_obsidian_embeds():
 
 
 def test_obsidian_callouts():
-    html = '<blockquote data-markdownify-alert-type="NOTE"><p>Note text</p></blockquote>'
+    html = (
+        '<blockquote data-markdownify-alert-type="NOTE"><p>Note text</p></blockquote>'
+    )
 
     converter = ObsidianConverter()
     result = converter.convert(html)
@@ -92,7 +94,7 @@ def test_obsidian_callouts():
 
 
 def test_obsidian_link_without_href():
-    html = '<p><a>No href</a></p>'
+    html = "<p><a>No href</a></p>"
 
     converter = ObsidianConverter()
     result = converter.convert(html)
