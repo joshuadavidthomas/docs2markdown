@@ -10,6 +10,7 @@ from docs2markdown.markdown import CommonMarkConverter
 from docs2markdown.markdown import Docs2MarkdownConverter
 from docs2markdown.markdown import GhfmConverter
 from docs2markdown.markdown import LlmsTxtConverter
+from docs2markdown.markdown import ObsidianConverter
 
 
 class DocType(Enum):
@@ -28,6 +29,7 @@ class Format(Enum):
     COMMONMARK = "commonmark"
     GHFM = "ghfm"
     LLMSTXT = "llmstxt"
+    OBSIDIAN = "obsidian"
 
     def get_converter(self) -> type[Docs2MarkdownConverter]:
         match self:
@@ -37,6 +39,8 @@ class Format(Enum):
                 return GhfmConverter
             case self.LLMSTXT:
                 return LlmsTxtConverter
+            case self.OBSIDIAN:
+                return ObsidianConverter
 
 
 def convert_html(html: str, doc_type: DocType, format: Format = Format.GHFM) -> str:

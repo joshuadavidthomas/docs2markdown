@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Added Obsidian output format (`Format.OBSIDIAN`) with wikilinks, embeds, and callouts for personal knowledge management
+
 ## [0.3.0]
 
 ### Added

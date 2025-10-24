@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from typing import Any
 from typing import final
+from urllib.parse import ParseResult
+from urllib.parse import urlparse
 
 from bs4 import Tag
 from markdownify import MarkdownConverter
@@ -172,3 +174,66 @@ class CommonMarkConverter(LlmsTxtConverter):
 
         process_tag(el, 0)
         return "\n".join(result) + "\n\n"
+
+
+class ObsidianConverter(Docs2MarkdownConverter):
+    def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
+        href = el.get("href")
+
+        if not href or not isinstance(href, str):
+            return text
+
+        parsed_href = urlparse(href)
+
+        # if not an internal href, format as obsidian-style wikilink
+        if (
+            not parsed_href.scheme
+            and not parsed_href.netloc
+            and not href.startswith("#")
+        ):
+            return self._format_wikilink(parsed_href, text)
+
+        return super().convert_a(el, text, **kwargs)
+
+    def convert_img(self, el: Tag, text: str, **kwargs: Any) -> str:
+        src = el.get("src", "")
+        alt = el.get("alt", "")
+
+        if alt:
+            return f"![[{src}|{alt}]]"
+        return f"![[{src}]]"
+
+    def convert_blockquote(self, el: Tag, text: str, **kwargs: Any) -> str:
+        alert_type = el.get("data-markdownify-alert-type")
+        title = el.get("data-markdownify-title")
+
+        if alert_type:
+            callout_header = f"[!{str(alert_type).lower()}]"
+            if title:
+                callout_header += f" {title}"
+            text = callout_header + text
+
+        return super().convert_blockquote(el, text, **kwargs)
+
+    def _format_wikilink(self, parsed_href: ParseResult, text: str) -> str:
+        path = parsed_href.path or ""
+        page = path.split("/")[-1] if path else ""
+        page = re.sub(r"\.(html|md)$", "", page)
+
+        anchor = parsed_href.fragment or None
+
+        target = f"{page}#{anchor}" if anchor else page
+
+        if text:
+            expected = target
+            text_normalized = text.lower().strip()
+            expected_normalized = expected.lower().strip()
+            page_normalized = page.lower().strip()
+
+            if (
+                text_normalized != page_normalized
+                and text_normalized != expected_normalized
+            ):
+                return f"[[{target}|{text}]]"
+
+        return f"[[{target}]]"
