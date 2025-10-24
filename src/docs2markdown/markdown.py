@@ -181,9 +181,8 @@ class ObsidianConverter(Docs2MarkdownConverter):
         if not href or not isinstance(href, str):
             return text
 
-        is_internal = (
-            not href.startswith("#")
-            and not href.startswith(("http://", "https://", "mailto:", "ftp://", "//"))
+        is_internal = not href.startswith("#") and not href.startswith(
+            ("http://", "https://", "mailto:", "ftp://", "//")
         )
 
         if is_internal:
@@ -242,7 +241,10 @@ class ObsidianConverter(Docs2MarkdownConverter):
             expected_normalized = expected.lower().strip()
             page_normalized = page.lower().strip()
 
-            if text_normalized != page_normalized and text_normalized != expected_normalized:
+            if (
+                text_normalized != page_normalized
+                and text_normalized != expected_normalized
+            ):
                 return f"[[{target}|{text}]]"
 
         return f"[[{target}]]"
