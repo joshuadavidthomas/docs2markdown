@@ -147,4 +147,28 @@ class CommonMarkConverter(LlmsTxtConverter):
     """
 
     def convert_table(self, el: Tag, text: str, **kwargs: Any) -> str:
-        return str(el) + "\n\n"
+        for p in el.find_all("p"):
+            p.unwrap()
+
+        result = []
+
+        def process_tag(tag, indent):
+            if isinstance(tag, str):
+                return
+
+            is_simple = all(
+                isinstance(child, str) or child.name in ["code", "a", "em", "strong"]
+                for child in tag.children
+            )
+
+            if is_simple:
+                result.append("  " * indent + str(tag))
+            else:
+                result.append("  " * indent + f"<{tag.name}>")
+                for child in tag.children:
+                    if hasattr(child, "name"):
+                        process_tag(child, indent + 1)
+                result.append("  " * indent + f"</{tag.name}>")
+
+        process_tag(el, 0)
+        return "\n".join(result) + "\n\n"

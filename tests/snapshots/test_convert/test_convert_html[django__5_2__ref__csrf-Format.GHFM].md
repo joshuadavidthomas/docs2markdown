@@ -5,7 +5,7 @@
 
 The CSRF middleware and template tag provides easy-to-use protection against [Cross Site Request Forgeries](https://owasp.org/www-community/attacks/csrf#overview). This type of attack occurs when a malicious website contains a link, a form button or some JavaScript that is intended to perform some action on your website, using the credentials of a logged-in user who visits the malicious site in their browser. A related type of attack, ‘login CSRF’, where an attacking site tricks a user’s browser into logging into a site with someone else’s credentials, is also covered.
 
-The first defense against CSRF attacks is to ensure that GET requests (and other ‘safe’ methods, as defined by <span class="target" id="index-0"></span>[**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1)) are side effect free. Requests via ‘unsafe’ methods, such as POST, PUT, and DELETE, can then be protected by the steps outlined in [How to use Django’s CSRF protection](../howto/csrf.md#using-csrf).
+The first defense against CSRF attacks is to ensure that GET requests (and other ‘safe’ methods, as defined by [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1)) are side effect free. Requests via ‘unsafe’ methods, such as POST, PUT, and DELETE, can then be protected by the steps outlined in [How to use Django’s CSRF protection](../howto/csrf.md#using-csrf).
 
 <span id="s-how-it-works"></span>
 <span id="s-how-csrf-works"></span><span id="how-csrf-works"></span>
@@ -38,7 +38,7 @@ The CSRF protection is based on the following things:
 
 This ensures that only forms that have originated from trusted domains can be used to POST data back.
 
-It deliberately ignores GET requests (and other requests that are defined as ‘safe’ by <span class="target" id="index-1"></span>[**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1)). These requests ought never to have any potentially dangerous side effects, and so a CSRF attack with a GET request ought to be harmless. <span class="target" id="index-2"></span>[**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1) defines POST, PUT, and DELETE as ‘unsafe’, and all other methods are also assumed to be unsafe, for maximum protection.
+It deliberately ignores GET requests (and other requests that are defined as ‘safe’ by [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1)). These requests ought never to have any potentially dangerous side effects, and so a CSRF attack with a GET request ought to be harmless. [**RFC 9110 Section 9.2.1**](https://datatracker.ietf.org/doc/html/rfc9110.md#section-9.2.1) defines POST, PUT, and DELETE as ‘unsafe’, and all other methods are also assumed to be unsafe, for maximum protection.
 
 The CSRF protection cannot protect against man-in-the-middle attacks, so use [HTTPS](../topics/security.md#security-recommendation-ssl) with [HTTP Strict Transport Security](middleware.md#http-strict-transport-security). It also assumes [validation of the HOST header](../topics/security.md#host-headers-virtual-hosting) and that there aren’t any [cross-site scripting vulnerabilities](../topics/security.md#cross-site-scripting) on your site (because XSS vulnerabilities already let an attacker do anything a CSRF vulnerability allows and much worse).
 

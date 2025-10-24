@@ -30,55 +30,66 @@ The database operators used by the lookups can be divided into three categories:
 The examples below show the SQL equivalent for the lookups in the different
 types of raster support. The same pattern applies to all spatial lookups.
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Case</p></th>
-<th class="head"><p>Lookup</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>N, B</p></td>
-<td><p><code>rast__contains=rst</code></p></td>
-<td><p><code>ST_Contains(rast, rst)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>N, B</p></td>
-<td><p><code>rast__1__contains=(rst, 2)</code></p></td>
-<td><p><code>ST_Contains(rast, 1, rst, 2)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>B, C</p></td>
-<td><p><code>rast__contains=geom</code></p></td>
-<td><p><code>ST_Contains(ST_Polygon(rast), geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>B, C</p></td>
-<td><p><code>rast__1__contains=geom</code></p></td>
-<td><p><code>ST_Contains(ST_Polygon(rast, 1), geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>B, C</p></td>
-<td><p><code>poly__contains=rst</code></p></td>
-<td><p><code>ST_Contains(poly, ST_Polygon(rst))</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>B, C</p></td>
-<td><p><code>poly__contains=(rst, 1)</code></p></td>
-<td><p><code>ST_Contains(poly, ST_Polygon(rst, 1))</code></p></td>
-</tr>
-<tr class="row-even"><td><p>C</p></td>
-<td><p><code>rast__crosses=rst</code></p></td>
-<td><p><code>ST_Crosses(ST_Polygon(rast), ST_Polygon(rst))</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>C</p></td>
-<td><p><code>rast__1__crosses=(rst, 2)</code></p></td>
-<td><p><code>ST_Crosses(ST_Polygon(rast, 1), ST_Polygon(rst, 2))</code></p></td>
-</tr>
-<tr class="row-even"><td><p>C</p></td>
-<td><p><code>rast__crosses=geom</code></p></td>
-<td><p><code>ST_Crosses(ST_Polygon(rast), geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>C</p></td>
-<td><p><code>poly__crosses=rst</code></p></td>
-<td><p><code>ST_Crosses(poly, ST_Polygon(rst))</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Case</th>
+      <th>Lookup</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>N, B</td>
+      <td><code>rast__contains=rst</code></td>
+      <td><code>ST_Contains(rast, rst)</code></td>
+    </tr>
+    <tr>
+      <td>N, B</td>
+      <td><code>rast__1__contains=(rst, 2)</code></td>
+      <td><code>ST_Contains(rast, 1, rst, 2)</code></td>
+    </tr>
+    <tr>
+      <td>B, C</td>
+      <td><code>rast__contains=geom</code></td>
+      <td><code>ST_Contains(ST_Polygon(rast), geom)</code></td>
+    </tr>
+    <tr>
+      <td>B, C</td>
+      <td><code>rast__1__contains=geom</code></td>
+      <td><code>ST_Contains(ST_Polygon(rast, 1), geom)</code></td>
+    </tr>
+    <tr>
+      <td>B, C</td>
+      <td><code>poly__contains=rst</code></td>
+      <td><code>ST_Contains(poly, ST_Polygon(rst))</code></td>
+    </tr>
+    <tr>
+      <td>B, C</td>
+      <td><code>poly__contains=(rst, 1)</code></td>
+      <td><code>ST_Contains(poly, ST_Polygon(rst, 1))</code></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td><code>rast__crosses=rst</code></td>
+      <td><code>ST_Crosses(ST_Polygon(rast), ST_Polygon(rst))</code></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td><code>rast__1__crosses=(rst, 2)</code></td>
+      <td><code>ST_Crosses(ST_Polygon(rast, 1), ST_Polygon(rst, 2))</code></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td><code>rast__crosses=geom</code></td>
+      <td><code>ST_Crosses(ST_Polygon(rast), geom)</code></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td><code>poly__crosses=rst</code></td>
+      <td><code>ST_Crosses(poly, ST_Polygon(rst))</code></td>
+    </tr>
+  </tbody>
 </table>
 
 Spatial lookups with rasters are only supported for PostGIS backends
@@ -98,26 +109,31 @@ Example:
 Zipcode.objects.filter(poly__bbcontains=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>poly ~ geom</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>MBRContains(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>MBRContains(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>SpatiaLite</p></td>
-<td><p><code>MbrContains(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>poly ~ geom</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>MBRContains(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>MBRContains(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>MbrContains(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `bboverlaps`
@@ -134,26 +150,31 @@ Example:
 Zipcode.objects.filter(poly__bboverlaps=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>poly &amp;&amp; geom</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>MBROverlaps(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>MBROverlaps(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>SpatiaLite</p></td>
-<td><p><code>MbrOverlaps(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>poly &amp;&amp; geom</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>MBROverlaps(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>MBROverlaps(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>MbrOverlaps(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `contained`
@@ -170,26 +191,31 @@ Example:
 Zipcode.objects.filter(poly__contained=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>poly @ geom</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>MBRWithin(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>MBRWithin(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>SpatiaLite</p></td>
-<td><p><code>MbrWithin(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>poly @ geom</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>MBRWithin(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>MBRWithin(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>MbrWithin(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `contains`
@@ -205,29 +231,35 @@ Example:
 Zipcode.objects.filter(poly__contains=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Contains(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_CONTAINS(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MariaDB</p></td>
-<td><p><code>ST_Contains(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MySQL</p></td>
-<td><p><code>ST_Contains(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Contains(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Contains(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_CONTAINS(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Contains(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Contains(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Contains(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `contains_properly`
@@ -244,17 +276,19 @@ Example:
 Zipcode.objects.filter(poly__contains_properly=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_ContainsProperly(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_ContainsProperly(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `coveredby`
@@ -271,26 +305,31 @@ Example:
 Zipcode.objects.filter(poly__coveredby=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_CoveredBy(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_COVEREDBY(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>MBRCoveredBy(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>SpatiaLite</p></td>
-<td><p><code>CoveredBy(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_CoveredBy(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_COVEREDBY(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>MBRCoveredBy(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>CoveredBy(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 > **Changed in Django 5.2:**
@@ -311,26 +350,31 @@ Example:
 Zipcode.objects.filter(poly__covers=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Covers(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_COVERS(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>MBRCovers(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>SpatiaLite</p></td>
-<td><p><code>Covers(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Covers(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_COVERS(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>MBRCovers(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Covers(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 > **Changed in Django 5.2:**
@@ -350,26 +394,31 @@ Example:
 Zipcode.objects.filter(poly__crosses=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Crosses(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Crosses(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Crosses(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>SpatiaLite</p></td>
-<td><p><code>Crosses(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Crosses(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Crosses(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Crosses(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Crosses(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `disjoint`
@@ -385,29 +434,35 @@ Example:
 Zipcode.objects.filter(poly__disjoint=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Disjoint(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_GEOM.RELATE(poly, 'DISJOINT', geom, 0.05)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MariaDB</p></td>
-<td><p><code>ST_Disjoint(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MySQL</p></td>
-<td><p><code>ST_Disjoint(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Disjoint(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Disjoint(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_GEOM.RELATE(poly, 'DISJOINT', geom, 0.05)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Disjoint(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Disjoint(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Disjoint(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `equals`
@@ -423,29 +478,35 @@ Example:
 Zipcode.objects.filter(poly__equals=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Equals(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_EQUAL(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MariaDB</p></td>
-<td><p><code>ST_Equals(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MySQL</p></td>
-<td><p><code>ST_Equals(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Equals(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Equals(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_EQUAL(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Equals(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Equals(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Equals(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `exact`, `same_as`
@@ -463,29 +524,35 @@ Example:
 Zipcode.objects.filter(poly=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>poly ~= geom</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_EQUAL(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MariaDB</p></td>
-<td><p><code>ST_Equals(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MySQL</p></td>
-<td><p><code>ST_Equals(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Equals(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>poly ~= geom</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_EQUAL(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Equals(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Equals(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Equals(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `intersects`
@@ -501,29 +568,35 @@ Example:
 Zipcode.objects.filter(poly__intersects=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Intersects(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_OVERLAPBDYINTERSECT(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MariaDB</p></td>
-<td><p><code>ST_Intersects(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MySQL</p></td>
-<td><p><code>ST_Intersects(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Intersects(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Intersects(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_OVERLAPBDYINTERSECT(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Intersects(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Intersects(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Intersects(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `isempty`
@@ -551,20 +624,23 @@ Example:
 Zipcode.objects.filter(poly__isvalid=True)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>MySQL, PostGIS, SpatiaLite</p></td>
-<td><p><code>ST_IsValid(poly)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT(poly, 0.05) = 'TRUE'</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MySQL, PostGIS, SpatiaLite</td>
+      <td><code>ST_IsValid(poly)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT(poly, 0.05) = 'TRUE'</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `overlaps`
@@ -574,29 +650,35 @@ Oracle, MariaDB, MySQL, SpatiaLite, PGRaster (Bilateral)
 
 Tests if the geometry field spatially overlaps the lookup geometry.
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Overlaps(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_OVERLAPS(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MariaDB</p></td>
-<td><p><code>ST_Overlaps(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MySQL</p></td>
-<td><p><code>ST_Overlaps(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Overlaps(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Overlaps(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_OVERLAPS(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Overlaps(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Overlaps(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Overlaps(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `relate`
@@ -685,29 +767,35 @@ Example:
 Zipcode.objects.filter(poly__touches=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Touches(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Touches(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Touches(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_TOUCH(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Touches(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Touches(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Touches(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Touches(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_TOUCH(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Touches(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `within`
@@ -723,29 +811,35 @@ Example:
 Zipcode.objects.filter(poly__within=geom)
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Within(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Within(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Within(poly, geom)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_INSIDE(poly, geom)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Within(poly, geom)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Within(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Within(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Within(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_INSIDE(poly, geom)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Within(poly, geom)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `left`
@@ -951,29 +1045,35 @@ Example:
 Zipcode.objects.filter(poly__distance_gt=(geom, D(m=5)))
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Distance/ST_Distance_Sphere(poly, geom) &gt; 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Distance(poly, geom) &gt; 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Distance(poly, geom) &gt; 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &gt; 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Distance(poly, geom) &gt; 5</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Distance/ST_Distance_Sphere(poly, geom) &gt; 5</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Distance(poly, geom) &gt; 5</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Distance(poly, geom) &gt; 5</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &gt; 5</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Distance(poly, geom) &gt; 5</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `distance_gte`
@@ -987,29 +1087,35 @@ Example:
 Zipcode.objects.filter(poly__distance_gte=(geom, D(m=5)))
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Distance/ST_Distance_Sphere(poly, geom) &gt;= 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Distance(poly, geom) &gt;= 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Distance(poly, geom) &gt;= 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &gt;= 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Distance(poly, geom) &gt;= 5</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Distance/ST_Distance_Sphere(poly, geom) &gt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Distance(poly, geom) &gt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Distance(poly, geom) &gt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &gt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Distance(poly, geom) &gt;= 5</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `distance_lt`
@@ -1023,29 +1129,35 @@ Example:
 Zipcode.objects.filter(poly__distance_lt=(geom, D(m=5)))
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Distance/ST_Distance_Sphere(poly, geom) &lt; 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Distance(poly, geom) &lt; 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Distance(poly, geom) &lt; 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &lt; 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Distance(poly, geom) &lt; 5</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Distance/ST_Distance_Sphere(poly, geom) &lt; 5</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Distance(poly, geom) &lt; 5</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Distance(poly, geom) &lt; 5</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &lt; 5</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Distance(poly, geom) &lt; 5</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `distance_lte`
@@ -1059,29 +1171,35 @@ Example:
 Zipcode.objects.filter(poly__distance_lte=(geom, D(m=5)))
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_Distance/ST_Distance_Sphere(poly, geom) &lt;= 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>MariaDB</p></td>
-<td><p><code>ST_Distance(poly, geom) &lt;= 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>MySQL</p></td>
-<td><p><code>ST_Distance(poly, geom) &lt;= 5</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &lt;= 5</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>Distance(poly, geom) &lt;= 5</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_Distance/ST_Distance_Sphere(poly, geom) &lt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td><code>ST_Distance(poly, geom) &lt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>MySQL</td>
+      <td><code>ST_Distance(poly, geom) &lt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) &lt;= 5</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>Distance(poly, geom) &lt;= 5</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### `dwithin`
@@ -1098,23 +1216,27 @@ Example:
 Zipcode.objects.filter(poly__dwithin=(geom, D(m=5)))
 ```
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Backend</p></th>
-<th class="head"><p>SQL Equivalent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PostGIS</p></td>
-<td><p><code>ST_DWithin(poly, geom, 5)</code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Oracle</p></td>
-<td><p><code>SDO_WITHIN_DISTANCE(poly, geom, 5)</code></p></td>
-</tr>
-<tr class="row-even"><td><p>SpatiaLite</p></td>
-<td><p><code>PtDistWithin(poly, geom, 5)</code></p></td>
-</tr>
-</tbody>
+<table>
+  <thead>
+    <tr>
+      <th>Backend</th>
+      <th>SQL Equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostGIS</td>
+      <td><code>ST_DWithin(poly, geom, 5)</code></td>
+    </tr>
+    <tr>
+      <td>Oracle</td>
+      <td><code>SDO_WITHIN_DISTANCE(poly, geom, 5)</code></td>
+    </tr>
+    <tr>
+      <td>SpatiaLite</td>
+      <td><code>PtDistWithin(poly, geom, 5)</code></td>
+    </tr>
+  </tbody>
 </table>
 
 ### Aggregate Functions
@@ -1122,20 +1244,22 @@ Zipcode.objects.filter(poly__dwithin=(geom, D(m=5)))
 Django provides some GIS-specific aggregate functions. For details on how to
 use these aggregate functions, see [the topic guide on aggregation](../../../topics/db/aggregation.md).
 
-<table class="docutils">
-<thead>
-<tr class="row-odd"><th class="head"><p>Keyword Argument</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code>tolerance</code></p></td>
-<td><p>This keyword is for Oracle only.  It is for the
+<table>
+  <thead>
+    <tr>
+      <th>Keyword Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>tolerance</code></td>
+      <td>This keyword is for Oracle only.  It is for the
 tolerance value used by the <code>SDOAGGRTYPE</code>
-procedure; the  <a class="reference external" href="https://docs.oracle.com/en/database/oracle/oracle-database/21/spatl/spatial-concepts.md#GUID-CE10AB14-D5EA-43BA-A647-DAC9EEF41EE6">Oracle documentation</a> has more
-details.</p></td>
-</tr>
-</tbody>
+procedure; the  <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/spatl/spatial-concepts.md#GUID-CE10AB14-D5EA-43BA-A647-DAC9EEF41EE6">Oracle documentation</a> has more
+details.</td>
+    </tr>
+  </tbody>
 </table>
 
 Example:
