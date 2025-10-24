@@ -331,8 +331,6 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
             for section in sections:
                 section_classes = section.get("class", [])
-                if not isinstance(section_classes, list):
-                    section_classes = [section_classes] if section_classes else []
 
                 common_tokens = self._find_common_meaningful_tokens(
                     for_attr, section_classes

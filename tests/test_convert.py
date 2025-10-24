@@ -108,3 +108,38 @@ $ python -m django --version
 
 This should output the version number."""
     )
+
+
+CONSOLE_BLOCK_EDGE_CASES_HTML = """<!DOCTYPE html>
+<html>
+<body>
+<article>
+<div class="console-block">
+  <label>No for attribute</label>
+  <label for="">Empty for attribute</label>
+  <label for="tab-unix">Unix</label>
+  <section class="content-unix">
+    <pre>$ ls</pre>
+  </section>
+</div>
+</article>
+</body>
+</html>"""
+
+
+@pytest.mark.parametrize(
+    "format",
+    [Format.GHFM, Format.LLMSTXT, Format.COMMONMARK],
+)
+def test_console_block_edge_cases(format):
+    result = convert_html(CONSOLE_BLOCK_EDGE_CASES_HTML, DocType.SPHINX, format)
+
+    assert (
+        result
+        == """\
+Unix
+
+```
+$ ls
+```"""
+    )
