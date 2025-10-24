@@ -20,12 +20,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ### Added
 
-- Added Obsidian output format (`Format.OBSIDIAN`) with support for:
-  - Wikilinks: Converts internal links to `[[page]]` or `[[page|display text]]` format
-  - Embeds: Converts images to `![[image.png|alt text]]` syntax
-  - Callouts: Maps GitHub-flavored alerts to lowercase Obsidian callouts (`[!note]`, `[!warning]`, etc.)
-  - Smart path normalization: Extracts filenames from relative paths for idiomatic Obsidian linking
-  - Display text optimization: Omits redundant display text when it matches the page name
+- Added Obsidian output format (`Format.OBSIDIAN`) with wikilinks, embeds, and callouts for personal knowledge management
 
 ## [0.3.0]
 

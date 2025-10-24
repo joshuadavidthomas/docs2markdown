@@ -49,7 +49,7 @@ def convert(
         Format,
         typer.Option(
             "--format",
-            help="Output format: ghfm (GitHub), commonmark (strict), obsidian (wikilinks), or llmstxt (LLM)",
+            help="Output format: ghfm (GitHub-flavored), commonmark (strict CommonMark), obsidian (Obsidian), or llmstxt (LLM-friendly)",
         ),
     ] = Format.GHFM,
 ) -> None:

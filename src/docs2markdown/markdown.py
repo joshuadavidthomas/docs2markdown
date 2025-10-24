@@ -175,18 +175,18 @@ class CommonMarkConverter(LlmsTxtConverter):
 
 
 class ObsidianConverter(Docs2MarkdownConverter):
-    """
-    Obsidian Markdown converter with wikilinks, embeds, and callouts.
-    Designed for use with Obsidian vaults.
-    """
-
     def convert_a(self, el: Tag, text: str, **kwargs: Any) -> str:
         href = el.get("href")
 
         if not href or not isinstance(href, str):
             return text
 
-        if self._is_internal_link(href):
+        is_internal = (
+            not href.startswith("#")
+            and not href.startswith(("http://", "https://", "mailto:", "ftp://", "//"))
+        )
+
+        if is_internal:
             return self._format_wikilink(href, text)
 
         return super().convert_a(el, text, **kwargs)
@@ -225,16 +225,7 @@ class ObsidianConverter(Docs2MarkdownConverter):
 
         return super().convert_blockquote(el, text, **kwargs)
 
-    @staticmethod
-    def _is_internal_link(href: str) -> bool:
-        if href.startswith("#"):
-            return False
-        if href.startswith(("http://", "https://", "mailto:", "ftp://", "//")):
-            return False
-        return True
-
-    @staticmethod
-    def _clean_path_for_wikilink(href: str) -> tuple[str, str | None]:
+    def _format_wikilink(self, href: str, text: str) -> str:
         if "#" in href:
             href_part, anchor = href.split("#", 1)
         else:
@@ -243,32 +234,15 @@ class ObsidianConverter(Docs2MarkdownConverter):
         page = href_part.split("/")[-1]
         page = re.sub(r"\.(html|md)$", "", page)
 
-        return (page, anchor)
-
-    def _format_wikilink(self, href: str, text: str) -> str:
-        page, anchor = self._clean_path_for_wikilink(href)
-
         target = f"{page}#{anchor}" if anchor else page
 
-        if self._should_include_display_text(page, text, anchor):
-            return f"[[{target}|{text}]]"
-        else:
-            return f"[[{target}]]"
+        if text:
+            expected = target
+            text_normalized = text.lower().strip()
+            expected_normalized = expected.lower().strip()
+            page_normalized = page.lower().strip()
 
-    @staticmethod
-    def _should_include_display_text(
-        page_name: str, link_text: str, anchor: str | None
-    ) -> bool:
-        if not link_text:
-            return False
+            if text_normalized != page_normalized and text_normalized != expected_normalized:
+                return f"[[{target}|{text}]]"
 
-        expected = f"{page_name}#{anchor}" if anchor else page_name
-
-        text_normalized = link_text.lower().strip()
-        expected_normalized = expected.lower().strip()
-        page_normalized = page_name.lower().strip()
-
-        return (
-            text_normalized != page_normalized
-            and text_normalized != expected_normalized
-        )
+        return f"[[{target}]]"

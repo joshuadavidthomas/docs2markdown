@@ -3,7 +3,7 @@
 [![PyPI - docs2markdown](https://img.shields.io/pypi/v/docs2markdown?label=docs2markdown)](https://pypi.org/project/docs2markdown/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/docs2markdown)
 
-Convert HTML documentation to Markdown with support for multiple output formats including GitHub-flavored, CommonMark, Obsidian, and LLM-friendly formats.
+Convert HTML documentation to Markdown with support for multiple output formats and documentation types.
 
 `docs2markdown` transforms HTML documentation into clean, readable Markdown. It works as both a CLI tool for quick conversions and a Python library for integration into your projects.
 
