@@ -151,8 +151,8 @@ Parameters:
 - `format`: Output format (default: `Format.GHFM`)
   - `Format.GHFM` - GitHub-flavored Markdown
   - `Format.COMMONMARK` - CommonMark (strict baseline)
-  - `Format.OBSIDIAN` - Obsidian with wikilinks and embeds
   - `Format.LLMSTXT` - LLM-friendly text format
+  - `Format.OBSIDIAN` - Obsidian with wikilinks and embeds
 
 Returns: Converted Markdown as a string
 
@@ -189,8 +189,8 @@ Parameters:
 - `format`: Output format (default: `Format.GHFM`)
   - `Format.GHFM` - GitHub-flavored Markdown
   - `Format.COMMONMARK` - CommonMark (strict baseline)
-  - `Format.OBSIDIAN` - Obsidian with wikilinks and embeds
   - `Format.LLMSTXT` - LLM-friendly text format
+  - `Format.OBSIDIAN` - Obsidian with wikilinks and embeds
 
 Returns: Converted Markdown as a string
 
