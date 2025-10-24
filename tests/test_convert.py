@@ -54,3 +54,57 @@ def test_convert_directory(format):
         assert len(results) == 1
         _, output_file = results[0]
         assert output_file.exists()
+
+
+CONSOLE_BLOCK_HTML = """<!DOCTYPE html>
+<html>
+<body>
+<article>
+<h1>Installation</h1>
+<p>To verify Django is installed, run:</p>
+<div class="console-block">
+  <input class="c-tab-unix" type="radio" checked>
+  <label for="c-tab-unix-0">&#xf17c;/&#xf179;</label>
+  <input class="c-tab-win" type="radio">
+  <label for="c-tab-win-0">&#xf17a;</label>
+  <section class="c-content-unix">
+    <pre>$ python -m django --version</pre>
+  </section>
+  <section class="c-content-win">
+    <pre>...\\> py -m django --version</pre>
+  </section>
+</div>
+<p>This should output the version number.</p>
+</article>
+</body>
+</html>"""
+
+
+@pytest.mark.parametrize(
+    "format",
+    [Format.GHFM, Format.LLMSTXT, Format.COMMONMARK],
+)
+def test_console_block_tabs_edge_case(format):
+    result = convert_html(CONSOLE_BLOCK_HTML, DocType.SPHINX, format)
+
+    assert (
+        result
+        == """\
+# Installation
+
+To verify Django is installed, run:
+
+/
+
+```
+$ python -m django --version
+```
+
+
+
+```
+...\\> py -m django --version
+```
+
+This should output the version number."""
+    )

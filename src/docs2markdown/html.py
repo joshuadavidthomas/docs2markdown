@@ -256,6 +256,10 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
     def process_div(self, div: Tag) -> None:
         classes = div.get("class", [])
 
+        if "console-block" in classes:
+            self._process_console_block(div)
+            return
+
         if "admonition" in classes:
             self._process_admonition(div)
             return
@@ -310,6 +314,28 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
         blockquote.extend(list(div.children))
         div.replace_with(blockquote)
+
+    def _process_console_block(self, div: Tag) -> None:
+        labels = list(div.find_all("label"))
+        sections = list(div.find_all("section"))
+
+        pairs = []
+        for label in labels:
+            for_attr = label.get("for", "")
+            if "unix" in for_attr:
+                section = div.find("section", class_="c-content-unix")
+            elif "win" in for_attr:
+                section = div.find("section", class_="c-content-win")
+            else:
+                section = None
+
+            if section:
+                pairs.append((label, section))
+
+        div.clear()
+        for label, section in pairs:
+            div.append(label)
+            div.append(section)
 
     def _process_code_block(self, div: Tag, highlight_class: str) -> None:
         pre = div.find("pre")
