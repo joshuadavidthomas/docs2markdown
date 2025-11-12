@@ -11,7 +11,7 @@ system checks, see the [[checks|System check topic guide]].
 
 ### `CheckMessage`
 
-`classCheckMessage(level,msg,hint=None,obj=None,id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L9)
+`class CheckMessage(level, msg, hint=None, obj=None, id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L9)
 
 The warnings and errors raised by system checks must be instances of
 `CheckMessage`. An instance encapsulates a single reportable error or
@@ -59,15 +59,15 @@ There are subclasses to make creating messages with common levels easier. When
 using them you can omit the `level` argument because it is implied by the
 class name.
 
-`classDebug(msg,hint=None,obj=None,id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L59)
+`class Debug(msg, hint=None, obj=None, id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L59)
 
-`classInfo(msg,hint=None,obj=None,id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L64)
+`class Info(msg, hint=None, obj=None, id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L64)
 
-`classWarning(msg,hint=None,obj=None,id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L69)
+`class Warning(msg, hint=None, obj=None, id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L69)
 
-`classError(msg,hint=None,obj=None,id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L74)
+`class Error(msg, hint=None, obj=None, id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L74)
 
-`classCritical(msg,hint=None,obj=None,id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L79)
+`class Critical(msg, hint=None, obj=None, id=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L79)
 
 ## Builtin tags
 

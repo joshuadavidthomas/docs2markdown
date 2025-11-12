@@ -210,7 +210,7 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
             if source_link.has_attr("class"):
                 del source_link["class"]
 
-        sig_text = dt.get_text("", strip=True)
+        sig_text = re.sub(r"\s+", " ", dt.get_text().strip())
 
         dt_id = dt.get("id")
         dt.clear()
@@ -233,6 +233,28 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
             for span in dd.find_all("span"):
                 span.unwrap()
+
+            nested_dls = dd.find_all(
+                "dl", recursive=False, attrs={"data-markdownify-raw": ""}
+            )
+            if nested_dls:
+                first_nested_dl = nested_dls[0]
+                elements_to_extract = []
+
+                for sibling in first_nested_dl.previous_siblings:
+                    if not sibling or (
+                        isinstance(sibling, str) and not sibling.strip()
+                    ):
+                        continue
+                    if hasattr(sibling, "name") and sibling.name == "p":
+                        elements_to_extract.insert(0, sibling)
+                    else:
+                        break
+
+                all_elements = elements_to_extract + list(nested_dls)
+                for element in reversed(all_elements):
+                    element.extract()
+                    dl.insert_after(element)
 
         dl["data-markdownify-raw"] = ""
 

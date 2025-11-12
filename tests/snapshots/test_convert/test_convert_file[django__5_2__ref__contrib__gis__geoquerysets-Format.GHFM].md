@@ -800,7 +800,7 @@ Example:
 #### `Collect`
 
 <dl>
-<dt id="django.contrib.gis.db.models.Collect"><code>classCollect(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L61">[source]</a></dt>
+<dt id="django.contrib.gis.db.models.Collect"><code>class Collect(geo_field, filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L61">[source]</a></dt>
 <dd>
 
 </dd>
@@ -821,7 +821,7 @@ Returns a `GEOMETRYCOLLECTION` or a `MULTI` geometry object from the geometry co
 #### `Extent`
 
 <dl>
-<dt id="django.contrib.gis.db.models.Extent"><code>classExtent(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L66">[source]</a></dt>
+<dt id="django.contrib.gis.db.models.Extent"><code>class Extent(geo_field, filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L66">[source]</a></dt>
 <dd>
 
 </dd>
@@ -844,7 +844,7 @@ Example:
 #### `Extent3D`
 
 <dl>
-<dt id="django.contrib.gis.db.models.Extent3D"><code>classExtent3D(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L77">[source]</a></dt>
+<dt id="django.contrib.gis.db.models.Extent3D"><code>class Extent3D(geo_field, filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L77">[source]</a></dt>
 <dd>
 
 </dd>
@@ -867,7 +867,7 @@ Example:
 #### `MakeLine`
 
 <dl>
-<dt id="django.contrib.gis.db.models.MakeLine"><code>classMakeLine(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L88">[source]</a></dt>
+<dt id="django.contrib.gis.db.models.MakeLine"><code>class MakeLine(geo_field, filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L88">[source]</a></dt>
 <dd>
 
 </dd>
@@ -890,7 +890,7 @@ LINESTRING (-95.3631510000000020 29.7633739999999989, -96.8016109999999941 32.78
 #### `Union`
 
 <dl>
-<dt id="django.contrib.gis.db.models.Union"><code>classUnion(geo_field,filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L93">[source]</a></dt>
+<dt id="django.contrib.gis.db.models.Union"><code>class Union(geo_field, filter=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L93">[source]</a></dt>
 <dd>
 
 </dd>

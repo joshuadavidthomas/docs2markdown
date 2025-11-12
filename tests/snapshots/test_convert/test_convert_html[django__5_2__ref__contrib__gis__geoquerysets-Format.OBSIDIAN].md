@@ -770,7 +770,7 @@ Example:
 
 #### `Collect`
 
-`classCollect(geo_field,filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L61)
+`class Collect(geo_field, filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L61)
 
 *Availability*: [PostGIS](https://postgis.net/docs/ST_Collect.md), MySQL,
 SpatiaLite
@@ -787,7 +787,7 @@ caring about dissolving boundaries.
 
 #### `Extent`
 
-`classExtent(geo_field,filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L66)
+`class Extent(geo_field, filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L66)
 
 *Availability*: [PostGIS](https://postgis.net/docs/ST_Extent.md),
 Oracle, SpatiaLite
@@ -805,7 +805,7 @@ Example:
 
 #### `Extent3D`
 
-`classExtent3D(geo_field,filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L77)
+`class Extent3D(geo_field, filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L77)
 
 *Availability*: [PostGIS](https://postgis.net/docs/ST_3DExtent.md)
 
@@ -823,7 +823,7 @@ Example:
 
 #### `MakeLine`
 
-`classMakeLine(geo_field,filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L88)
+`class MakeLine(geo_field, filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L88)
 
 *Availability*: [PostGIS](https://postgis.net/docs/ST_MakeLine.md),
 SpatiaLite
@@ -841,7 +841,7 @@ LINESTRING (-95.3631510000000020 29.7633739999999989, -96.8016109999999941 32.78
 
 #### `Union`
 
-`classUnion(geo_field,filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L93)
+`class Union(geo_field, filter=None)`[[source]](https://github.com/django/django/blob/stable/5.2.x/django/contrib/gis/db/models/aggregates.py#L93)
 
 *Availability*: [PostGIS](https://postgis.net/docs/ST_Union.md),
 Oracle, SpatiaLite

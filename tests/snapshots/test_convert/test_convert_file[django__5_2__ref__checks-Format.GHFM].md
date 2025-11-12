@@ -15,7 +15,7 @@ For details on how to add your own checks and integrate them with Django’s sys
 ### `CheckMessage`
 
 <dl>
-<dt id="django.core.checks.CheckMessage"><code>classCheckMessage(level,msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L9">[source]</a></dt>
+<dt id="django.core.checks.CheckMessage"><code>class CheckMessage(level, msg, hint=None, obj=None, id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L9">[source]</a></dt>
 <dd>
 
 </dd>
@@ -48,35 +48,35 @@ Optional string. A unique identifier for the issue. Identifiers should follow th
 There are subclasses to make creating messages with common levels easier. When using them you can omit the `level` argument because it is implied by the class name.
 
 <dl>
-<dt id="django.core.checks.Debug"><code>classDebug(msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L59">[source]</a></dt>
+<dt id="django.core.checks.Debug"><code>class Debug(msg, hint=None, obj=None, id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L59">[source]</a></dt>
 <dd>
 
 </dd>
 </dl>
 
 <dl>
-<dt id="django.core.checks.Info"><code>classInfo(msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L64">[source]</a></dt>
+<dt id="django.core.checks.Info"><code>class Info(msg, hint=None, obj=None, id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L64">[source]</a></dt>
 <dd>
 
 </dd>
 </dl>
 
 <dl>
-<dt id="django.core.checks.Warning"><code>classWarning(msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L69">[source]</a></dt>
+<dt id="django.core.checks.Warning"><code>class Warning(msg, hint=None, obj=None, id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L69">[source]</a></dt>
 <dd>
 
 </dd>
 </dl>
 
 <dl>
-<dt id="django.core.checks.Error"><code>classError(msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L74">[source]</a></dt>
+<dt id="django.core.checks.Error"><code>class Error(msg, hint=None, obj=None, id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L74">[source]</a></dt>
 <dd>
 
 </dd>
 </dl>
 
 <dl>
-<dt id="django.core.checks.Critical"><code>classCritical(msg,hint=None,obj=None,id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L79">[source]</a></dt>
+<dt id="django.core.checks.Critical"><code>class Critical(msg, hint=None, obj=None, id=None)</code><a href="https://github.com/django/django/blob/stable/5.2.x/django/core/checks/messages.py#L79">[source]</a></dt>
 <dd>
 
 </dd>

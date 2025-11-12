@@ -88,6 +88,26 @@ class GhfmConverter(Docs2MarkdownConverter):
 
         return super().convert_code(el, text, **kwargs)
 
+    def convert_ul(self, el: Tag, text: str, **kwargs: Any) -> Any:
+        parent_tags = kwargs.get("parent_tags", set())
+
+        if "dd" in parent_tags:
+            dl_parent = el.find_parent("dl")
+            if dl_parent and dl_parent.has_attr("data-markdownify-raw"):
+                return str(el)
+
+        return super().convert_ul(el, text, **kwargs)
+
+    def convert_li(self, el: Tag, text: str, **kwargs: Any) -> Any:
+        parent_tags = kwargs.get("parent_tags", set())
+
+        if "dd" in parent_tags and "ul" in parent_tags:
+            dl_parent = el.find_parent("dl")
+            if dl_parent and dl_parent.has_attr("data-markdownify-raw"):
+                return str(el)
+
+        return super().convert_li(el, text, **kwargs)
+
     def convert_dl(self, el: Tag, text: str, **kwargs: Any) -> Any:
         if el.has_attr("data-markdownify-raw"):
             dt = el.find("dt")
@@ -96,13 +116,14 @@ class GhfmConverter(Docs2MarkdownConverter):
             if dd and dd.get_text(strip=True):
                 parent_tags_for_dd = kwargs.get("parent_tags", set()) | {"dl", "dd"}
                 dd_parts = []
+
                 for child in dd.children:
-                    if hasattr(child, "name") and child.name:  # It's a Tag
+                    if hasattr(child, "name") and child.name:
                         child_md = self.process_tag(
                             child, parent_tags=parent_tags_for_dd
                         )
                         dd_parts.append(child_md)
-                    else:  # It's a text node
+                    else:
                         dd_parts.append(str(child))
 
                 dd_markdown = "".join(dd_parts).strip()

@@ -25,7 +25,7 @@ Django gives you two ways of performing raw SQL queries: you can use [`Manager.r
 The `raw()` manager method can be used to perform raw SQL queries that return model instances:
 
 <dl>
-<dt id="django.db.models.Manager.raw"><code>Manager.raw(raw_query,params=(),translations=None)</code></dt>
+<dt id="django.db.models.Manager.raw"><code>Manager.raw(raw_query, params=(), translations=None)</code></dt>
 <dd>
 
 </dd>
@@ -333,7 +333,7 @@ finally:
 #### Calling stored procedures
 
 <dl>
-<dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname,params=None,kparams=None)</code></dt>
+<dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname, params=None, kparams=None)</code></dt>
 <dd>
 Calls a database stored procedure with the given name. A sequence (<code>params</code>) or dictionary (<code>kparams</code>) of input parameters may be provided. Most databases don’t support <code>kparams</code>. Of Django’s built-in backends, only Oracle supports it.
 
