@@ -94,8 +94,6 @@ class GhfmConverter(Docs2MarkdownConverter):
         if "dd" in parent_tags:
             dl_parent = el.find_parent("dl")
             if dl_parent and dl_parent.has_attr("data-markdownify-raw"):
-                if el.has_attr("class"):
-                    del el["class"]
                 return str(el)
 
         return super().convert_ul(el, text, **kwargs)
@@ -118,34 +116,20 @@ class GhfmConverter(Docs2MarkdownConverter):
             if dd and dd.get_text(strip=True):
                 parent_tags_for_dd = kwargs.get("parent_tags", set()) | {"dl", "dd"}
                 dd_parts = []
-                nested_dls = []
 
                 for child in dd.children:
                     if hasattr(child, "name") and child.name:
-                        if child.name == "dl" and child.has_attr(
-                            "data-markdownify-raw"
-                        ):
-                            nested_dl_md = self.process_tag(
-                                child, parent_tags=kwargs.get("parent_tags", set())
-                            )
-                            nested_dls.append(nested_dl_md)
-                        else:
-                            child_md = self.process_tag(
-                                child, parent_tags=parent_tags_for_dd
-                            )
-                            dd_parts.append(child_md)
+                        child_md = self.process_tag(
+                            child, parent_tags=parent_tags_for_dd
+                        )
+                        dd_parts.append(child_md)
                     else:
                         dd_parts.append(str(child))
 
                 dd_markdown = "".join(dd_parts).strip()
                 dd_markdown = re.sub(r"\n{3,}", "\n\n", dd_markdown)
 
-                result = f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
-
-                if nested_dls:
-                    result += "".join(nested_dls)
-
-                return result
+                return f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
             else:
                 dd_markdown = ""
 
