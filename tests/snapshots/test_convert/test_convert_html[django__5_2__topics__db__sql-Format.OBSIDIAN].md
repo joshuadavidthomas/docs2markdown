@@ -29,7 +29,7 @@ you can avoid the model layer entirely and [execute custom SQL directly](#execut
 The `raw()` manager method can be used to perform raw SQL queries that
 return model instances:
 
-`Manager.raw(raw_query,params=(),translations=None)`
+`Manager.raw(raw_query, params=(), translations=None)`
 
 This method takes a raw SQL query, executes it, and returns a
 `django.db.models.query.RawQuerySet` instance. This `RawQuerySet` instance
@@ -394,7 +394,7 @@ finally:
 
 #### Calling stored procedures
 
-`CursorWrapper.callproc(procname,params=None,kparams=None)`
+`CursorWrapper.callproc(procname, params=None, kparams=None)`
 :   Calls a database stored procedure with the given name. A sequence
     (`params`) or dictionary (`kparams`) of input parameters may be
     provided. Most databases don’t support `kparams`. Of Django’s built-in

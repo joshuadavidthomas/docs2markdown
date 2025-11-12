@@ -210,7 +210,8 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
             if source_link.has_attr("class"):
                 del source_link["class"]
 
-        sig_text = dt.get_text("", strip=True)
+        # Get text preserving internal whitespace, then normalize multiple spaces
+        sig_text = re.sub(r"\s+", " ", dt.get_text().strip())
 
         dt_id = dt.get("id")
         dt.clear()
@@ -233,6 +234,17 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
 
             for span in dd.find_all("span"):
                 span.unwrap()
+
+            # Extract nested dl elements and move them after the parent dl
+            # This prevents them from being indented as part of the parent dd
+            nested_dls = dd.find_all(
+                "dl", recursive=False, attrs={"data-markdownify-raw": ""}
+            )
+            # Extract in reverse order and insert after parent to maintain original order
+            for nested_dl in reversed(nested_dls):
+                nested_dl.extract()
+                # Insert after the parent dl
+                dl.insert_after(nested_dl)
 
         dl["data-markdownify-raw"] = ""
 

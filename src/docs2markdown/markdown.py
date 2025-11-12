@@ -96,17 +96,38 @@ class GhfmConverter(Docs2MarkdownConverter):
             if dd and dd.get_text(strip=True):
                 parent_tags_for_dd = kwargs.get("parent_tags", set()) | {"dl", "dd"}
                 dd_parts = []
+                nested_dls = []
+
                 for child in dd.children:
                     if hasattr(child, "name") and child.name:  # It's a Tag
-                        child_md = self.process_tag(
-                            child, parent_tags=parent_tags_for_dd
-                        )
-                        dd_parts.append(child_md)
+                        # Check if this is a nested dl element
+                        if child.name == "dl" and child.has_attr(
+                            "data-markdownify-raw"
+                        ):
+                            # Process nested dl separately - it will be added after the parent dd
+                            nested_dl_md = self.process_tag(
+                                child, parent_tags=kwargs.get("parent_tags", set())
+                            )
+                            nested_dls.append(nested_dl_md)
+                        else:
+                            child_md = self.process_tag(
+                                child, parent_tags=parent_tags_for_dd
+                            )
+                            dd_parts.append(child_md)
                     else:  # It's a text node
                         dd_parts.append(str(child))
 
                 dd_markdown = "".join(dd_parts).strip()
                 dd_markdown = re.sub(r"\n{3,}", "\n\n", dd_markdown)
+
+                # Build the result with parent dl and any nested dls
+                result = f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
+
+                # Append nested dls without indentation
+                if nested_dls:
+                    result += "".join(nested_dls)
+
+                return result
             else:
                 dd_markdown = ""
 

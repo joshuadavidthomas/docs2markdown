@@ -36,7 +36,7 @@ Please read more about <a href="../security.html#sql-injection-protection">SQL i
 <p>The <code>raw()</code> manager method can be used to perform raw SQL queries that
 return model instances:</p>
 <dl data-markdownify-raw="">
-<dt id="django.db.models.Manager.raw"><code>Manager.raw(raw_query,params=(),translations=None)</code></dt>
+<dt id="django.db.models.Manager.raw"><code>Manager.raw(raw_query, params=(), translations=None)</code></dt>
 <dd></dd></dl>
 <p>This method takes a raw SQL query, executes it, and returns a
 <code>django.db.models.query.RawQuerySet</code> instance. This <code>RawQuerySet</code> instance
@@ -325,7 +325,7 @@ finally:
 <section><span data-markdownify-raw="" id="s-calling-stored-procedures"></span>
 <h4>Calling stored procedures</h4>
 <dl data-markdownify-raw="">
-<dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname,params=None,kparams=None)</code></dt>
+<dt id="django.db.models.CursorWrapper.callproc"><code>CursorWrapper.callproc(procname, params=None, kparams=None)</code></dt>
 <dd><p>Calls a database stored procedure with the given name. A sequence
 (<code>params</code>) or dictionary (<code>kparams</code>) of input parameters may be
 provided. Most databases don’t support <code>kparams</code>. Of Django’s built-in
