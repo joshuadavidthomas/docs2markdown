@@ -18,6 +18,13 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed nested definition list indentation in Sphinx API documentation to prevent nested `<dl>` elements from being incorrectly indented as part of parent definitions
+- Fixed transitional paragraphs before nested definition lists being rendered as code blocks by extracting them to column 0
+- Fixed signature text whitespace preservation to prevent spaces from being collapsed (e.g., "class CharField" instead of "classCharField")
+- Fixed GHFM list rendering inside definition lists by keeping them as HTML `<ul><li>` tags instead of markdown syntax
+
 ## [0.4.0]
 
 ### Added
