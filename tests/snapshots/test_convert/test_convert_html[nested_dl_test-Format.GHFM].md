@@ -5,10 +5,12 @@
 <dl>
 <dt id="django.forms.CharField"><code>class CharField(**kwargs)</code><a href="https://example.com/source">[source]</a></dt>
 <dd>
-- Default widget: <code>TextInput</code>
-- Empty value: Whatever you've given as <code>empty_value</code>.
-- Normalizes to: A string.
-- Error message keys: <code>required</code>, <code>max_length</code>
+<ul>
+<li><p>Default widget: <code>TextInput</code></p></li>
+<li><p>Empty value: Whatever you've given as <code>empty_value</code>.</p></li>
+<li><p>Normalizes to: A string.</p></li>
+<li><p>Error message keys: <code>required</code>, <code>max_length</code></p></li>
+</ul>
 </dd>
 </dl>
 
