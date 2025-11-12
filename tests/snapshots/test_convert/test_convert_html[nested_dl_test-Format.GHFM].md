@@ -9,10 +9,10 @@
 - Empty value: Whatever you've given as <code>empty_value</code>.
 - Normalizes to: A string.
 - Error message keys: <code>required</code>, <code>max_length</code>
-
-Has the following optional arguments for validation:
 </dd>
 </dl>
+
+Has the following optional arguments for validation:
 
 <dl>
 <dt id="django.forms.CharField.max_length"><code>max_length</code></dt>

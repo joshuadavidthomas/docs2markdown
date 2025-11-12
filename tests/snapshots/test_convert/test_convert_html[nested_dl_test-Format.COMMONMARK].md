@@ -6,7 +6,7 @@
     - Normalizes to: A string.
     - Error message keys: `required`, `max_length`
 
-    Has the following optional arguments for validation:
+Has the following optional arguments for validation:
 
 `max_length`
 

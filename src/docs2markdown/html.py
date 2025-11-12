@@ -237,9 +237,24 @@ class SphinxHtmlPreprocessor(BaseHtmlPreprocessor):
             nested_dls = dd.find_all(
                 "dl", recursive=False, attrs={"data-markdownify-raw": ""}
             )
-            for nested_dl in reversed(nested_dls):
-                nested_dl.extract()
-                dl.insert_after(nested_dl)
+            if nested_dls:
+                first_nested_dl = nested_dls[0]
+                elements_to_extract = []
+
+                for sibling in first_nested_dl.previous_siblings:
+                    if not sibling or (
+                        isinstance(sibling, str) and not sibling.strip()
+                    ):
+                        continue
+                    if hasattr(sibling, "name") and sibling.name == "p":
+                        elements_to_extract.insert(0, sibling)
+                    else:
+                        break
+
+                all_elements = elements_to_extract + list(nested_dls)
+                for element in reversed(all_elements):
+                    element.extract()
+                    dl.insert_after(element)
 
         dl["data-markdownify-raw"] = ""
 
