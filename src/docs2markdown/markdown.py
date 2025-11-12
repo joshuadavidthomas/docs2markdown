@@ -128,8 +128,6 @@ class GhfmConverter(Docs2MarkdownConverter):
 
                 dd_markdown = "".join(dd_parts).strip()
                 dd_markdown = re.sub(r"\n{3,}", "\n\n", dd_markdown)
-
-                return f"<dl>\n{str(dt)}\n<dd>\n{dd_markdown}\n</dd>\n</dl>\n\n"
             else:
                 dd_markdown = ""
 
