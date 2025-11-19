@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Changed
+
+- Added normalization of anchor-wrapped headings in base HTML preprocessor for better markdown output
+
 ## [0.4.1]
 
 ### Fixed
