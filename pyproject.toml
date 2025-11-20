@@ -67,7 +67,7 @@ readme = "README.md"
 # ]]] -->
 requires-python = ">=3.10"
 # [[[end]]]
-version = "0.4.1"
+version = "0.5.0"
 
 [project.scripts]
 docs2markdown = "docs2markdown.cli:app"
@@ -80,7 +80,7 @@ Source = "https://github.com/joshuadavidthomas/docs2markdown"
 [tool.bumpver]
 commit = true
 commit_message = ":bookmark: bump version {old_version} -> {new_version}"
-current_version = "0.4.1"
+current_version = "0.5.0"
 push = true
 tag = false
 version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
