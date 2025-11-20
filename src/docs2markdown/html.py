@@ -18,8 +18,6 @@ class BaseHtmlPreprocessor:
 
     def process_a(self, tag: Tag) -> None:
         parent = tag.parent
-        if parent is None:
-            return
 
         # normalize anchors that directly wrap a single heading element
         if getattr(parent, "name", None) in {"h1", "h2", "h3", "h4", "h5", "h6"}:
