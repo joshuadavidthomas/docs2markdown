@@ -18,6 +18,8 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.5.0]
+
 ### Changed
 
 - Added normalization of anchor-wrapped headings in base HTML preprocessor for better markdown output
@@ -79,10 +81,11 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/docs2markdown/compare/v0.4.1...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/docs2markdown/compare/v0.5.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.1.0
 [0.1.1]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.1.1
 [0.2.0]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.3.0
 [0.4.0]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.4.0
 [0.4.1]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.4.1
+[0.5.0]: https://github.com/joshuadavidthomas/docs2markdown/releases/tag/v0.5.0
