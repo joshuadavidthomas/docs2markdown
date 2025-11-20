@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 from bs4 import BeautifulSoup
+from bs4 import Tag
 
 from docs2markdown.html import BaseHtmlPreprocessor
 from docs2markdown.html import SphinxHtmlPreprocessor
@@ -119,3 +120,40 @@ def test_sphinx_process_highlight_div_no_pre(soup):
     # Should return early without crashing, leaving div unchanged
     assert div.find("pre") is None
     assert div.find("code") is not None
+
+
+def test_base_process_a_wraps_heading_anchor_structure():
+    html = """
+<html>
+<body>
+    <a id="let-they-who-are-without-syn" href="#let-they-who-are-without-syn" class="anchor">
+        <h2>Let they who are without syn…</h2>
+    </a>
+</body>
+</html>
+"""
+
+    processor = BaseHtmlPreprocessor(html.replace("\n", ""))
+    body = processor.soup.body
+
+    anchor = body.find("a")
+
+    processor.process_a(anchor)
+
+    tag_children = [child for child in body.contents if isinstance(child, Tag)]
+
+    assert len(tag_children) == 1
+
+    heading = tag_children[0]
+
+    assert isinstance(heading, Tag)
+    assert heading.name == "h2"
+    assert len(heading.contents) == 1
+
+    inner_anchor = heading.contents[0]
+
+    assert isinstance(inner_anchor, Tag)
+    assert inner_anchor.name == "a"
+    assert inner_anchor.get("href") == "#let-they-who-are-without-syn"
+    assert inner_anchor.get("id") == "let-they-who-are-without-syn"
+    assert inner_anchor.get_text(strip=True) == "Let they who are without syn…"

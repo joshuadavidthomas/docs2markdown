@@ -16,6 +16,49 @@ class BaseHtmlPreprocessor:
         self.content_selectors: list[str] = self.get_content_selectors()
         self.generic_chrome_selectors: list[str] = self.get_generic_chrome_selectors()
 
+    def process_a(self, tag: Tag) -> None:
+        parent = tag.parent
+
+        # normalize anchors that directly wrap a single heading element
+        if getattr(parent, "name", None) in {"h1", "h2", "h3", "h4", "h5", "h6"}:
+            return
+
+        children = [
+            child
+            for child in tag.children
+            if (getattr(child, "name", None) is not None) or str(child).strip()
+        ]
+
+        if len(children) != 1:
+            return
+
+        heading = children[0]
+        if not isinstance(heading, Tag) or heading.name not in {
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+        }:
+            return
+
+        # Restructure from:
+        #   <a ...><hN>Text</hN></a>
+        # to:
+        #   <hN><a ...>Text</a></hN>
+        heading.extract()
+        tag.replace_with(heading)
+
+        anchor = self.soup.new_tag("a")
+        for attr, value in list(tag.attrs.items()):
+            anchor[attr] = value
+
+        for child in list(heading.contents):
+            anchor.append(child.extract())
+
+        heading.append(anchor)
+
     def get_content_selectors(self) -> list[str]:
         return [
             "article#docs-content",
