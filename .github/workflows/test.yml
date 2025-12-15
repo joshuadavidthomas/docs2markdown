@@ -30,7 +30,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
+        uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867
         with:
           enable-cache: true
 
@@ -53,7 +53,7 @@ jobs:
           persist-credentials: false
 
       - name: Cache nox environments and Python installations
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             .nox
@@ -61,7 +61,7 @@ jobs:
           key: nox-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('uv.lock', 'noxfile.py') }}
 
       - name: Install uv
-        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
+        uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867
         with:
           enable-cache: true
         env:
@@ -104,7 +104,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
+        uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867
         with:
           enable-cache: true
 
@@ -122,7 +122,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
+        uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867
         with:
           enable-cache: true
 
